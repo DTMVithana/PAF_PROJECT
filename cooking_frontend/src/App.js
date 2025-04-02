@@ -1,0 +1,30 @@
+import React from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Home from './Bawantha_components/Home'; 
+import RecipeList from './Bawantha_components/RecipeList';
+import RecipeForm from './Bawantha_components/RecipeForm';
+import SharePost from './Bawantha_components/SharePost';
+import PublicPlatform from './Bawantha_components/PublicPlatform';
+import PostView from './Bawantha_components/PostView';
+import UpdateRecipe from './Bawantha_components/UpdateRecipe';
+
+
+function App() {
+  return (
+    <BrowserRouter>
+      <Routes>
+      <Route path="/" element={<Home />} /> {/* ✅ Show Home by default */}
+        <Route path="/recipe" element={<RecipeList />} />
+        <Route path="/create" element={<RecipeForm />} />
+        <Route path="/edit/:id" element={<UpdateRecipe />} />
+        <Route path="/public" element={<PublicPlatform />} />
+        <Route path="/share" element={<SharePost />} />
+        <Route path="/post/:id" element={<PostView />} />
+
+      
+      </Routes>
+    </BrowserRouter>
+  );
+}
+
+export default App;
