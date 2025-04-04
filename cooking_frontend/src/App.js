@@ -1,12 +1,12 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Home from './Bawantha_components/Home'; 
-import RecipeList from './Bawantha_components/RecipeList';
-import RecipeForm from './Bawantha_components/RecipeForm';
+import RecipeList from './Bawantha_pages/RecipeList';
+import RecipeForm from './Bawantha_pages/RecipeForm';
 import SharePost from './Bawantha_components/SharePost';
 import PublicPlatform from './Bawantha_components/PublicPlatform';
-import PostView from './Bawantha_components/PostView';
-import UpdateRecipe from './Bawantha_components/UpdateRecipe';
+import PostView from './Bawantha_pages/PostView';
+import UpdateRecipe from './Bawantha_pages/UpdateRecipe';
 
 
 function App() {
