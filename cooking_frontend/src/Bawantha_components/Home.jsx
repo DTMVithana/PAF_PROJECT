@@ -23,7 +23,7 @@ const Home = () => {
       const data = await res.json();
       setRecipes(data);
     } catch (err) {
-      alert('❌ Failed to load recipes.');
+      alert('Failed to load recipes.');
     }
   };
 
@@ -33,7 +33,7 @@ const Home = () => {
         await fetch(`/api/recipes/${id}`, { method: 'DELETE' });
         fetchRecipes();
       } catch (err) {
-        alert('❌ Failed to delete recipe.');
+        alert('Failed to delete recipe.');
       }
     }
   };
@@ -41,9 +41,9 @@ const Home = () => {
   const handleShare = async (id) => {
     try {
       await fetch(`/api/recipes/${id}/share`, { method: 'PUT' });
-      alert('✅ Post shared to public platform!');
+      alert('Post shared to public platform!');
     } catch (err) {
-      alert('❌ Failed to share post.');
+      alert('Failed to share post.');
     }
   };
 
@@ -165,7 +165,7 @@ const Home = () => {
 };
 
 const styles = {
-  // In your Home.js file, update the page style:
+ 
 page: {
   display: 'flex',
   flexDirection: 'column',

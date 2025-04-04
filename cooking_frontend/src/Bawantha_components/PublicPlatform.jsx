@@ -49,7 +49,7 @@ const PublicPlatform = () => {
         setRecipes(prev => prev.filter(recipe => recipe.id !== id));
       } catch (error) {
         console.error('Failed to delete', error);
-        alert('❌ Could not delete post.');
+        alert('Could not delete post.');
       }
     }
   };
@@ -211,7 +211,7 @@ const PublicPlatform = () => {
   );
 };
 
-// 💅 Styles
+
 const styles = {
   container: {
     padding: '40px',

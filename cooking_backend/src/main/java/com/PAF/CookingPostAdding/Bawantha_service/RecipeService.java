@@ -20,7 +20,7 @@ public class RecipeService {
         recipe.setAuthor(author);
         recipe.setCreatedAt(LocalDateTime.now());
         recipe.setUpdatedAt(LocalDateTime.now());
-        recipe.setShared(false); // Default: not shared publicly
+        recipe.setShared(false);
         return recipeRepository.save(recipe);
     }
 
@@ -42,16 +42,18 @@ public class RecipeService {
         recipe.setTitle(updatedRecipe.getTitle());
         recipe.setDescription(updatedRecipe.getDescription());
         recipe.setMediaUrls(updatedRecipe.getMediaUrls());
+        recipe.setSteps(updatedRecipe.getSteps());
         recipe.setUpdatedAt(LocalDateTime.now());
         return recipeRepository.save(recipe);
     }
+    
 
     public void deleteRecipe(Long id, String author) {
         Recipe recipe = getRecipe(id);
         recipeRepository.delete(recipe);
     }
 
-    // ✅ NEW: Share a post publicly
+    //Share a post publicly
     public Recipe sharePost(Long id) {
         Recipe recipe = getRecipe(id);
         recipe.setShared(true);
@@ -60,7 +62,7 @@ public class RecipeService {
 
     public Recipe addComment(Long id, String comment) {
         Recipe recipe = getRecipe(id);
-        recipe.getComments().add(comment); // ✅ Only store plain text
+        recipe.getComments().add(comment); 
         return recipeRepository.save(recipe);
     }
 

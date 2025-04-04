@@ -1,4 +1,4 @@
-// Header.jsx
+
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -7,7 +7,7 @@ const Header = ({ toggleSidebar }) => {
 
   return (
     <div style={styles.navbar}>
-      {/* ☰ Toggle Button */}
+    
       <button onClick={toggleSidebar} style={styles.menuBtn}>☰</button>
 
       <div style={styles.leftSection}>

@@ -23,7 +23,7 @@ const RecipeList = () => {
     if (window.confirm('Are you sure you want to delete this recipe?')) {
       try {
         await axios.delete(`/api/recipes/${id}`);
-        fetchRecipes(); // Refresh list after deletion
+        fetchRecipes(); 
       } catch (error) {
         console.error('Error deleting recipe:', error);
         alert('Failed to delete recipe.');
@@ -34,10 +34,10 @@ const RecipeList = () => {
   const shareThisPost = async (id) => {
     try {
       await axios.put(`/api/recipes/${id}/share`);
-      alert('✅ Post shared to public platform!');
+      alert('Post shared to public platform!');
     } catch (error) {
-      console.error('❌ Share failed:', error.response || error.message);
-      alert('❌ Failed to share post.');
+      console.error('Share failed:', error.response || error.message);
+      alert('Failed to share post.');
     }
   };
   

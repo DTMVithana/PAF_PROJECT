@@ -33,7 +33,7 @@ public class Recipe {
     private List<String> comments = new ArrayList<>();
 
     @ElementCollection
-    private List<Step> steps = new ArrayList<>(); // ✅ New field for structured steps
+    private List<Step> steps = new ArrayList<>(); 
 
     private String author;
 

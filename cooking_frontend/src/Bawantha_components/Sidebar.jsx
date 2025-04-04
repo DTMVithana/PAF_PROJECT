@@ -12,7 +12,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
         transform: isOpen ? 'translateX(0)' : 'translateX(-100%)',
       }}
     >
-      {/* Close Icon */}
+      
       <div style={styles.closeBtnWrapper}>
         <FaTimes style={styles.closeBtn} onClick={toggleSidebar} />
       </div>

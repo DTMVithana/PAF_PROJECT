@@ -33,7 +33,7 @@ public class RecipeController {
 
     @PostMapping
     public Recipe createRecipe(@RequestBody Recipe recipe) {
-        recipe.setAuthor("anonymous"); // hardcoded for now
+        recipe.setAuthor("anonymous");
         return recipeService.createRecipe(recipe, recipe.getAuthor());
     }
 
@@ -47,7 +47,7 @@ public class RecipeController {
         recipeService.deleteRecipe(id, "anonymous");
     }
 
-    // ✅ Fixed: Use service layer to share post
+    // share post
     @PutMapping("/{id}/share")
     public Recipe sharePost(@PathVariable Long id) {
         return recipeService.sharePost(id);
@@ -59,7 +59,7 @@ public class RecipeController {
 // }
 @PutMapping("/{id}/comment")
 public Recipe addComment(@PathVariable Long id, @RequestBody Map<String, String> body) {
-    String comment = body.get("comment"); // ✅ extract plain text
+    String comment = body.get("comment"); 
     return recipeService.addComment(id, comment);
 }
 

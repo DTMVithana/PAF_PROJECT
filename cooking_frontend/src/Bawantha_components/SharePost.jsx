@@ -28,11 +28,11 @@ const SharePost = () => {
 
     try {
       await axios.post('/api/recipes', recipe);
-      alert('✅ Post shared successfully!');
+      alert('Post shared successfully!');
       navigate('/');
     } catch (error) {
       console.error('Error sharing post:', error);
-      alert('❌ Failed to share post.');
+      alert('Failed to share post.');
     }
   };
 

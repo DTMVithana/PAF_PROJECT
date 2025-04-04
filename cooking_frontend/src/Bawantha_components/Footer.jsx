@@ -17,7 +17,7 @@ const styles = {
     fontSize: '13px',
     width: '100%',
     backdropFilter: 'blur(8px)',
-    marginTop: 'auto' // This helps push the footer to the bottom
+    marginTop: 'auto'
   },
   text: {
     margin: 0

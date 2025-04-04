@@ -159,7 +159,7 @@ const RecipeForm = () => {
             </div>
 
             {/* Main Image */}
-            <div style={styles.formGroup}>
+            {/* <div style={styles.formGroup}>
               <label style={styles.label}>Main Image URL</label>
               <input
                 type="text"
@@ -168,7 +168,7 @@ const RecipeForm = () => {
                 onChange={(e) => setMainImage(e.target.value)}
                 style={styles.input}
               />
-            </div>
+            </div> */}
 
             {/* Media URLs */}
             <div style={styles.formGroup}>
@@ -193,6 +193,10 @@ const RecipeForm = () => {
               )}
             </div>
 
+            <p>                            
+                -------------------------------------------------------------------------------------------------------------------------
+            </p>
+
             {/* Cooking Steps */}
             <div style={styles.formGroup}>
               <label style={styles.label}>Meal Steps</label>
@@ -213,13 +217,20 @@ const RecipeForm = () => {
                     value={step.imageUrl}
                     onChange={(e) => handleStepChange(index, 'imageUrl', e.target.value)}
                     style={styles.input}
+                    
                   />
+                   <p>                            
+                --------------------------------------------------------------------------------------------------------------------
+            </p>
+
                 </div>
+                
               ))}
               <button type="button" onClick={addStep} style={styles.addBtn}>➕ Add Another Step</button>
             </div>
+            
 
-            {/* Form Actions */}
+        
             <div style={styles.formActions}>
               <button type="button" onClick={() => navigate('/')} style={styles.cancelBtn}>Cancel</button>
               <button type="submit" style={styles.submitBtn}>{id ? 'Update Recipe' : 'Submit Recipe'}</button>
@@ -244,7 +255,7 @@ const RecipeForm = () => {
 
   
 };
-// ✅ Styles moved to top to avoid "styles not defined" errors
+
 const styles = {
   page: {
     fontFamily: '"Roboto", "Segoe UI", sans-serif',
