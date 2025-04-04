@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import Sidebar from './Sidebar';
 import Header from './Header';
 import Footer from './Footer';
+import CornerVideo from './CornerVideo';
+
 
 const Home = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -132,6 +134,7 @@ const Home = () => {
         </div>
 
         <div style={styles.latest}>
+        
           <h3 style={{ borderBottom: '3px solid red', paddingBottom: 6 }}>
             The Latest
           </h3>
@@ -156,10 +159,12 @@ const Home = () => {
           >
             {showAllLatest ? 'Show Less' : 'See More'}
           </button>
+          <CornerVideo />
         </div>
       </div>
-
+      
       <Footer />
+      
     </div>
   );
 };
