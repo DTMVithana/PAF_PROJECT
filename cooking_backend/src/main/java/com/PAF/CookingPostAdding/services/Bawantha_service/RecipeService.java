@@ -51,32 +51,32 @@ public class RecipeService {
         recipeRepository.delete(recipe);
     }
 
-    // Share a post publicly
-    public Recipe sharePost(String id) {
-        Recipe recipe = getRecipe(id);
-        recipe.setShared(true);
-        return recipeRepository.save(recipe);
-    }
+    // // Share a post publicly
+    // public Recipe sharePost(String id) {
+    //     Recipe recipe = getRecipe(id);
+    //     recipe.setShared(true);
+    //     return recipeRepository.save(recipe);
+    // }
 
-    public Recipe addComment(String id, String comment) {
-        Recipe recipe = getRecipe(id);
-        recipe.getComments().add(comment);
-        return recipeRepository.save(recipe);
-    }
+    // public Recipe addComment(String id, String comment) {
+    //     Recipe recipe = getRecipe(id);
+    //     recipe.getComments().add(comment);
+    //     return recipeRepository.save(recipe);
+    // }
 
-    public Recipe updateComment(String id, int index, String newComment) {
-        Recipe recipe = getRecipe(id);
-        if (index >= 0 && index < recipe.getComments().size()) {
-            recipe.getComments().set(index, newComment);
-        }
-        return recipeRepository.save(recipe);
-    }
+    // public Recipe updateComment(String id, int index, String newComment) {
+    //     Recipe recipe = getRecipe(id);
+    //     if (index >= 0 && index < recipe.getComments().size()) {
+    //         recipe.getComments().set(index, newComment);
+    //     }
+    //     return recipeRepository.save(recipe);
+    // }
     
-    public Recipe deleteComment(String id, int index) {
-        Recipe recipe = getRecipe(id);
-        if (index >= 0 && index < recipe.getComments().size()) {
-            recipe.getComments().remove(index);
-        }
-        return recipeRepository.save(recipe);
-    }
+    // public Recipe deleteComment(String id, int index) {
+    //     Recipe recipe = getRecipe(id);
+    //     if (index >= 0 && index < recipe.getComments().size()) {
+    //         recipe.getComments().remove(index);
+    //     }
+    //     return recipeRepository.save(recipe);
+    // }
 }
