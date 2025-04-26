@@ -11,7 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/mealplans")
-@CrossOrigin(origins = "http://localhost:3000")  // allow calls from your React dev server
+@CrossOrigin(origins = "http://localhost:3000")
 public class MealPlanController {
 
     @Autowired
@@ -25,8 +25,8 @@ public class MealPlanController {
     @GetMapping("/{id}")
     public ResponseEntity<MealPlan> get(@PathVariable String id) {
         return service.getById(id)
-                      .map(ResponseEntity::ok)
-                      .orElse(ResponseEntity.notFound().build());
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 
     @PostMapping
@@ -40,13 +40,16 @@ public class MealPlanController {
             @RequestBody MealPlan mealPlan
     ) {
         return service.getById(id)
-                      .map(existing -> ResponseEntity.ok(service.update(id, mealPlan)))
-                      .orElse(ResponseEntity.notFound().build());
+                .map(existing -> ResponseEntity.ok(service.update(id, mealPlan)))
+                .orElse(ResponseEntity.notFound().build());
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable String id) {
-        service.delete(id);
-        return ResponseEntity.noContent().build();
+        if (service.getById(id).isPresent()) {
+            service.delete(id);
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.notFound().build();
     }
 }
