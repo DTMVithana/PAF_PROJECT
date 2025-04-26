@@ -1,4 +1,4 @@
-package com.PAF.CookingPostAdding.Bawantha_model;
+package com.PAF.CookingPostAdding.models.Bawantha_model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -1,8 +1,10 @@
-package com.PAF.CookingPostAdding.Bawantha_repo;
+package com.PAF.CookingPostAdding.repos.Bawantha_repo;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
-import com.PAF.CookingPostAdding.Bawantha_model.Recipe;
+
+import com.PAF.CookingPostAdding.models.Bawantha_model.Recipe;
+
 import java.util.List;
 
 @Repository

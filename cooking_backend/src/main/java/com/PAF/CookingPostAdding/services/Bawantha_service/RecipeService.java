@@ -1,10 +1,10 @@
-package com.PAF.CookingPostAdding.Bawantha_service;
+package com.PAF.CookingPostAdding.services.Bawantha_service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.PAF.CookingPostAdding.Bawantha_model.Recipe;
-import com.PAF.CookingPostAdding.Bawantha_repo.RecipeRepository;
+import com.PAF.CookingPostAdding.models.Bawantha_model.Recipe;
+import com.PAF.CookingPostAdding.repos.Bawantha_repo.RecipeRepository;
 
 import java.time.LocalDateTime;
 import java.util.List;

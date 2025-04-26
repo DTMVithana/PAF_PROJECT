@@ -1,4 +1,4 @@
-package com.PAF.CookingPostAdding.Bawantha_model;
+package com.PAF.CookingPostAdding.models.Bawantha_model;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;

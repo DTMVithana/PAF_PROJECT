@@ -1,10 +1,10 @@
-package com.PAF.CookingPostAdding.Bawantha_controller;
+package com.PAF.CookingPostAdding.controllers.Bawantha_controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import com.PAF.CookingPostAdding.Bawantha_model.Recipe;
-import com.PAF.CookingPostAdding.Bawantha_service.RecipeService;
+import com.PAF.CookingPostAdding.models.Bawantha_model.Recipe;
+import com.PAF.CookingPostAdding.services.Bawantha_service.RecipeService;
 
 import java.util.List;
 import java.util.Map;
