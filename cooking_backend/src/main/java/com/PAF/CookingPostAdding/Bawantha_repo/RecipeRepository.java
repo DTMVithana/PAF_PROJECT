@@ -1,14 +1,11 @@
 package com.PAF.CookingPostAdding.Bawantha_repo;
 
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
-
 import com.PAF.CookingPostAdding.Bawantha_model.Recipe;
-
 import java.util.List;
 
 @Repository
-public interface RecipeRepository extends JpaRepository<Recipe, Long> {
+public interface RecipeRepository extends MongoRepository<Recipe, String> {
     List<Recipe> findBySharedTrue();
 }
-

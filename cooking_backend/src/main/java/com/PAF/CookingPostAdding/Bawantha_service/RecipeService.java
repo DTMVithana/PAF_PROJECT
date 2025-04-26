@@ -15,7 +15,6 @@ public class RecipeService {
     @Autowired
     private RecipeRepository recipeRepository;
     
-
     public Recipe createRecipe(Recipe recipe, String author) {
         recipe.setAuthor(author);
         recipe.setCreatedAt(LocalDateTime.now());
@@ -24,7 +23,7 @@ public class RecipeService {
         return recipeRepository.save(recipe);
     }
 
-    public Recipe getRecipe(Long id) {
+    public Recipe getRecipe(String id) {
         return recipeRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Recipe not found"));
     }
@@ -37,7 +36,7 @@ public class RecipeService {
         return recipeRepository.findBySharedTrue();
     }
 
-    public Recipe updateRecipe(Long id, Recipe updatedRecipe, String author) {
+    public Recipe updateRecipe(String id, Recipe updatedRecipe, String author) {
         Recipe recipe = getRecipe(id);
         recipe.setTitle(updatedRecipe.getTitle());
         recipe.setDescription(updatedRecipe.getDescription());
@@ -47,26 +46,25 @@ public class RecipeService {
         return recipeRepository.save(recipe);
     }
     
-
-    public void deleteRecipe(Long id, String author) {
+    public void deleteRecipe(String id, String author) {
         Recipe recipe = getRecipe(id);
         recipeRepository.delete(recipe);
     }
 
-    //Share a post publicly
-    public Recipe sharePost(Long id) {
+    // Share a post publicly
+    public Recipe sharePost(String id) {
         Recipe recipe = getRecipe(id);
         recipe.setShared(true);
         return recipeRepository.save(recipe);
     }
 
-    public Recipe addComment(Long id, String comment) {
+    public Recipe addComment(String id, String comment) {
         Recipe recipe = getRecipe(id);
-        recipe.getComments().add(comment); 
+        recipe.getComments().add(comment);
         return recipeRepository.save(recipe);
     }
 
-    public Recipe updateComment(Long id, int index, String newComment) {
+    public Recipe updateComment(String id, int index, String newComment) {
         Recipe recipe = getRecipe(id);
         if (index >= 0 && index < recipe.getComments().size()) {
             recipe.getComments().set(index, newComment);
@@ -74,14 +72,11 @@ public class RecipeService {
         return recipeRepository.save(recipe);
     }
     
-    public Recipe deleteComment(Long id, int index) {
+    public Recipe deleteComment(String id, int index) {
         Recipe recipe = getRecipe(id);
         if (index >= 0 && index < recipe.getComments().size()) {
             recipe.getComments().remove(index);
         }
         return recipeRepository.save(recipe);
     }
-    
-    
-    
 }

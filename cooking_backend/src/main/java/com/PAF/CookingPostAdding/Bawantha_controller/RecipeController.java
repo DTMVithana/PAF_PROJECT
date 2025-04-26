@@ -27,7 +27,7 @@ public class RecipeController {
     }
 
     @GetMapping("/{id}")
-    public Recipe getRecipe(@PathVariable Long id) {
+    public Recipe getRecipe(@PathVariable String id) {
         return recipeService.getRecipe(id);
     }
 
@@ -38,45 +38,34 @@ public class RecipeController {
     }
 
     @PutMapping("/{id}")
-    public Recipe updateRecipe(@PathVariable Long id, @RequestBody Recipe recipe) {
+    public Recipe updateRecipe(@PathVariable String id, @RequestBody Recipe recipe) {
         return recipeService.updateRecipe(id, recipe, null);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteRecipe(@PathVariable Long id) {
+    public void deleteRecipe(@PathVariable String id) {
         recipeService.deleteRecipe(id, "anonymous");
     }
 
-    // share post
+    // Share post
     @PutMapping("/{id}/share")
-    public Recipe sharePost(@PathVariable Long id) {
+    public Recipe sharePost(@PathVariable String id) {
         return recipeService.sharePost(id);
     }
 
-//     @PutMapping("/{id}/comment")
-// public Recipe addComment(@PathVariable Long id, @RequestBody String comment) {
-//     return recipeService.addComment(id, comment);
-// }
-@PutMapping("/{id}/comment")
-public Recipe addComment(@PathVariable Long id, @RequestBody Map<String, String> body) {
-    String comment = body.get("comment"); 
-    return recipeService.addComment(id, comment);
-}
+    @PutMapping("/{id}/comment")
+    public Recipe addComment(@PathVariable String id, @RequestBody Map<String, String> body) {
+        String comment = body.get("comment"); 
+        return recipeService.addComment(id, comment);
+    }
 
-@PutMapping("/{id}/comment/{index}")
-public Recipe updateComment(@PathVariable Long id, @PathVariable int index, @RequestBody Map<String, String> body) {
-    return recipeService.updateComment(id, index, body.get("comment"));
-}
+    @PutMapping("/{id}/comment/{index}")
+    public Recipe updateComment(@PathVariable String id, @PathVariable int index, @RequestBody Map<String, String> body) {
+        return recipeService.updateComment(id, index, body.get("comment"));
+    }
 
-@DeleteMapping("/{id}/comment/{index}")
-public Recipe deleteComment(@PathVariable Long id, @PathVariable int index) {
-    return recipeService.deleteComment(id, index);
-}
-
-
-
-
-
-
-
+    @DeleteMapping("/{id}/comment/{index}")
+    public Recipe deleteComment(@PathVariable String id, @PathVariable int index) {
+        return recipeService.deleteComment(id, index);
+    }
 }

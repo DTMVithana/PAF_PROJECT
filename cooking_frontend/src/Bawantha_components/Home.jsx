@@ -6,6 +6,10 @@ import Footer from './Footer';
 import CornerVideo from './CornerVideo';
 
 
+
+
+
+
 const Home = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [recipes, setRecipes] = useState([]);
@@ -23,12 +27,19 @@ const Home = () => {
     try {
       const res = await fetch('/api/recipes');
       const data = await res.json();
-      setRecipes(data);
+      console.log("Fetched data:", data); // check this in console
+      if (Array.isArray(data)) {
+        setRecipes(data);
+      } else {
+        console.error("Backend did not return an array, got:", data);
+        setRecipes([]);
+      }
     } catch (err) {
+      console.error('Failed to load recipes.', err);
       alert('Failed to load recipes.');
     }
   };
-
+  
   const handleDelete = async (id) => {
     if (window.confirm('Are you sure you want to delete this recipe?')) {
       try {
@@ -79,7 +90,7 @@ const Home = () => {
             {recipes.length === 0 ? (
               <p>No recipes found.</p>
             ) : (
-              recipes.map((recipe) => (
+              recipes.map((recipe => (
                 <div
                   key={recipe.id}
                   style={styles.postCard}
@@ -128,7 +139,7 @@ const Home = () => {
                     )}
                   </div>
                 </div>
-              ))
+              )))
             )}
           </div>
         </div>
@@ -164,7 +175,7 @@ const Home = () => {
       </div>
       
       <Footer />
-      
+       
     </div>
   );
 };
