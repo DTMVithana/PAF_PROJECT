@@ -8,6 +8,11 @@ import PublicPlatform from './Bawantha_components/PublicPlatform';
 import PostView from './Bawantha_pages/PostView';
 import UpdateRecipe from './Bawantha_pages/UpdateRecipe';
 
+// 👇 Your meal-plan pages
+import MealPlanList from './Dineth_pages/MealPlanList';
+import MealPlanForm from './Dineth_pages/MealPlanForm';
+import UpdateMealPlan from './Dineth_pages/UpdateMealPlan';
+
 
 function App() {
   return (
@@ -20,6 +25,13 @@ function App() {
         <Route path="/public" element={<PublicPlatform />} />
         <Route path="/share" element={<SharePost />} />
         <Route path="/post/:id" element={<PostView />} />
+
+
+                {/* Dineth (MealPlan) routes */}
+                <Route path="/mealplan" element={<MealPlanList />} />
+        <Route path="/mealplan/create" element={<MealPlanForm />} />
+        <Route path="/mealplan/edit/:id" element={<UpdateMealPlan />} />
+        
 
       
       </Routes>

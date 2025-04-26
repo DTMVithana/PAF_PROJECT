@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -7,28 +6,36 @@ const Header = ({ toggleSidebar }) => {
 
   return (
     <div style={styles.navbar}>
-    
-      <button onClick={toggleSidebar} style={styles.menuBtn}>☰</button>
+      
+      <div style={styles.leftWrapper}>
+        <button onClick={toggleSidebar} style={styles.menuBtn}>☰</button>
 
-      <div style={styles.leftSection}>
-        <div style={styles.logo}>Cook Book</div>
+        <div style={styles.leftSection}>
+          <div style={styles.logo}>Cook Book</div>
 
-        <div style={styles.navLinks}>
-        <span style={{ cursor: 'pointer' }} onClick={() => navigate('/')}>Home</span>
-  <span style={{ cursor: 'pointer' }}>Meal Planning</span>
-  <span style={{ cursor: 'pointer' }}>Categories</span>
-  <span style={{ cursor: 'pointer' }}>On Going</span>
-  <span style={{ cursor: 'pointer' }}onClick={() => navigate('/public')}>Public</span>
-  
+          <div style={styles.navLinks}>
+            <span style={{ cursor: 'pointer' }} onClick={() => navigate('/')}>Home</span>
+            <span style={{ cursor: 'pointer' }}>Categories</span>
+            <span style={{ cursor: 'pointer' }}>On Going</span>
+            <span style={{ cursor: 'pointer' }} onClick={() => navigate('/public')}>Public</span>
+            <span style={{ cursor: 'pointer' }} onClick={() => navigate('/mealplan/create')}>Meal Plans</span>
+          </div>
         </div>
-
-        <input type="text" placeholder="Find a recipe or ingredient" style={styles.search} />
       </div>
 
-      <div style={styles.profile}>
-        <span role="img" aria-label="user">👤</span>
-        <button style={styles.logoutBtn}>Log Out</button>
+      <div style={styles.rightSection}>
+        <input
+          type="text"
+          placeholder="Find a recipe or ingredient"
+          style={styles.search}
+        />
+
+        <div style={styles.profile}>
+          <span role="img" aria-label="user">👤</span>
+          <button style={styles.logoutBtn}>Log Out</button>
+        </div>
       </div>
+
     </div>
   );
 };
@@ -38,11 +45,19 @@ const styles = {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
-    padding: '20px 20px',
+    padding: '10px 20px',
     backgroundColor: '#fff',
     borderBottom: '1px solid #eee',
     flexWrap: 'wrap',
-    marginLeft: '0px',
+    width: '100vw',          // ✅ Full window width
+    boxSizing: 'border-box', // ✅ Include padding inside width
+  },
+  leftWrapper: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '15px',
+    flex: '1 1 auto',
+    minWidth: '280px',
   },
   menuBtn: {
     fontSize: '20px',
@@ -51,37 +66,46 @@ const styles = {
     borderRadius: '4px',
     padding: '6px 12px',
     cursor: 'pointer',
-    marginRight: '15px',
-    boxShadow: '0 2px 5px rgba(0,0,0,0.1)'
+    boxShadow: '0 2px 5px rgba(0,0,0,0.1)',
   },
   leftSection: {
     display: 'flex',
     alignItems: 'center',
-    gap: '270px'
+    gap: '20px',
+    flexWrap: 'wrap',
   },
   logo: {
-    fontSize: '28px',
+    fontSize: '24px',
     color: '#e85a00',
     fontWeight: 'bold',
-    marginLeft: '0px'
   },
   navLinks: {
     display: 'flex',
-    gap: '28px',
+    gap: '18px',
     fontSize: '14px',
     fontWeight: '500',
     flexWrap: 'wrap',
   },
+  rightSection: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+    gap: '10px',
+    flex: '1 1 auto',
+    minWidth: '250px',
+    marginTop: '10px',
+  },
   search: {
-    padding: '9px 20px',
+    padding: '8px 16px',
     fontSize: '14px',
     borderRadius: '4px',
     border: '1px solid #ccc',
+    width: '180px',
   },
   profile: {
     display: 'flex',
     alignItems: 'center',
-    gap: '12px'
+    gap: '8px',
   },
   logoutBtn: {
     padding: '6px 12px',
@@ -91,7 +115,7 @@ const styles = {
     borderRadius: '4px',
     cursor: 'pointer',
     fontSize: '14px',
-  }
+  },
 };
 
 export default Header;
