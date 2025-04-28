@@ -1,3 +1,4 @@
+// PublicPlatform.jsx
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
@@ -31,7 +32,7 @@ const PublicPlatform = () => {
   }, []);
 
   const handleLike = (id) => {
-    setLikes(prev => ({ ...prev, [id]: prev[id] + 1 }));
+    setLikes(prev => ({ ...prev, [id]: (prev[id] || 0) + 1 }));
   };
 
   const toggleMenu = (id) => {
@@ -94,24 +95,46 @@ const PublicPlatform = () => {
       }));
       setEditingIndex({});
       setEditComment({});
+      alert('Comment updated successfully!');
     } catch (err) {
       alert("Failed to update comment.");
     }
   };
-  
 
   const deleteComment = async (postId, index) => {
-    try {
-      const response = await axios.delete(`/api/recipes/${postId}/comment/${index}`);
-      setAllComments(prev => ({
-        ...prev,
-        [postId]: response.data.comments
-      }));
-    } catch (err) {
-      alert("Failed to delete comment.");
+    if (window.confirm("Do you want this comment to delete?")) {
+      try {
+        const response = await axios.delete(`/api/recipes/${postId}/comment/${index}`);
+        setAllComments(prev => ({
+          ...prev,
+          [postId]: response.data.comments
+        }));
+        alert('Comment deleted successfully!');
+      } catch (err) {
+        alert("Failed to delete comment.");
+      }
     }
   };
-  
+
+  const handleShare = (post) => {
+    if (navigator.share) {
+      navigator.share({
+        title: post.title,
+        text: post.description,
+        url: window.location.href,
+      })
+      .then(() => console.log('Post shared successfully'))
+      .catch((error) => console.error('Error sharing', error));
+    } else {
+      alert('Sharing is not supported on this browser.');
+    }
+  };
+
+  // 🚀 Ask Question for specific post
+  const handleAskQuestion = (recipeId) => {
+    window.location.href = `/recipe/${recipeId}/questions`;
+  };
+
   return (
     <div style={styles.container}>
       <div style={styles.wrapper}>
@@ -153,17 +176,24 @@ const PublicPlatform = () => {
                 ))}
               </div>
 
+              {/* Action Buttons */}
               <div style={styles.actions}>
                 <button onClick={() => handleLike(post.id)} style={styles.likeBtn}>
                   ❤️ Like ({likes[post.id] || 0})
                 </button>
                 <button onClick={() => toggleComments(post.id)} style={styles.commentBtn}>
-  💬 Comment ({(allComments[post.id] || []).length})
-</button>
-
-                <button style={styles.shareBtn}>🔁 Share</button>
+                  💬 Comment ({(allComments[post.id] || []).length})
+                </button>
+                {/* 🚀 Ask Question per Post */}
+                <button onClick={() => handleAskQuestion(post.id)} style={styles.askQuestionBtnSmall}>
+                  🙋 Ask Question
+                </button>
+                <button onClick={() => handleShare(post)} style={styles.shareBtn}>
+                  🔁 Share
+                </button>
               </div>
 
+              {/* Comment Section */}
               {openComments[post.id] && (
                 <div style={styles.commentBox}>
                   {(allComments[post.id] || []).map((cmt, index) => (
@@ -189,6 +219,7 @@ const PublicPlatform = () => {
                     </div>
                   ))}
 
+                  {/* New Comment Input */}
                   <div style={{ display: 'flex' }}>
                     <input
                       type="text"
@@ -211,7 +242,7 @@ const PublicPlatform = () => {
   );
 };
 
-
+// CSS-in-JS styles
 const styles = {
   container: {
     padding: '40px',
@@ -227,137 +258,135 @@ const styles = {
     textAlign: 'center',
     marginBottom: '30px',
     fontWeight: '600',
-    fontSize: '26px'
+    fontSize: '26px',
   },
   card: {
     backgroundColor: '#fff',
     padding: '20px',
     borderRadius: '10px',
     marginBottom: '25px',
-    boxShadow: '0 4px 10px rgba(0,0,0,0.1)',
-    position: 'relative',
+    boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
   },
   cardHeader: {
     display: 'flex',
     justifyContent: 'space-between',
-    alignItems: 'flex-start',
-    marginBottom: '10px',
-    position: 'relative',
+    alignItems: 'center',
   },
   title: {
     margin: '0',
-    fontSize: '20px',
-  },
-  description: {
-    color: '#555',
-    marginBottom: '15px',
-  },
-  mediaWrap: {
-    display: 'flex',
-    flexWrap: 'wrap',
-    gap: '10px',
-    marginBottom: '15px',
-  },
-  media: {
-    width: '100%',
-    maxWidth: '240px',
-    borderRadius: '8px',
-  },
-  actions: {
-    display: 'flex',
-    justifyContent: 'space-around',
-    borderTop: '1px solid #eee',
-    paddingTop: '15px',
-  },
-  likeBtn: {
-    backgroundColor: 'transparent',
-    border: 'none',
-    color: '#e0245e',
-    cursor: 'pointer',
-    fontSize: '16px',
-  },
-  commentBtn: {
-    backgroundColor: 'transparent',
-    border: 'none',
-    color: '#007bff',
-    cursor: 'pointer',
-    fontSize: '16px',
-  },
-  shareBtn: {
-    backgroundColor: 'transparent',
-    border: 'none',
-    color: '#28a745',
-    cursor: 'pointer',
-    fontSize: '16px',
   },
   menuWrapper: {
     position: 'relative',
   },
   menuIcon: {
-    fontSize: '24px',
     cursor: 'pointer',
-    userSelect: 'none',
-    padding: '4px',
+    fontSize: '20px',
   },
   dropdown: {
     position: 'absolute',
-    top: '28px',
-    right: 0,
-    backgroundColor: '#fff',
-    boxShadow: '0 2px 8px rgba(0,0,0,0.2)',
-    borderRadius: '6px',
-    zIndex: 10,
-    width: '120px',
+    top: '25px',
+    right: '0',
+    background: '#fff',
+    border: '1px solid #ccc',
+    borderRadius: '5px',
+    overflow: 'hidden',
   },
   dropdownItem: {
     padding: '10px',
-    fontSize: '14px',
     cursor: 'pointer',
+    fontSize: '14px',
     borderBottom: '1px solid #eee',
+  },
+  description: {
+    marginTop: '10px',
+    fontSize: '15px',
+  },
+  mediaWrap: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    marginTop: '10px',
+  },
+  media: {
+    width: '100%',
+    maxHeight: '400px',
+    objectFit: 'cover',
+    marginBottom: '10px',
+    borderRadius: '5px',
+  },
+  actions: {
+    display: 'flex',
+    gap: '10px',
+    marginTop: '15px',
+    flexWrap: 'wrap',
+  },
+  likeBtn: {
+    backgroundColor: '#ffcccc',
+    padding: '8px 15px',
+    border: 'none',
+    borderRadius: '20px',
+    cursor: 'pointer',
+  },
+  commentBtn: {
+    backgroundColor: '#cce5ff',
+    padding: '8px 15px',
+    border: 'none',
+    borderRadius: '20px',
+    cursor: 'pointer',
+  },
+  askQuestionBtnSmall: {
+    backgroundColor: '#ff9900',
+    padding: '8px 15px',
+    border: 'none',
+    borderRadius: '20px',
+    color: '#fff',
+    fontWeight: 'bold',
+    cursor: 'pointer',
+  },
+  shareBtn: {
+    backgroundColor: '#d9d9d9',
+    padding: '8px 15px',
+    border: 'none',
+    borderRadius: '20px',
+    cursor: 'pointer',
   },
   commentBox: {
     marginTop: '15px',
-    borderTop: '1px solid #eee',
-    paddingTop: '15px',
+    backgroundColor: '#fafafa',
+    padding: '10px',
+    borderRadius: '5px',
   },
   commentLine: {
     display: 'flex',
-    justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: '10px'
+    marginBottom: '8px',
+    justifyContent: 'space-between',
   },
   commentItem: {
-    fontSize: '15px',
-    color: '#333',
-    paddingLeft: '8px',
-    margin: 0,
-    flex: 1,
+    margin: '0',
   },
   commentMenu: {
     display: 'flex',
-    gap: '10px',
-    marginLeft: '10px',
+    gap: '5px',
   },
   commentDot: {
     cursor: 'pointer',
     fontSize: '16px',
   },
   commentInput: {
-    flex: 1,
-    padding: '8px',
-    border: '1px solid #ccc',
-    borderRadius: '5px',
+    flexGrow: '1',
     marginRight: '10px',
-    fontSize: '15px',
+    padding: '8px',
+    borderRadius: '5px',
+    border: '1px solid #ccc',
   },
   sendBtn: {
     padding: '8px 12px',
-    backgroundColor: '#007bff',
+    backgroundColor: '#4CAF50',
+    color: 'white',
     border: 'none',
-    color: '#fff',
     borderRadius: '5px',
     cursor: 'pointer',
-  }
+  },
 };
 
 export default PublicPlatform;

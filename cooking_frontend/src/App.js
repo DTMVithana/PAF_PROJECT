@@ -7,6 +7,7 @@ import SharePost from './Bawantha_components/SharePost';
 import PublicPlatform from './Bawantha_components/PublicPlatform';
 import PostView from './Bawantha_pages/PostView';
 import UpdateRecipe from './Bawantha_pages/UpdateRecipe';
+import QuestionPage from './Uvindu_pages/QuestionPage';
 
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
         <Route path="/public" element={<PublicPlatform />} />
         <Route path="/share" element={<SharePost />} />
         <Route path="/post/:id" element={<PostView />} />
+        <Route path="/recipe/:recipeId/questions" element={<QuestionPage />} />
 
       
       </Routes>

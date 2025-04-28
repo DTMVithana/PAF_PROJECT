@@ -17,20 +17,17 @@ public class Recipe {
     @Id
     private String id;
 
-    private boolean shared;
+    // private boolean shared;
     private String title;
     private String mainImage;
     private String description;
 
     private List<String> mediaUrls = new ArrayList<>();
-    private List<String> comments = new ArrayList<>();
+    // private List<String> comments = new ArrayList<>();
     private List<Step> steps = new ArrayList<>();
-
-    private List<String> likedBy = new ArrayList<>(); 
-    private List<String> likes = new ArrayList<>();
-
 
     private String author;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 }
+                  
