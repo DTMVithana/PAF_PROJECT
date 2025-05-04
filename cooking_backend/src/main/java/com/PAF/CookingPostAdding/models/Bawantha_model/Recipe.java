@@ -17,25 +17,16 @@ public class Recipe {
     @Id
     private String id;
 
-    private boolean shared;  // Added shared field
-
+    private boolean shared;
     private String title;
     private String mainImage;
     private String description;
 
     private List<String> mediaUrls = new ArrayList<>();
+    private List<String> comments = new ArrayList<>();
     private List<Step> steps = new ArrayList<>();
 
     private String author;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
-
-    // Getter and Setter for shared field
-    public boolean isShared() {
-        return shared;
-    }
-
-    public void setShared(boolean shared) {
-        this.shared = shared;
-    }
 }

@@ -7,6 +7,7 @@ import com.PAF.CookingPostAdding.models.Bawantha_model.Recipe;
 import com.PAF.CookingPostAdding.services.Bawantha_service.RecipeService;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/recipes")
@@ -46,25 +47,25 @@ public class RecipeController {
         recipeService.deleteRecipe(id, "anonymous");
     }
 
-    // // Share post
-    // @PutMapping("/{id}/share")
-    // public Recipe sharePost(@PathVariable String id) {
-    //     return recipeService.sharePost(id);
-    // }
+    // Share post
+    @PutMapping("/{id}/share")
+    public Recipe sharePost(@PathVariable String id) {
+        return recipeService.sharePost(id);
+    }
 
-    // @PutMapping("/{id}/comment")
-    // public Recipe addComment(@PathVariable String id, @RequestBody Map<String, String> body) {
-    //     String comment = body.get("comment"); 
-    //     return recipeService.addComment(id, comment);
-    // }
+    @PutMapping("/{id}/comment")
+    public Recipe addComment(@PathVariable String id, @RequestBody Map<String, String> body) {
+        String comment = body.get("comment"); 
+        return recipeService.addComment(id, comment);
+    }
 
-    // @PutMapping("/{id}/comment/{index}")
-    // public Recipe updateComment(@PathVariable String id, @PathVariable int index, @RequestBody Map<String, String> body) {
-    //     return recipeService.updateComment(id, index, body.get("comment"));
-    // }
+    @PutMapping("/{id}/comment/{index}")
+    public Recipe updateComment(@PathVariable String id, @PathVariable int index, @RequestBody Map<String, String> body) {
+        return recipeService.updateComment(id, index, body.get("comment"));
+    }
 
-    // @DeleteMapping("/{id}/comment/{index}")
-    // public Recipe deleteComment(@PathVariable String id, @PathVariable int index) {
-    //     return recipeService.deleteComment(id, index);
-    // }
+    @DeleteMapping("/{id}/comment/{index}")
+    public Recipe deleteComment(@PathVariable String id, @PathVariable int index) {
+        return recipeService.deleteComment(id, index);
+    }
 }

@@ -1,5 +1,4 @@
-package com.PAF.CookingPostAdding.repos.Bawantha_repo;
-
+package com.PAF.CookingPostAdding.Bawantha_repo;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 

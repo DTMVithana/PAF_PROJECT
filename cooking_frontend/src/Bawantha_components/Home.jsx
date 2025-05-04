@@ -51,9 +51,9 @@ const Home = () => {
     }
   };
 
-  const handleShare = async (recipeId) => {
+  const handleShare = async (id) => {
     try {
-      await fetch(`/api/recipes/${recipeId}/share`, { method: 'PUT' });
+      await fetch(`/api/recipes/${id}/share`, { method: 'PUT' });
       alert('Post shared to public platform!');
     } catch (err) {
       alert('Failed to share post.');
