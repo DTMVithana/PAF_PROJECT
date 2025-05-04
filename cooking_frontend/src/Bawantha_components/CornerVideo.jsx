@@ -11,22 +11,22 @@ const CornerVideo = () => {
   const [fade, setFade] = useState(false);
 
   const handleVideoEnd = () => {
-    // Start fade-out effect
+    
     setFade(true);
-    // After fade-out transition, update video and trigger fade-in
+    
     setTimeout(() => {
       setCurrentVideoIndex((prevIndex) => (prevIndex + 1) % videos.length);
-      // Small delay to ensure the new video is mounted before fading in
+      
       setTimeout(() => {
         setFade(false);
       }, 50);
-    }, 500); // 500ms fade-out duration
+    }, 500);
   };
 
   return (
     <div style={styles.container}>
       <video
-        key={currentVideoIndex} // ensures re-render when index changes
+        key={currentVideoIndex} 
         src={videos[currentVideoIndex]}
         controls
         autoPlay
@@ -34,7 +34,7 @@ const CornerVideo = () => {
         onEnded={handleVideoEnd}
         style={{
           ...styles.video,
-          transition: 'opacity 0.5s ease-in-out', // smooth opacity transition
+          transition: 'opacity 0.5s ease-in-out', 
           opacity: fade ? 0 : 1,
         }}
       />
@@ -44,7 +44,7 @@ const CornerVideo = () => {
 
 const styles = {
   container: {
-    position: 'sticky', // or use 'fixed' to stay in place during scrolling
+    position: 'sticky', 
     right: '20px',
     bottom: '-250px',
     width: '420px',
