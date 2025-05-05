@@ -4,7 +4,7 @@ import Sidebar from './Sidebar';
 import Header from './Header';
 import Footer from './Footer';
 import CornerVideo from './CornerVideo';
-import axiosInstance from '../api/axiosInstance'; // adjust the path if needed
+
 
 
 
@@ -26,13 +26,13 @@ const Home = () => {
 
   const fetchRecipes = async () => {
     try {
-      const res = await axiosInstance.get('/recipes');
-      const data = res.data;
-      console.log("Fetched data:", data);
+      const res = await fetch('/api/recipes');
+      const data = await res.json();
+      console.log("Fetched data:", data); // check this in console
       if (Array.isArray(data)) {
         setRecipes(data);
       } else {
-        console.error("Expected array, got:", data);
+        console.error("Backend did not return an array, got:", data);
         setRecipes([]);
       }
     } catch (err) {
@@ -41,27 +41,26 @@ const Home = () => {
     }
   };
   
-  
   const handleDelete = async (id) => {
     if (window.confirm('Are you sure you want to delete this recipe?')) {
       try {
-        await axiosInstance.delete(`/recipes/${id}`);
+        await fetch(`/api/recipes/${id}`, { method: 'DELETE' });
         fetchRecipes();
       } catch (err) {
         alert('Failed to delete recipe.');
       }
     }
   };
-  
+
   const handleShare = async (id) => {
     try {
-      await axiosInstance.put(`/recipes/${id}/share`);
+      await fetch(`/api/recipes/${id}/share`, { method: 'PUT' });
       alert('Post shared to public platform!');
     } catch (err) {
       alert('Failed to share post.');
     }
   };
-  
+
 
   const sortedRecipes = [...recipes].sort(
     (a, b) => new Date(b.updatedAt || b.createdAt) - new Date(a.updatedAt || a.createdAt)
