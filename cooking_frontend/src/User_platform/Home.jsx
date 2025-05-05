@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Sidebar from './Sidebar';
-import Header from './Header';
-import Footer from './Footer';
-import CornerVideo from './CornerVideo';
+import Sidebar from '../Bawantha_components/Sidebar';
+import Header from '../Bawantha_components/Header';
+import Footer from '../Bawantha_components/Footer';
+import CornerVideo from '../Bawantha_components/CornerVideo';
 
 
 

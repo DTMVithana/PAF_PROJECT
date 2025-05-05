@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Home from './Bawantha_components/Home'; 
+import Home from './User_platform/Home'; 
 import RecipeList from './Bawantha_pages/RecipeList';
 import RecipeForm from './Bawantha_pages/RecipeForm';
 import SharePost from './User_platform/SharePost';
