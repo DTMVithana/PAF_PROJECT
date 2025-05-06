@@ -1,10 +1,7 @@
 package com.PAF.CookingPostAdding;
-<<<<<<< HEAD
-=======
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
->>>>>>> aa580192ddb68397cb6e4840e983f4c3dd426d40
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.event.ApplicationReadyEvent;

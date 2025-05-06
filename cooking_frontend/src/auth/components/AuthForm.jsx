@@ -9,8 +9,7 @@ const AuthForm = ({ mode }) => {
   const [form, setForm] = useState({
     username: '',
     password: '',
-    name: '',
-    profilePhotoUrl: ''
+    name: ''
   });
   const [error, setError] = useState('');
 
@@ -22,7 +21,11 @@ const AuthForm = ({ mode }) => {
     const url = isLogin ? '/api/auth/login' : '/api/auth/signup';
     const payload = isLogin
       ? { username: form.username, password: form.password }
-      : form;
+      : {
+          name: form.name,
+          username: form.username,
+          password: form.password
+        };
 
     try {
       const res = await fetch(url, {
@@ -40,7 +43,6 @@ const AuthForm = ({ mode }) => {
         throw new Error(msg);
       }
 
-      // read body safely even if empty
       const text = await res.text();
       const data = text ? JSON.parse(text) : {};
 
@@ -48,7 +50,7 @@ const AuthForm = ({ mode }) => {
         if (!data.token) throw new Error('No token received');
         localStorage.setItem('authToken', data.token);
         alert('Login successful! Redirecting…');
-        navigate('/');  // or wherever your protected home is
+        navigate('/');
       } else {
         alert('Signup successful! Please log in.');
         navigate('/login');
@@ -63,26 +65,15 @@ const AuthForm = ({ mode }) => {
       <h2>{isLogin ? 'Login' : 'Sign Up'}</h2>
       <form onSubmit={handleSubmit} className="auth-form">
         {!isLogin && (
-          <>
-            <label>
-              Name
-              <input
-                name="name"
-                value={form.name}
-                onChange={handleChange}
-                required
-              />
-            </label>
-            <label>
-              Profile Photo URL
-              <input
-                name="profilePhotoUrl"
-                value={form.profilePhotoUrl}
-                onChange={handleChange}
-                required
-              />
-            </label>
-          </>
+          <label>
+            Name
+            <input
+              name="name"
+              value={form.name}
+              onChange={handleChange}
+              required
+            />
+          </label>
         )}
 
         <label>
