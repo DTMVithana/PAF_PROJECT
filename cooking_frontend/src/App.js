@@ -1,5 +1,5 @@
 import React from 'react';
-import { Routes, Route, Link } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import Home from './User_platform/Home'; 
 import RecipeList from './Bawantha_pages/RecipeList';
 import RecipeForm from './Bawantha_pages/RecipeForm';
@@ -13,10 +13,7 @@ import SignupPage from './auth/pages/SignupPage';
 function App() {
   return (
     <div className="App">
-      <nav>
-        <Link to="/login">Login</Link> |{' '}
-        <Link to="/signup">Sign Up</Link>
-      </nav>
+    
 
       <main>
         <Routes>
