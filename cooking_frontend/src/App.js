@@ -1,5 +1,5 @@
 import React from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import Home from './User_platform/Home'; 
 import RecipeList from './Bawantha_pages/RecipeList';
 import RecipeForm from './Bawantha_pages/RecipeForm';
@@ -13,12 +13,12 @@ import SignupPage from './auth/pages/SignupPage';
 function App() {
   return (
     <div className="App">
-    
+      
 
       <main>
         <Routes>
           {/* Redirect root to login */}
-          
+          <Route path="/" element={<Navigate to="/login" replace />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/signup" element={<SignupPage />} />
           <Route path="/" element={<Home />} /> {/* ✅ Show Home by default */}
