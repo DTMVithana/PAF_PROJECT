@@ -10,12 +10,14 @@ import com.PAF.CookingPostAdding.auth.service.UserService;
 import com.PAF.CookingPostAdding.auth.util.JwtUtils; 
 
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -26,49 +28,57 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.http.HttpStatus;
+
+import java.time.LocalDateTime;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 // …
 @RestController
 @RequestMapping("/api/auth")
+@CrossOrigin                   // allow requests from your React dev server
+@RequiredArgsConstructor 
 public class AuthController {
 
-    @Autowired private AuthenticationManager authManager;  // NEW
-    @Autowired private JwtUtils jwtUtils;
-    @Autowired private UserService userService;
-    @Autowired private UserRepository userRepository; 
-    @PostMapping("/login")
-    public LoginResponse login(@Valid @RequestBody LoginRequest req) {
-        Logger log = LoggerFactory.getLogger(AuthController.class);
-        log.info("▶ OK – /login called for {}", req.getUsername());
-        // ── 1.  Look up the user or immediately return 401  ───────────────
-        User user = userRepository.findByUsername(req.getUsername())
-            .orElseThrow(() -> new ResponseStatusException(
-                    HttpStatus.UNAUTHORIZED, "Invalid credentials"));
-                    log.info("▶ OK – user found");
-        // ── 2.  Compare plain‑text password  ──────────────────────────────
-        if (!user.getPassword().equals(req.getPassword())) {
-            log.warn("⚠ FAIL – password mismatch");
-            throw new ResponseStatusException(
-                    HttpStatus.UNAUTHORIZED, "Invalid credentials");
-        }
-        log.info("▶ OK – password matched");
-
-
-        // ── 3.  Build and return the JWT  ─────────────────────────────────
-        String token = jwtUtils.generateToken(user.getUsername());
-        log.info("▶ OK – JWT generated");
-        return new LoginResponse(token);
-    }
     
+    @Autowired
+    private final UserRepository userRepo;
+    private final PasswordEncoder passwordEncoder;
 
-    @PostMapping("/signup")
-    public ResponseEntity<AuthResponse> signup(
-            @Valid @RequestBody SignupRequest req) {
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody LoginRequest req) {
 
-        userService.register(req);
-        return ResponseEntity.ok(new AuthResponse("Registration successful"));
+        return userRepo.findByUsername(req.getUsername())
+                .filter(u -> passwordEncoder.matches(req.getPassword(), u.getPassword()))
+                .<ResponseEntity<?>>map(u ->
+                        ResponseEntity.ok(new LoginResponse("Login successful", u.getId())))
+                .orElseGet(() ->
+                        ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                                .body("Invalid username or password"));
     }
+
+   // ---------- REGISTER ----------
+    @PostMapping("/signup")
+    public ResponseEntity<?> register(@RequestBody SignupRequest req) {
+
+        if (userRepo.findByUsername(req.getUsername()).isPresent()) {
+            return ResponseEntity.status(HttpStatus.CONFLICT)
+                    .body("Username already taken");
+        }
+
+        User user = User.builder()
+                .name(req.getName())
+                .username(req.getUsername())
+                .password(passwordEncoder.encode(req.getPassword()))   // BCrypt!
+                .profilePhotoUrl(req.getProfilePhotoUrl())
+                .createdAt(LocalDateTime.now())
+                .build();
+
+        userRepo.save(user);
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(new LoginResponse("User created", user.getId()));
+    }
+
     @GetMapping("/ping")  // works → proves controller is scanned
     public ResponseEntity<String> ping() { return ResponseEntity.ok("pong"); }
 }

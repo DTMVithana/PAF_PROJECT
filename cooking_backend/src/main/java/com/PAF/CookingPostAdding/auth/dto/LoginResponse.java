@@ -1,10 +1,11 @@
 package com.PAF.CookingPostAdding.auth.dto;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
 public class LoginResponse {
-    private String token;
+    private String message;
+    private String userId;
 }

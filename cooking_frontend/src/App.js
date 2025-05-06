@@ -1,6 +1,5 @@
-
 import React from 'react';
-import { Routes, Route, Link, Navigate } from 'react-router-dom';
+import { Routes, Route, Link } from 'react-router-dom';
 import Home from './User_platform/Home'; 
 import RecipeList from './Bawantha_pages/RecipeList';
 import RecipeForm from './Bawantha_pages/RecipeForm';
@@ -22,7 +21,7 @@ function App() {
       <main>
         <Routes>
           {/* Redirect root to login */}
-          <Route path="/" element={<Navigate to="/login" replace />} />
+          
           <Route path="/login" element={<LoginPage />} />
           <Route path="/signup" element={<SignupPage />} />
           <Route path="/" element={<Home />} /> {/* ✅ Show Home by default */}
@@ -32,7 +31,7 @@ function App() {
         <Route path="/public" element={<PublicPlatform />} />
         <Route path="/share" element={<SharePost />} />
         <Route path="/post/:id" element={<PostView />} />
-        <Route path="/login" element={<LoginPage />} />
+        
         <Route path="/signup" element={<SignupPage />} />
           {/* protected routes go here */}
         </Routes>
@@ -45,4 +44,3 @@ function App() {
 }
 
 export default App;
-

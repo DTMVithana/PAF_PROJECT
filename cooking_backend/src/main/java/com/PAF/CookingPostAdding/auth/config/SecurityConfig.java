@@ -7,6 +7,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
@@ -44,8 +45,7 @@ public class SecurityConfig {
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return org.springframework.security.crypto.password.
-               NoOpPasswordEncoder.getInstance();
+        return new BCryptPasswordEncoder();
     }
 
     @Bean
@@ -62,28 +62,17 @@ public class SecurityConfig {
                    .build();
     }
 
-    @Bean
-    SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+  @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-          .csrf(csrf -> csrf.disable())
-          .sessionManagement(sm -> sm.sessionCreationPolicy(
-                                SessionCreationPolicy.STATELESS))
-          .cors(Customizer.withDefaults())
-          .httpBasic(AbstractHttpConfigurer::disable)
-          .formLogin(AbstractHttpConfigurer::disable)
-          .authorizeHttpRequests(auth ->
-              auth.requestMatchers("/api/auth/**", "/error").permitAll()
-                  .anyRequest().authenticated()
-          )
-          .addFilterBefore(jwtAuthenticationFilter,
-                           UsernamePasswordAuthenticationFilter.class);
-       
-                           LoggerFactory.getLogger(SecurityConfig.class)
-                           .info("▶ OK – SecurityFilterChain built, JWT filter inserted");
-                           return http.build();
-    
-    
-                        }
+            .csrf().disable()               // fine for simple demo; enable for production
+            .authorizeHttpRequests(auth -> auth
+                .requestMatchers(HttpMethod.POST, "/api/auth/**").permitAll()
+                .anyRequest().permitAll())
+            .httpBasic().disable()          // we’re using JSON, not HTTP Basic
+            .formLogin().disable();
+        return http.build();
+    }
     
 
     // ────────────────────────────────────────────────
