@@ -29,4 +29,10 @@ public class Recipe {
     private String author;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
+<<<<<<< HEAD
 }
+=======
+}
+
+
+>>>>>>> aa580192ddb68397cb6e4840e983f4c3dd426d40

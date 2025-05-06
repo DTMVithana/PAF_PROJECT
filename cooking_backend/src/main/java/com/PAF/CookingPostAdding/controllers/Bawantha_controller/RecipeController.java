@@ -1,7 +1,8 @@
 package com.PAF.CookingPostAdding.controllers.Bawantha_controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import com.PAF.CookingPostAdding.models.Bawantha_model.Recipe;
 import com.PAF.CookingPostAdding.services.Bawantha_service.RecipeService;
@@ -11,6 +12,10 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/recipes")
+// Allow requests from your React dev server:
+@CrossOrigin(origins = "http://localhost:3000", 
+             methods = { RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE, RequestMethod.OPTIONS },
+             allowCredentials = "true")
 public class RecipeController {
 
     @Autowired
