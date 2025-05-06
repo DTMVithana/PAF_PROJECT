@@ -10,6 +10,11 @@ import UpdateRecipe from './Bawantha_pages/UpdateRecipe';
 import LoginPage from './auth/pages/LoginPage';
 import SignupPage from './auth/pages/SignupPage';
 
+const PrivateRoute = ({ children }) =>
+  localStorage.getItem("userId")
+    ? children
+    : <Navigate to="/login" replace />;
+
 function App() {
   return (
     <div className="App">
@@ -19,9 +24,23 @@ function App() {
         <Routes>
           {/* Redirect root to login */}
           <Route path="/" element={<Navigate to="/login" replace />} />
+     
+     
+     
+     
           <Route path="/login" element={<LoginPage />} />
           <Route path="/signup" element={<SignupPage />} />
-          <Route path="/" element={<Home />} /> {/* ✅ Show Home by default */}
+         
+         
+         
+          <Route
+        path="/home"
+        element={
+          <PrivateRoute>
+            <Home />
+          </PrivateRoute>
+        }
+      />
         <Route path="/recipe" element={<RecipeList />} />
         <Route path="/create" element={<RecipeForm />} />
         <Route path="/edit/:id" element={<UpdateRecipe />} />

@@ -47,7 +47,7 @@ const AuthForm = ({ mode }) => {
         // 👉 you can store userId or keep it stateless for now
         localStorage.setItem("userId", data.userId);
         alert("Login successful!");
-        navigate("/");                     // change to "/" if that’s your route
+        navigate("/home");                     // change to "/" if that’s your route
       } else {
         alert("Signup successful — please log in.");
         navigate("/login");
