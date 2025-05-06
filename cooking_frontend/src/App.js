@@ -9,6 +9,7 @@ import PostView from './Bawantha_pages/PostView';
 import UpdateRecipe from './Bawantha_pages/UpdateRecipe';
 import LoginPage from './auth/pages/LoginPage';
 import SignupPage from './auth/pages/SignupPage';
+import UserProfile from './User_platform/UserProfile';
 
 const PrivateRoute = ({ children }) =>
   localStorage.getItem("userId")
@@ -47,6 +48,7 @@ function App() {
         <Route path="/public" element={<PublicPlatform />} />
         <Route path="/share" element={<SharePost />} />
         <Route path="/post/:id" element={<PostView />} />
+        <Route path="/profile/:id" element={<UserProfile />} />
         
         <Route path="/signup" element={<SignupPage />} />
           {/* protected routes go here */}
