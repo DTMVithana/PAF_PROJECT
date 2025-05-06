@@ -7,52 +7,54 @@ import com.PAF.CookingPostAdding.models.Tharinda_model.ProgressRecipe;
 import com.PAF.CookingPostAdding.services.Tharinda_service.ProgressService;
 
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/api/ongoing")
 public class ProgressController {
-
+    
     @Autowired
-    private ProgressService ProgressService;
-
+    private ProgressService progressService;
+    
     @GetMapping
     public List<ProgressRecipe> getAllRecipes() {
-        return ProgressService.getAllRecipes();
+        return progressService.getAllRecipes();
     }
-
+    
     @GetMapping("/shared")
     public List<ProgressRecipe> getSharedRecipes() {
-        return ProgressService.getSharedRecipes();
+        return progressService.getSharedRecipes();
     }
-
+    
+    @GetMapping("/ongoing")
+    public List<ProgressRecipe> getOngoingRecipes() {
+        return progressService.getOngoingRecipes();
+    }
+    
     @GetMapping("/{id}")
     public ProgressRecipe getRecipe(@PathVariable String id) {
-        return ProgressService.getRecipe(id);
+        return progressService.getRecipe(id);
     }
-
+    
     @PostMapping
-    public ProgressRecipe createRecipe(@RequestBody ProgressRecipe Progressrecipe) {
-        Progressrecipe.setAuthor("anonymous");
-        return ProgressService.createRecipe(Progressrecipe, Progressrecipe.getAuthor());
+    public ProgressRecipe createRecipe(@RequestBody ProgressRecipe progressrecipe) {
+        progressrecipe.setAuthor("anonymous");
+        return progressService.createRecipe(progressrecipe, progressrecipe.getAuthor());
     }
-
+    
     @PutMapping("/{id}")
-    public ProgressRecipe updateRecipe(@PathVariable String id, @RequestBody ProgressRecipe Progressrecipe) {
-        return ProgressService.updateRecipe(id, Progressrecipe, null);
+    public ProgressRecipe updateRecipe(@PathVariable String id, @RequestBody ProgressRecipe progressrecipe) {
+        return progressService.updateRecipe(id, progressrecipe, null);
     }
-
+    
     @DeleteMapping("/{id}")
     public void deleteRecipe(@PathVariable String id) {
-        ProgressService.deleteRecipe(id, "anonymous");
+        progressService.deleteRecipe(id, "anonymous");
     }
-
+    
     // Share post
     @PutMapping("/{id}/share")
     public ProgressRecipe sharePost(@PathVariable String id) {
-        return ProgressService.sharePost(id);
+        return progressService.sharePost(id);
     }
-
     
-    }
-
+}

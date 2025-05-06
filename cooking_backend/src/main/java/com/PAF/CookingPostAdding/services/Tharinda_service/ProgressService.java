@@ -11,7 +11,7 @@ import java.util.List;
 
 @Service
 public class ProgressService {
-
+    
     @Autowired
     private ProgressRecipeRepository recipeRepository;
     
@@ -22,20 +22,24 @@ public class ProgressService {
         recipe.setShared(false);
         return recipeRepository.save(recipe);
     }
-
+    
     public ProgressRecipe getRecipe(String id) {
         return recipeRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Recipe not found"));
     }
-
+    
     public List<ProgressRecipe> getAllRecipes() {
         return recipeRepository.findAll();
     }
-
+    
     public List<ProgressRecipe> getSharedRecipes() {
         return recipeRepository.findBySharedTrue();
     }
-
+    
+    public List<ProgressRecipe> getOngoingRecipes() {
+        return recipeRepository.findByStatusNot("completed");
+    }
+    
     public ProgressRecipe updateRecipe(String id, ProgressRecipe updatedRecipe, String author) {
         ProgressRecipe recipe = getRecipe(id);
         recipe.setTitle(updatedRecipe.getTitle());
@@ -54,12 +58,11 @@ public class ProgressService {
         ProgressRecipe recipe = getRecipe(id);
         recipeRepository.delete(recipe);
     }
-
+    
     // Share a post publicly
     public ProgressRecipe sharePost(String id) {
         ProgressRecipe recipe = getRecipe(id);
         recipe.setShared(true);
         return recipeRepository.save(recipe);
     }
-
 }

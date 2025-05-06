@@ -1,30 +1,26 @@
-
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const Header = ({ toggleSidebar }) => {
   const navigate = useNavigate();
-
+  
   return (
     <div style={styles.navbar}>
-    
       <button onClick={toggleSidebar} style={styles.menuBtn}>☰</button>
-
       <div style={styles.leftSection}>
         <div style={styles.logo}>Cook Book</div>
-
+        
         <div style={styles.navLinks}>
-        <span style={{ cursor: 'pointer' }} onClick={() => navigate('/')}>Home</span>
-  <span style={{ cursor: 'pointer' }}>Meal Planning</span>
-  <span style={{ cursor: 'pointer' }}>Categories</span>
-  <span style={{ cursor: 'pointer' }}>On Going</span>
-  <span style={{ cursor: 'pointer' }}onClick={() => navigate('/public')}>Public</span>
-  
+          <span style={{ cursor: 'pointer' }} onClick={() => navigate('/')}>Home</span>
+          <span style={{ cursor: 'pointer' }} onClick={() => navigate('/meal-planning')}>Meal Planning</span>
+          <span style={{ cursor: 'pointer' }} onClick={() => navigate('/categories')}>Categories</span>
+          <span style={{ cursor: 'pointer' }} onClick={() => navigate('/ongoing')}>On Going</span>
+          <span style={{ cursor: 'pointer' }} onClick={() => navigate('/public')}>Public</span>
         </div>
-
+        
         <input type="text" placeholder="Find a recipe or ingredient" style={styles.search} />
       </div>
-
+      
       <div style={styles.profile}>
         <span role="img" aria-label="user">👤</span>
         <button style={styles.logoutBtn}>Log Out</button>

@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
 // import Sidebar from './Sidebar';
-import Header from '../Bawantha_components/Header';
-import Footer from '../Bawantha_components/Footer';
-import Sidebar from '../Bawantha_components/Sidebar';
+import Header from '../Tharinda_components/Header';
+import Footer from '../Tharinda_components/Footer';
+import Sidebar from '../Tharinda_components/Sidebar';
 
 
 
