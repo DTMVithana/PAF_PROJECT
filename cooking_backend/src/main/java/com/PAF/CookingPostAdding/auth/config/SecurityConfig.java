@@ -4,6 +4,7 @@ import com.PAF.CookingPostAdding.auth.filter.JwtAuthenticationFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
@@ -30,6 +31,7 @@ public class SecurityConfig {
 
     @Bean
     public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
         return new BCryptPasswordEncoder(); // ✅ secure password hashing
     }
 
@@ -48,9 +50,25 @@ public class SecurityConfig {
     
     
 
+  @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
+            .csrf().disable()               // fine for simple demo; enable for production
+            .authorizeHttpRequests(auth -> auth
+                .requestMatchers(HttpMethod.POST, "/api/auth/**").permitAll()
+                .anyRequest().permitAll())
+            .httpBasic().disable()          // we’re using JSON, not HTTP Basic
+            .formLogin().disable();
+        return http.build();
+    }
+    
+
+    // ────────────────────────────────────────────────
+    // NEW – BCrypt instead of NoOp
+    // ────────────────────────────────────────────────
+   
             .csrf(AbstractHttpConfigurer::disable)
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .cors(Customizer.withDefaults())

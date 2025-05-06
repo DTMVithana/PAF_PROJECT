@@ -1,6 +1,5 @@
-
 import React from 'react';
-import { Routes, Route, Link, Navigate } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import Home from './User_platform/Home'; 
 import RecipeList from './Bawantha_pages/RecipeList';
 import RecipeForm from './Bawantha_pages/RecipeForm';
@@ -13,20 +12,37 @@ import QuestionPage from './Uvindu_pages/QuestionPage';
 import LoginPage from './auth/pages/LoginPage';
 import SignupPage from './auth/pages/SignupPage';
 
+const PrivateRoute = ({ children }) =>
+  localStorage.getItem("userId")
+    ? children
+    : <Navigate to="/login" replace />;
+
 function App() {
   return (
     <div className="App">
-      <nav>
-        <Link to="/login">Login</Link> |{' '}
-        <Link to="/signup">Sign Up</Link>
-      </nav>
+      
 
       <main>
         <Routes>
           {/* Redirect root to login */}
           <Route path="/" element={<Navigate to="/login" replace />} />
+     
+     
+     
+     
           <Route path="/login" element={<LoginPage />} />
           <Route path="/signup" element={<SignupPage />} />
+         
+         
+         
+          <Route
+        path="/home"
+        element={
+          <PrivateRoute>
+            <Home />
+          </PrivateRoute>
+        }
+      />
           <Route path="/" element={<Home />} /> 
         <Route path="/recipe" element={<RecipeList />} />
         <Route path="/create" element={<RecipeForm />} />
@@ -34,6 +50,7 @@ function App() {
         <Route path="/public" element={<PublicPlatform />} />
         <Route path="/share" element={<SharePost />} />
         <Route path="/post/:id" element={<PostView />} />
+        
         <Route path="/recipe/:recipeId/questions" element={<QuestionPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignupPage />} />
@@ -48,4 +65,3 @@ function App() {
 }
 
 export default App;
-

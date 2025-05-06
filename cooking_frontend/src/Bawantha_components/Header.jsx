@@ -14,7 +14,7 @@ const Header = ({ toggleSidebar }) => {
         <div style={styles.logo}>Cook Book</div>
 
         <div style={styles.navLinks}>
-        <span style={{ cursor: 'pointer' }} onClick={() => navigate('/')}>Home</span>
+        <span style={{ cursor: 'pointer' }} onClick={() => navigate('/home')}>Home</span>
   <span style={{ cursor: 'pointer' }}>Meal Planning</span>
   <span style={{ cursor: 'pointer' }}>Categories</span>
   <span style={{ cursor: 'pointer' }}>On Going</span>

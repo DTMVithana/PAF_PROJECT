@@ -1,24 +1,31 @@
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
-import { useNavigate } from 'react-router-dom';
-import '../auth.css';
+import React, { useState } from "react";
+import PropTypes from "prop-types";
+import { useNavigate } from "react-router-dom";
+import "../auth.css";
 
 const AuthForm = ({ mode }) => {
-  const isLogin = mode === 'login';
+  const isLogin = mode === "login";
   const navigate = useNavigate();
+
   const [form, setForm] = useState({
+    username: "",
+    password: "",
+    name: "",
+    profilePhotoUrl: ""
     username: '',
     password: '',
     name: ''
   });
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
 
-  const handleChange = e =>
+  const handleChange = (e) =>
     setForm({ ...form, [e.target.name]: e.target.value });
 
-  const handleSubmit = async e => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const url = isLogin ? '/api/auth/login' : '/api/auth/signup';
+
+    // ——— endpoint & body ———
+    const url = isLogin ? "/api/auth/login" : "/api/auth/register";
     const payload = isLogin
       ? { username: form.username, password: form.password }
       : {
@@ -29,31 +36,34 @@ const AuthForm = ({ mode }) => {
 
     try {
       const res = await fetch(url, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload)
       });
 
+      // ---------- error handling ----------
       if (!res.ok) {
-        let msg = 'Request failed';
-        try {
-          const errBody = await res.json();
-          msg = errBody.message || msg;
-        } catch {}
-        throw new Error(msg);
+        const msg = await res.text();          // backend sends plain text on 4xx
+        throw new Error(msg || "Request failed");
       }
 
+      // backend returns JSON on success
+      const data = await res.json();           // { message, userId }
       const text = await res.text();
       const data = text ? JSON.parse(text) : {};
 
       if (isLogin) {
+        // 👉 you can store userId or keep it stateless for now
+        localStorage.setItem("userId", data.userId);
+        alert("Login successful!");
+        navigate("/home");                     // change to "/" if that’s your route
         if (!data.token) throw new Error('No token received');
         localStorage.setItem('authToken', data.token);
         alert('Login successful! Redirecting…');
         navigate('/');
       } else {
-        alert('Signup successful! Please log in.');
-        navigate('/login');
+        alert("Signup successful — please log in.");
+        navigate("/login");
       }
     } catch (err) {
       setError(err.message);
@@ -62,9 +72,29 @@ const AuthForm = ({ mode }) => {
 
   return (
     <div className="auth-container">
-      <h2>{isLogin ? 'Login' : 'Sign Up'}</h2>
+      <h2>{isLogin ? "Login" : "Sign Up"}</h2>
+
       <form onSubmit={handleSubmit} className="auth-form">
         {!isLogin && (
+          <>
+            <label>
+              Name
+              <input
+                name="name"
+                value={form.name}
+                onChange={handleChange}
+                required
+              />
+            </label>
+            <label>
+              Profile Photo URL
+              <input
+                name="profilePhotoUrl"
+                value={form.profilePhotoUrl}
+                onChange={handleChange}
+              />
+            </label>
+          </>
           <label>
             Name
             <input
@@ -85,6 +115,7 @@ const AuthForm = ({ mode }) => {
             required
           />
         </label>
+
         <label>
           Password
           <input
@@ -98,16 +129,15 @@ const AuthForm = ({ mode }) => {
         </label>
 
         {error && <p className="auth-error">{error}</p>}
-        <button type="submit">
-          {isLogin ? 'Log In' : 'Sign Up'}
-        </button>
+
+        <button type="submit">{isLogin ? "Log In" : "Sign Up"}</button>
       </form>
     </div>
   );
 };
 
 AuthForm.propTypes = {
-  mode: PropTypes.oneOf(['login', 'signup']).isRequired
+  mode: PropTypes.oneOf(["login", "signup"]).isRequired
 };
 
 export default AuthForm;
