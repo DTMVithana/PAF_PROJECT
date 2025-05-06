@@ -26,7 +26,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.http.HttpStatus;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 // …
 @RestController
 @RequestMapping("/api/auth")
@@ -35,33 +36,31 @@ public class AuthController {
     @Autowired private AuthenticationManager authManager;  // NEW
     @Autowired private JwtUtils jwtUtils;
     @Autowired private UserService userService;
+    @Autowired private UserRepository userRepository; 
     @PostMapping("/login")
-    public ResponseEntity<LoginResponse> login(
-            @Valid @RequestBody LoginRequest req) {
-
-        try {
-            // 1. Ask Spring to authenticate the credentials
-            Authentication auth = authManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        req.getUsername(), req.getPassword()));
-
-            // 2. If we get here, credentials are valid – build the token
-            String token = jwtUtils.generateToken(
-                    ((UserDetails) auth.getPrincipal()).getUsername());
-
-            return ResponseEntity.ok(new LoginResponse(token));
-
-        } catch (org.springframework.security.core.AuthenticationException ex) {
-            // wrong username / password → 401, not 500
+    public LoginResponse login(@Valid @RequestBody LoginRequest req) {
+        Logger log = LoggerFactory.getLogger(AuthController.class);
+        log.info("▶ OK – /login called for {}", req.getUsername());
+        // ── 1.  Look up the user or immediately return 401  ───────────────
+        User user = userRepository.findByUsername(req.getUsername())
+            .orElseThrow(() -> new ResponseStatusException(
+                    HttpStatus.UNAUTHORIZED, "Invalid credentials"));
+                    log.info("▶ OK – user found");
+        // ── 2.  Compare plain‑text password  ──────────────────────────────
+        if (!user.getPassword().equals(req.getPassword())) {
+            log.warn("⚠ FAIL – password mismatch");
             throw new ResponseStatusException(
-                    HttpStatus.UNAUTHORIZED, "Invalid credentials", ex);
-        } catch (IllegalArgumentException ex) {
-            // jwt.secret missing / empty
-            throw new ResponseStatusException(
-                    HttpStatus.INTERNAL_SERVER_ERROR,
-                    "JWT secret key not configured", ex);
+                    HttpStatus.UNAUTHORIZED, "Invalid credentials");
         }
+        log.info("▶ OK – password matched");
+
+
+        // ── 3.  Build and return the JWT  ─────────────────────────────────
+        String token = jwtUtils.generateToken(user.getUsername());
+        log.info("▶ OK – JWT generated");
+        return new LoginResponse(token);
     }
+    
 
     @PostMapping("/signup")
     public ResponseEntity<AuthResponse> signup(

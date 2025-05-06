@@ -6,7 +6,8 @@ import org.springframework.stereotype.Service;
 import com.PAF.CookingPostAdding.auth.dto.SignupRequest;
 import com.PAF.CookingPostAdding.auth.model.User;
 import com.PAF.CookingPostAdding.auth.repository.UserRepository;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.time.LocalDateTime;
 
 @Service
@@ -29,5 +30,8 @@ public class UserService {
     .build();
 
         userRepository.save(u);
+
+        LoggerFactory.getLogger(UserService.class)
+        .info("▶ OK – user {} registered", req.getUsername());
     }
 }

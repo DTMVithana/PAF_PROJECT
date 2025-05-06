@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -27,6 +28,10 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.cors.CorsConfigurationSource;
 import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
@@ -39,13 +44,30 @@ public class SecurityConfig {
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
+        return org.springframework.security.crypto.password.
+               NoOpPasswordEncoder.getInstance();
     }
+
+    @Bean
+    DaoAuthenticationProvider authenticationProvider() {
+        DaoAuthenticationProvider p = new DaoAuthenticationProvider();
+        p.setUserDetailsService(userDetailsService);
+        p.setPasswordEncoder(passwordEncoder());
+        return p;
+    }
+ @Bean
+    AuthenticationManager authenticationManager(HttpSecurity http) throws Exception {
+        return http.getSharedObject(AuthenticationManagerBuilder.class)
+                   .authenticationProvider(authenticationProvider())
+                   .build();
+    }
+
     @Bean
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
           .csrf(csrf -> csrf.disable())
-          .sessionManagement(sm -> sm.sessionCreationPolicy(STATELESS))
+          .sessionManagement(sm -> sm.sessionCreationPolicy(
+                                SessionCreationPolicy.STATELESS))
           .cors(Customizer.withDefaults())
           .httpBasic(AbstractHttpConfigurer::disable)
           .formLogin(AbstractHttpConfigurer::disable)
@@ -53,23 +75,16 @@ public class SecurityConfig {
               auth.requestMatchers("/api/auth/**", "/error").permitAll()
                   .anyRequest().authenticated()
           )
-          // ✓ JWT filter inserted
-          .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
-        return http.build();
-    }
-    @Bean
-    public DaoAuthenticationProvider authenticationProvider() {
-        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-        authProvider.setUserDetailsService(userDetailsService);
-        authProvider.setPasswordEncoder(passwordEncoder());
-        return authProvider;
-    }
-
-    @Bean
-    public AuthenticationManager authenticationManager(
-                       AuthenticationConfiguration authConfig) throws Exception {
-        return authConfig.getAuthenticationManager();
-    }
+          .addFilterBefore(jwtAuthenticationFilter,
+                           UsernamePasswordAuthenticationFilter.class);
+       
+                           LoggerFactory.getLogger(SecurityConfig.class)
+                           .info("▶ OK – SecurityFilterChain built, JWT filter inserted");
+                           return http.build();
+    
+    
+                        }
+    
 
     // ────────────────────────────────────────────────
     // NEW – BCrypt instead of NoOp
