@@ -9,5 +9,5 @@ public class CookingPostAddingApplication {
     public static void main(String[] args) {
         SpringApplication.run(CookingPostAddingApplication.class, args);
     }
-
+  
 }
