@@ -1,9 +1,18 @@
 
-import React from 'react';
+
 import { useNavigate } from 'react-router-dom';
+import React, { useState } from 'react';
 
 const Header = ({ toggleSidebar }) => {
+  const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
+
   const navigate = useNavigate();
+  const handleLogout = () => {
+    localStorage.removeItem("userId");
+    localStorage.removeItem("username");
+    navigate("/login");
+  };
+
 
   return (
     <div style={styles.navbar}>
@@ -26,9 +35,27 @@ const Header = ({ toggleSidebar }) => {
       </div>
 
       <div style={styles.profile}>
-        <span role="img" aria-label="user">👤</span>
-        <button style={styles.logoutBtn}>Log Out</button>
+  <span role="img" aria-label="user">👤</span>
+  <button style={styles.profileBtn} onClick={() => navigate('/profile')}>
+    Profile
+  </button>
+  <button style={styles.logoutBtn} onClick={() => setShowLogoutConfirm(true)}>
+    Log Out
+  </button>
+</div>
+
+      {showLogoutConfirm && (
+  <div style={styles.modalOverlay}>
+    <div style={styles.moda}>
+      <p style={{ marginBottom: 20 }}>Are you sure you want to log out?</p>
+      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+        <button style={styles.cancelBtn} onClick={() => setShowLogoutConfirm(false)}>Cancel</button>
+        <button style={styles.confirmBtn} onClick={handleLogout}>Yes, Log Out</button>
       </div>
+    </div>
+  </div>
+)}
+
     </div>
   );
 };
@@ -57,7 +84,7 @@ const styles = {
   leftSection: {
     display: 'flex',
     alignItems: 'center',
-    gap: '270px'
+    gap: '200px'
   },
   logo: {
     fontSize: '28px',
@@ -73,7 +100,7 @@ const styles = {
     flexWrap: 'wrap',
   },
   search: {
-    padding: '9px 20px',
+    padding: '9px 15px',
     fontSize: '14px',
     borderRadius: '4px',
     border: '1px solid #ccc',
@@ -91,7 +118,56 @@ const styles = {
     borderRadius: '4px',
     cursor: 'pointer',
     fontSize: '14px',
-  }
+  },
+
+  modalOverlay: {
+    position: 'fixed',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    zIndex: 1000,
+  },
+  modal: {
+    backgroundColor: '#1a1a1a', // ⬅️ Light background color
+    padding: '30px 25px',
+    borderRadius: '12px',
+    width: '400px',
+    textAlign: 'center',
+    boxShadow: '0 8px 24px rgba(0,0,0,0.2)',
+    transform: 'translateY(-30px)',
+    animation: 'fadeIn 0.3s ease-in-out',
+    border: '1px solid #444',    
+    color: '#f1f1f1',    // Optional: subtle border
+  },
+  
+  
+  cancelBtn: {
+    backgroundColor: '#ccc',
+    border: 'none',
+    padding: '10px 20px',
+    borderRadius: '6px',
+    cursor: 'pointer',
+    fontSize: '14px',
+    marginRight: '10px',
+    transition: 'background-color 0.2s',
+  },
+  confirmBtn: {
+    backgroundColor: '#e85a00',
+    color: '#fff',
+    border: 'none',
+    padding: '10px 20px',
+    borderRadius: '6px',
+    cursor: 'pointer',
+    fontSize: '14px',
+    transition: 'background-color 0.2s',
+  },
+  
+  
 };
 
 export default Header;
