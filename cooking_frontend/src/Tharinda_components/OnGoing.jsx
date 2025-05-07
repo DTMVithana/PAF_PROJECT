@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import Header from '../Tharinda_components/Header';
-import Footer from '../Tharinda_components/Footer';
-import Sidebar from '../Tharinda_components/Sidebar';
-import CornerVideo from '../Tharinda_components/CornerVideo';
+import Header from './Header';
+import Footer from './Footer';
+import Sidebar from './Sidebar';
+import CornerVideo from './CornerVideo';
 import './OnGoing.css';
 
 function OnGoing() {

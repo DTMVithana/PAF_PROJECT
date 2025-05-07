@@ -25,7 +25,7 @@ const RecipeProgressForm = () => {
 
   useEffect(() => {
     if (id) {
-      axios.get(`/api/recipes/${id}`).then(response => {
+      axios.get(`/api/recipes/ongoing/${id}`).then(response => {
         const data = response.data;
         setTitle(data.title);
         setDescription(data.description);
