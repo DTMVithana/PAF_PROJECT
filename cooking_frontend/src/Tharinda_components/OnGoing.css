@@ -1,0 +1,48 @@
+/* OnGoing.css */
+.error-message {
+    color: #e74c3c;
+    background-color: #fdf2f2;
+    border-left: 4px solid #e74c3c;
+    padding: 10px 15px;
+    margin: 10px 0;
+    border-radius: 3px;
+  }
+  
+  /* Animate the progress bar on load */
+  @keyframes fillProgress {
+    from { width: 0; }
+    to { width: 100%; }
+  }
+  
+  .recipe-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+  }
+  
+  /* Add some responsive styles */
+  @media (max-width: 1200px) {
+    .recipe-card {
+      width: calc(50% - 10px) !important;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .recipe-card {
+      width: 100% !important;
+    }
+    
+    .main {
+      flex-direction: column;
+    }
+    
+    .feature, .latest {
+      max-width: 100% !important;
+    }
+    
+    .latest {
+      margin-left: 0 !important;
+      margin-top: 30px;
+    }
+  }
+

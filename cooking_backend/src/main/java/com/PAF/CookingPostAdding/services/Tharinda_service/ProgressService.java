@@ -11,10 +11,15 @@ import java.util.List;
 
 @Service
 public class ProgressService {
-    
+
     @Autowired
     private ProgressRecipeRepository recipeRepository;
     
+    // New method to match the controller endpoint
+    public List<ProgressRecipe> getAllProgressRecipes() {
+        return recipeRepository.findAll();
+    }
+
     public ProgressRecipe createRecipe(ProgressRecipe recipe, String author) {
         recipe.setAuthor(author);
         recipe.setCreatedAt(LocalDateTime.now());
@@ -22,24 +27,24 @@ public class ProgressService {
         recipe.setShared(false);
         return recipeRepository.save(recipe);
     }
-    
+
     public ProgressRecipe getRecipe(String id) {
         return recipeRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Recipe not found"));
     }
-    
+
     public List<ProgressRecipe> getAllRecipes() {
         return recipeRepository.findAll();
     }
-    
+
     public List<ProgressRecipe> getSharedRecipes() {
         return recipeRepository.findBySharedTrue();
     }
-    
+
     public List<ProgressRecipe> getOngoingRecipes() {
-        return recipeRepository.findByStatusNot("completed");
+        return recipeRepository.findByStatus("ongoing");
     }
-    
+
     public ProgressRecipe updateRecipe(String id, ProgressRecipe updatedRecipe, String author) {
         ProgressRecipe recipe = getRecipe(id);
         recipe.setTitle(updatedRecipe.getTitle());
@@ -53,12 +58,12 @@ public class ProgressService {
         recipe.setUpdatedAt(LocalDateTime.now());
         return recipeRepository.save(recipe);
     }
-    
+
     public void deleteRecipe(String id, String author) {
         ProgressRecipe recipe = getRecipe(id);
         recipeRepository.delete(recipe);
     }
-    
+
     // Share a post publicly
     public ProgressRecipe sharePost(String id) {
         ProgressRecipe recipe = getRecipe(id);

@@ -1,6 +1,7 @@
 package com.PAF.CookingPostAdding.controllers.Tharinda_controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.PAF.CookingPostAdding.models.Tharinda_model.ProgressRecipe;
@@ -9,12 +10,21 @@ import com.PAF.CookingPostAdding.services.Tharinda_service.ProgressService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/ongoing")
+@RequestMapping("/api/progress")
+@CrossOrigin(origins = "http://localhost:3000") // Frontend URL
 public class ProgressController {
-    
+
     @Autowired
     private ProgressService progressService;
     
+    // New endpoint to match the frontend fetch request
+    @GetMapping("/recipes")
+    public ResponseEntity<List<ProgressRecipe>> getAllProgressRecipes() {
+        List<ProgressRecipe> recipes = progressService.getAllRecipes();
+        return ResponseEntity.ok(recipes);
+    }
+    
+    // Keep your existing endpoints
     @GetMapping
     public List<ProgressRecipe> getAllRecipes() {
         return progressService.getAllRecipes();
@@ -56,5 +66,4 @@ public class ProgressController {
     public ProgressRecipe sharePost(@PathVariable String id) {
         return progressService.sharePost(id);
     }
-    
 }

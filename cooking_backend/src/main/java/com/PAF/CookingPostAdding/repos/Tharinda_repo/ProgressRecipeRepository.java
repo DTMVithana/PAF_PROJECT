@@ -11,4 +11,6 @@ import java.util.List;
 public interface ProgressRecipeRepository extends MongoRepository<ProgressRecipe, String> {
     List<ProgressRecipe> findBySharedTrue();
     List<ProgressRecipe> findByStatusNot(String status);
+    List<ProgressRecipe> findByStatus(String status);
+
 }

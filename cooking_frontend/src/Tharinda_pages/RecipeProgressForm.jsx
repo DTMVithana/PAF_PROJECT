@@ -1,15 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
-// import Sidebar from './Sidebar';
 import Header from '../Tharinda_components/Header';
 import Footer from '../Tharinda_components/Footer';
 import Sidebar from '../Tharinda_components/Sidebar';
 
-
-
-
-const RecipeForm = () => {
+const RecipeProgressForm = () => {
   const [title, setTitle] = useState('');
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [description, setDescription] = useState('');
@@ -83,7 +79,7 @@ const RecipeForm = () => {
       } else {
         await axios.post('/api/recipes', recipe);
       }
-      navigate('/');
+      navigate('/ongoing'); // ✅ Redirect to OnGoing page
     } catch (error) {
       console.error('Error saving recipe:', error);
       alert('Failed to save recipe.');
@@ -92,168 +88,124 @@ const RecipeForm = () => {
 
   return (
     <div>
-    <div style={styles.page}>
-      <Sidebar isOpen={sidebarOpen} toggleSidebar={toggleSidebar} />
-      <Header toggleSidebar={toggleSidebar} />
-      {/* Background images */}
-      <div style={styles.backgroundContainer}>
-        {backgroundImages.map((image, index) => (
-          <div
-            key={index}
-            style={{
-              ...styles.backgroundImage,
-              backgroundImage: `url(${image})`,
-              opacity: currentBgIndex === index ? 0.8 : 0,
-              zIndex: currentBgIndex === index ? 1 : 0
-            }}
-          />
-        ))}
-        <div style={styles.overlay} />
-      </div>
-      
+      <div style={styles.page}>
+        <Sidebar isOpen={sidebarOpen} toggleSidebar={toggleSidebar} />
+        <Header toggleSidebar={toggleSidebar} />
 
-     
-
-      {/* Main Content */}
-      <div style={styles.container}>
-        <div style={styles.breadcrumbs}>
-          <span onClick={() => navigate('/')} style={styles.breadcrumbLink}>Dashboard</span>
-          <span style={styles.breadcrumbSeparator}>›</span>
-          <span style={styles.breadcrumbCurrent}>{id ? 'Edit Recipe' : 'New Recipe'}</span>
+        <div style={styles.backgroundContainer}>
+          {backgroundImages.map((image, index) => (
+            <div
+              key={index}
+              style={{
+                ...styles.backgroundImage,
+                backgroundImage: `url(${image})`,
+                opacity: currentBgIndex === index ? 0.8 : 0,
+                zIndex: currentBgIndex === index ? 1 : 0
+              }}
+            />
+          ))}
+          <div style={styles.overlay} />
         </div>
 
-        <div style={styles.card}>
-          <div style={styles.cardHeader}>
-            <h2 style={styles.heading}>
-              {id ? 'Update Recipe Information' : 'Create New Recipe Entry'}
-            </h2>
-            <p style={styles.subheading}>
-              {id ? 'Modify the details of your existing recipe' : 'Fill in the information to share your recipe'}
-            </p>
+        <div style={styles.container}>
+          <div style={styles.breadcrumbs}>
+            <span onClick={() => navigate('/ongoing')} style={styles.breadcrumbLink}>Dashboard</span>
+            <span style={styles.breadcrumbSeparator}>›</span>
+            <span style={styles.breadcrumbCurrent}>{id ? 'Edit Recipe' : 'New Recipe'}</span>
           </div>
 
-          <form onSubmit={handleSubmit} style={styles.form}>
-            {/* Title */}
-            <div style={styles.formGroup}>
-              <label style={styles.label}>Recipe Title</label>
-              <input
-                type="text"
-                placeholder="Enter recipe title"
-                value={title}
-                required
-                onChange={(e) => setTitle(e.target.value)}
-                style={styles.input}
-              />
+          <div style={styles.card}>
+            <div style={styles.cardHeader}>
+              <h2 style={styles.heading}>
+                {id ? 'Update Recipe Information' : 'Create New Recipe Entry'}
+              </h2>
+              <p style={styles.subheading}>
+                {id ? 'Modify the details of your existing recipe' : 'Fill in the information to share your recipe'}
+              </p>
             </div>
 
-            {/* Description */}
-            <div style={styles.formGroup}>
-              <label style={styles.label}>Recipe Description</label>
-              <textarea
-                placeholder="Describe the recipe..."
-                value={description}
-                required
-                onChange={(e) => setDescription(e.target.value)}
-                style={styles.textarea}
-              />
-            </div>
+            <form onSubmit={handleSubmit} style={styles.form}>
+              <div style={styles.formGroup}>
+                <label style={styles.label}>Recipe Title</label>
+                <input
+                  type="text"
+                  placeholder="Enter recipe title"
+                  value={title}
+                  required
+                  onChange={(e) => setTitle(e.target.value)}
+                  style={styles.input}
+                />
+              </div>
 
-            {/* Main Image */}
-            {/* <div style={styles.formGroup}>
-              <label style={styles.label}>Main Image URL</label>
-              <input
-                type="text"
-                placeholder="Main image"
-                value={mainImage}
-                onChange={(e) => setMainImage(e.target.value)}
-                style={styles.input}
-              />
-            </div> */}
+              <div style={styles.formGroup}>
+                <label style={styles.label}>Recipe Description</label>
+                <textarea
+                  placeholder="Describe the recipe..."
+                  value={description}
+                  required
+                  onChange={(e) => setDescription(e.target.value)}
+                  style={styles.textarea}
+                />
+              </div>
 
-            {/* Media URLs */}
-            <div style={styles.formGroup}>
-              <label style={styles.label}>Media URLs</label>
-              <p style={styles.helperText}>Add up to 3 image or short video URLs (30s max)</p>
-              {mediaUrls.map((url, index) => (
-                <div key={index} style={styles.mediaField}>
-                  <input
-                    type="text"
-                    placeholder={`Media URL ${index + 1}`}
-                    value={url}
-                    onChange={(e) => handleMediaChange(index, e.target.value)}
-                    style={styles.input}
-                  />
-                  <span style={styles.mediaFieldNumber}>{index + 1}</span>
-                </div>
-              ))}
-              {mediaUrls.length < 3 && (
-                <button type="button" onClick={addMediaField} style={styles.addBtn}>
-                  Add Additional Media
-                </button>
-              )}
-            </div>
+              <div style={styles.formGroup}>
+                <label style={styles.label}>Media URLs</label>
+                <p style={styles.helperText}>Add up to 3 image or short video URLs (30s max)</p>
+                {mediaUrls.map((url, index) => (
+                  <div key={index} style={styles.mediaField}>
+                    <input
+                      type="text"
+                      placeholder={`Media URL ${index + 1}`}
+                      value={url}
+                      onChange={(e) => handleMediaChange(index, e.target.value)}
+                      style={styles.input}
+                    />
+                    <span style={styles.mediaFieldNumber}>{index + 1}</span>
+                  </div>
+                ))}
+                {mediaUrls.length < 3 && (
+                  <button type="button" onClick={addMediaField} style={styles.addBtn}>
+                    Add Additional Media
+                  </button>
+                )}
+              </div>
 
-            <p>                            
-                -------------------------------------------------------------------------------------------------------------------------
-            </p>
+              <div style={styles.formGroup}>
+                <label style={styles.label}>Meal Steps</label>
+                <p style={styles.helperText}>Add step-by-step cooking instructions with images</p>
+                {steps.map((step, index) => (
+                  <div key={index} style={{ marginBottom: '20px', backgroundColor: '#f9f9f9', padding: '15px', borderRadius: '8px' }}>
+                    <label style={styles.label}>Step {index + 1} Description</label>
+                    <textarea
+                      placeholder="Step description"
+                      value={step.description}
+                      onChange={(e) => handleStepChange(index, 'description', e.target.value)}
+                      style={styles.textarea}
+                    />
+                    <label style={styles.label}>Step {index + 1} Image URL</label>
+                    <input
+                      type="text"
+                      placeholder="Image URL for this step"
+                      value={step.imageUrl}
+                      onChange={(e) => handleStepChange(index, 'imageUrl', e.target.value)}
+                      style={styles.input}
+                    />
+                  </div>
+                ))}
+                <button type="button" onClick={addStep} style={styles.addBtn}>➕ Add Another Step</button>
+              </div>
 
-            {/* Cooking Steps */}
-            <div style={styles.formGroup}>
-              <label style={styles.label}>Meal Steps</label>
-              <p style={styles.helperText}>Add step-by-step cooking instructions with images</p>
-              {steps.map((step, index) => (
-                <div key={index} style={{ marginBottom: '20px', backgroundColor: '#f9f9f9', padding: '15px', borderRadius: '8px' }}>
-                  <label style={styles.label}>Step {index + 1} Description</label>
-                  <textarea
-                    placeholder="Step description"
-                    value={step.description}
-                    onChange={(e) => handleStepChange(index, 'description', e.target.value)}
-                    style={styles.textarea}
-                  />
-                  <label style={styles.label}>Step {index + 1} Image URL</label>
-                  <input
-                    type="text"
-                    placeholder="Image URL for this step"
-                    value={step.imageUrl}
-                    onChange={(e) => handleStepChange(index, 'imageUrl', e.target.value)}
-                    style={styles.input}
-                    
-                  />
-                   <p>                            
-                --------------------------------------------------------------------------------------------------------------------
-            </p>
-
-                </div>
-                
-              ))}
-              <button type="button" onClick={addStep} style={styles.addBtn}>➕ Add Another Step</button>
-            </div>
-            
-
-        
-            <div style={styles.formActions}>
-              <button type="button" onClick={() => navigate('/')} style={styles.cancelBtn}>Cancel</button>
-              <button type="submit" style={styles.submitBtn}>{id ? 'Update Recipe' : 'Submit Recipe'}</button>
-            </div>
-          </form>
+              <div style={styles.formActions}>
+                <button type="button" onClick={() => navigate('/ongoing')} style={styles.cancelBtn}>Cancel</button>
+                <button type="submit" style={styles.submitBtn}>{id ? 'Update Recipe' : 'Submit Recipe'}</button>
+              </div>
+            </form>
+          </div>
         </div>
-        
       </div>
-
-      {/* Footer
-      <footer style={styles.footer}>
-        <p>&copy; 2025 Recipe Management System. All rights reserved.</p>
-      </footer> */}
-
-
-
+      <Footer />
     </div>
-    <Footer />
-    </div>
-    
   );
-
-  
 };
 
 const styles = {
@@ -461,4 +413,4 @@ const styles = {
   }
 };
 
-export default RecipeForm;
+export default RecipeProgressForm;
