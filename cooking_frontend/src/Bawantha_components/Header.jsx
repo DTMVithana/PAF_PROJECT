@@ -18,7 +18,8 @@ const Header = ({ toggleSidebar }) => {
             <span style={{ cursor: 'pointer' }}>Categories</span>
             <span style={{ cursor: 'pointer' }}>On Going</span>
             <span style={{ cursor: 'pointer' }} onClick={() => navigate('/public')}>Public</span>
-            <span style={{ cursor: 'pointer' }} onClick={() => navigate('/mealplan/create')}>Meal Plans</span>
+            {/* <span style={{ cursor: 'pointer' }} onClick={() => navigate('/mealplan/create')}>Meal Plans</span> */}
+            <span style={{ cursor: 'pointer' }} onClick={() => navigate('/mealplan')}>Meal Plan List</span>
           </div>
         </div>
       </div>

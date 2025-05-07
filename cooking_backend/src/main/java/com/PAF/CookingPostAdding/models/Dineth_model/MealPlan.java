@@ -10,15 +10,17 @@ public class MealPlan {
   @Id
   private String id;
   private String name;
-  private String date;
+  private String start_date;
+  private String end_date;
   private String photo;
 
   public MealPlan() {}
 
-  public MealPlan(String id, String name, String date, String photo) {
+  public MealPlan(String id, String name, String start_date,String end_date,  String photo) {
     this.id = id;
     this.name = name;
-    this.date = date;
+    this.start_date = start_date;
+    this.end_date = end_date;
     this.photo = photo;
   }
 
@@ -38,12 +40,19 @@ public class MealPlan {
     this.name = name;
   }
 
-  public String getDate() {
-    return date;
+  public String getSDate() {
+    return start_date;
   }
 
-  public void setDate(String date) {
-    this.date = date;
+  public void setSDate(String start_date) {
+    this.start_date = start_date;
+  }
+  public String getEDate() {
+    return end_date;
+  }
+
+  public void setEDate(String end_date) {
+    this.end_date = end_date;
   }
 
   public String getPhoto() {

@@ -6,7 +6,8 @@ import './MealPlanForm.css';
 
 function MealPlanForm() {
   const [name, setName]   = useState('');
-  const [date, setDate]   = useState('');
+  const [start_date, setSDate]   = useState('');
+  const [end_date, setEDate]   = useState('');
   const [photo, setPhoto] = useState('');
   const navigate = useNavigate();
 
@@ -15,7 +16,7 @@ function MealPlanForm() {
     try {
       await axios.post(
         'http://localhost:9090/api/mealplans',
-        { name, date, photo }
+        { name, start_date,end_date, photo }
       );
       navigate('/mealplan');
     } catch (err) {
@@ -41,12 +42,22 @@ function MealPlanForm() {
         </label>
 
         <label className="form-label">
-          Date
+          Start Date
           <input
             className="form-input"
             type="date"
-            value={date}
-            onChange={e => setDate(e.target.value)}
+            value={start_date}
+            onChange={e => setSDate(e.target.value)}
+            required
+          />
+        </label>
+        <label className="form-label">
+          End Date
+          <input
+            className="form-input"
+            type="date"
+            value={end_date}
+            onChange={e => setEDate(e.target.value)}
             required
           />
         </label>
