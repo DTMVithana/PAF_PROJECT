@@ -19,22 +19,26 @@ public class QuestionController {
     @Autowired
     private QuestionService questionService;
 
-    @GetMapping("/{recipeId}")
-    public List<Question> getQuestions(@PathVariable String recipeId) {
+    // Fetch questions for a specific recipe
+    @GetMapping("/recipe/{recipeId}")
+    public List<Question> getQuestionsByRecipe(@PathVariable String recipeId) {
         return questionService.getQuestionsByRecipeId(recipeId);
     }
 
+    // Add a new question to a recipe
     @PostMapping
     public Question addQuestion(@RequestBody Question question) {
         question.setTimestamp(LocalDateTime.now());
         return questionService.addQuestion(question);
     }
 
+    // Optional - Update a question
     @PutMapping("/{id}")
     public Optional<Question> updateQuestion(@PathVariable String id, @RequestBody Map<String, String> body) {
         return questionService.updateQuestion(id, body.get("content"));
     }
 
+    // Optional - Delete a question
     @DeleteMapping("/{id}")
     public void deleteQuestion(@PathVariable String id) {
         questionService.deleteQuestion(id);
