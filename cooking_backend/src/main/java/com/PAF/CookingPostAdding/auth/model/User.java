@@ -16,5 +16,6 @@ public class User {
     private String name;
     private String username;
     private String password;         // stored as BCrypt hash
+    private String profilePhotoUrl;
     private LocalDateTime createdAt;
 }
