@@ -12,24 +12,25 @@ import java.util.Optional;
 @Service
 public class QuestionService {
     
+
     @Autowired
     private QuestionRepository questionRepository;
-
-    public List<Question> getQuestionsByRecipeId(String recipeId) {
-        return questionRepository.findByRecipeId(recipeId);
-    }
 
     public Question addQuestion(Question question) {
         return questionRepository.save(question);
     }
 
+    public List<Question> getQuestionsByRecipeId(String recipeId) {
+        return questionRepository.findByRecipeId(recipeId);
+    }
+
     public Optional<Question> updateQuestion(String id, String content) {
-        Optional<Question> existing = questionRepository.findById(id);
-        existing.ifPresent(q -> {
-            q.setContent(content);
-            questionRepository.save(q);
+        Optional<Question> q = questionRepository.findById(id);
+        q.ifPresent(existing -> {
+            existing.setContent(content);
+            questionRepository.save(existing);
         });
-        return existing;
+        return q;
     }
 
     public void deleteQuestion(String id) {
