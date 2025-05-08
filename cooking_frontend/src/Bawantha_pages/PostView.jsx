@@ -157,8 +157,7 @@ const PostView = () => {
           {showQuestions && (
             <QuestionSection 
               recipeId={id}
-              userName="AnonymousUser" 
-              recipeTitle={recipe?.title || "This Recipe"}
+              currentUser="AnonymousUser"  // Replace with actual user if available
             />
           )}
         </div>

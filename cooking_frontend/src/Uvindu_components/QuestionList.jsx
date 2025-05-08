@@ -6,10 +6,10 @@ const QuestionList = ({ recipeId }) => {
 
   const fetchQuestions = async () => {
     try {
-      const res = await axios.get(`http://localhost:9090/api/questions/recipe/${recipeId}`);
+      const res = await axios.get(`/api/questions/recipe/${recipeId}`);
       setQuestions(res.data);
-    } catch (error) {
-      console.error('Error fetching questions:', error);
+    } catch (err) {
+      console.error('Error loading questions:', err);
     }
   };
 
@@ -18,21 +18,17 @@ const QuestionList = ({ recipeId }) => {
   }, [recipeId]);
 
   return (
-    <div className="p-4 shadow rounded bg-white mt-6">
-      <h2 className="text-xl mb-3 font-semibold">Questions & Answers</h2>
+    <div className="mt-6 bg-white p-4 rounded shadow">
+      <h3 className="text-lg font-semibold mb-3">Previous Questions</h3>
       {questions.length === 0 ? (
         <p>No questions yet. Be the first to ask!</p>
       ) : (
-        <ul className="space-y-4">
+        <ul className="space-y-3">
           {questions.map((q) => (
-            <li key={q.id} className="border p-3 rounded">
-              <p><strong>{q.customerName}</strong> asked:</p>
-              <p className="mb-2">{q.questionText}</p>
-              {q.answerText ? (
-                <p className="text-green-600"><strong>Answer:</strong> {q.answerText}</p>
-              ) : (
-                <p className="text-gray-400">Not answered yet.</p>
-              )}
+            <li key={q.id} className="p-3 bg-gray-50 border rounded">
+              <p className="font-medium text-blue-700">{q.user}:</p>
+              <p>{q.content}</p>
+              <p className="text-sm text-gray-500">{new Date(q.timestamp).toLocaleString()}</p>
             </li>
           ))}
         </ul>

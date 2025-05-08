@@ -12,9 +12,6 @@ const AuthForm = ({ mode }) => {
     password: "",
     name: "",
     profilePhotoUrl: ""
-    username: '',
-    password: '',
-    name: ''
   });
   const [error, setError] = useState("");
 
@@ -28,11 +25,7 @@ const AuthForm = ({ mode }) => {
     const url = isLogin ? "/api/auth/login" : "/api/auth/register";
     const payload = isLogin
       ? { username: form.username, password: form.password }
-      : {
-          name: form.name,
-          username: form.username,
-          password: form.password
-        };
+      : form;
 
     try {
       const res = await fetch(url, {
@@ -49,18 +42,13 @@ const AuthForm = ({ mode }) => {
 
       // backend returns JSON on success
       const data = await res.json();           // { message, userId }
-      const text = await res.text();
-      const data = text ? JSON.parse(text) : {};
 
       if (isLogin) {
         // 👉 you can store userId or keep it stateless for now
         localStorage.setItem("userId", data.userId);
+        localStorage.setItem("username", data.username);
         alert("Login successful!");
         navigate("/home");                     // change to "/" if that’s your route
-        if (!data.token) throw new Error('No token received');
-        localStorage.setItem('authToken', data.token);
-        alert('Login successful! Redirecting…');
-        navigate('/');
       } else {
         alert("Signup successful — please log in.");
         navigate("/login");
@@ -95,15 +83,6 @@ const AuthForm = ({ mode }) => {
               />
             </label>
           </>
-          <label>
-            Name
-            <input
-              name="name"
-              value={form.name}
-              onChange={handleChange}
-              required
-            />
-          </label>
         )}
 
         <label>
