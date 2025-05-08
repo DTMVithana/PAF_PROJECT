@@ -1,19 +1,25 @@
 package com.PAF.CookingPostAdding.models.Uvindu_model;
 
 import java.time.LocalDateTime;
-
+import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.annotation.Id;
 
+@Document(collection = "questions")
 public class Question {
-    
+
     @Id
     private String id;
 
     private String recipeId;
-    private String user;         // Could be name, email or a UUID if you have authentication
+    private String user; // username or email
     private String content;
     private LocalDateTime timestamp;
 
+    public Question() {
+        this.timestamp = LocalDateTime.now();
+    }
+
+    // Getters and Setters
     public String getId() { return id; }
     public void setId(String id) { this.id = id; }
 
