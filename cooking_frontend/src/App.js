@@ -12,6 +12,7 @@ import UpdateRecipe from './Bawantha_pages/UpdateRecipe';
 import MealPlanList from './Dineth_pages/MealPlanList';
 import MealPlanForm from './Dineth_pages/MealPlanForm';
 import UpdateMealPlan from './Dineth_pages/UpdateMealPlan';
+import MealPlanDetails from './Dineth_pages/MealPlanDetails';
 
 
 function App() {
@@ -31,6 +32,7 @@ function App() {
                 <Route path="/mealplan" element={<MealPlanList />} />
         <Route path="/mealplan/create" element={<MealPlanForm />} />
         <Route path="/mealplan/edit/:id" element={<UpdateMealPlan />} />
+        <Route path="/mealplan/view/:id" element={<MealPlanDetails />} />
         
 
       
