@@ -83,7 +83,8 @@ const RecipeForm = () => {
       } else {
         await axios.post('/api/recipes', recipe);
       }
-      navigate('/');
+      navigate('/home');
+
     } catch (error) {
       console.error('Error saving recipe:', error);
       alert('Failed to save recipe.');
@@ -232,7 +233,7 @@ const RecipeForm = () => {
 
         
             <div style={styles.formActions}>
-              <button type="button" onClick={() => navigate('/')} style={styles.cancelBtn}>Cancel</button>
+              <button type="button" onClick={() => navigate('/home')} style={styles.cancelBtn}>Cancel</button>
               <button type="submit" style={styles.submitBtn}>{id ? 'Update Recipe' : 'Submit Recipe'}</button>
             </div>
           </form>

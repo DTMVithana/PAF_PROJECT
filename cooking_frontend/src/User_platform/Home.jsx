@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Sidebar from './Sidebar';
-import Header from './Header';
-import Footer from './Footer';
-import CornerVideo from './CornerVideo';
+import Sidebar from '../Bawantha_components/Sidebar';
+import Header from '../Bawantha_components/Header';
+import Footer from '../Bawantha_components/Footer';
+import CornerVideo from '../Bawantha_components/CornerVideo';
+
 
 
 
@@ -24,22 +25,30 @@ const Home = () => {
   }, []);
 
   const fetchRecipes = async () => {
-    try {
-      const res = await fetch('/api/recipes');
-      const data = await res.json();
-      console.log("Fetched data:", data); // check this in console
-      if (Array.isArray(data)) {
-        setRecipes(data);
-      } else {
-        console.error("Backend did not return an array, got:", data);
-        setRecipes([]);
+  try {
+    const token = localStorage.getItem("token");
+    const res = await fetch('/api/recipes', {
+      headers: {
+        Authorization: `Bearer ${token}`
       }
-    } catch (err) {
-      console.error('Failed to load recipes.', err);
-      alert('Failed to load recipes.');
+    });
+
+    if (!res.ok) throw new Error("Unauthorized or bad response");
+
+    const data = await res.json();
+    console.log("Fetched data:", data);
+
+    if (Array.isArray(data)) {
+      setRecipes(data);
+    } else {
+      console.error("Expected an array but got:", data);
+      setRecipes([]);
     }
-  };
-  
+  } catch (err) {
+    console.error('Failed to load recipes.', err);
+    alert('Failed to load recipes. Are you logged in?');
+  }
+};
   const handleDelete = async (id) => {
     if (window.confirm('Are you sure you want to delete this recipe?')) {
       try {
@@ -59,6 +68,7 @@ const Home = () => {
       alert('Failed to share post.');
     }
   };
+
 
   const sortedRecipes = [...recipes].sort(
     (a, b) => new Date(b.updatedAt || b.createdAt) - new Date(a.updatedAt || a.createdAt)

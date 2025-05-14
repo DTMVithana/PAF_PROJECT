@@ -30,3 +30,5 @@ public class Recipe {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 }
+
+
