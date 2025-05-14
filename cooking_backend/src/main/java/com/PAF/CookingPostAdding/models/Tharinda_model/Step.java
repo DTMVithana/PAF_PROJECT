@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Steps {
+public class Step {
     private String description;
     private String imageUrl;
 }

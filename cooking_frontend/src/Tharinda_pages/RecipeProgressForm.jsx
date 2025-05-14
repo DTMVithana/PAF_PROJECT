@@ -16,6 +16,10 @@ const RecipeProgressForm = () => {
   const navigate = useNavigate();
   const { id } = useParams();
   const toggleSidebar = () => setSidebarOpen(!sidebarOpen);
+  const [estimatedTime, setEstimatedTime] = useState('');
+  const [status, setStatus] = useState('Draft');
+  const [currentStep, setCurrentStep] = useState(0);
+  const [NumberofSteps, setNumberofSteps] = useState(0);
 
   const backgroundImages = [
     "https://ca-times.brightspotcdn.com/dims4/default/cc33da0/2147483647/strip/true/crop/6582x4388+0+0/resize/2400x1600!/quality/75/?url=https%3A%2F%2Fcalifornia-times-brightspot.s3.amazonaws.com%2F37%2F50%2F28ad1c96426fa31619f425e8b971%2Fla-photos-freelance-contract-843855-la-fo-week-of-meals-oct-jc-16.JPG",
@@ -32,6 +36,9 @@ const RecipeProgressForm = () => {
         setMainImage(data.mainImage || '');
         setMediaUrls(data.mediaUrls || ['']);
         setSteps(data.steps?.length ? data.steps : [{ description: '', imageUrl: '' }]);
+        setEstimatedTime(data.estimatedTime || '');
+        setStatus(data.status || 'Draft');
+        setCurrentStep(data.currentStep || 0);
       });
     }
   }, [id]);
@@ -70,7 +77,10 @@ const RecipeProgressForm = () => {
       description,
       mainImage,
       mediaUrls: mediaUrls.filter(Boolean),
-      steps: steps.filter(step => step.description.trim() !== '' || step.imageUrl.trim() !== '')
+      steps: steps.filter(step => step.description.trim() !== '' || step.imageUrl.trim() !== ''),
+      estimatedTime,
+      status,
+      currentStep
     };
 
     try {
@@ -169,6 +179,61 @@ const RecipeProgressForm = () => {
                   </button>
                 )}
               </div>
+
+              <div style={styles.formGroup}>
+               <label style={styles.label}>Estimated Time (in minutes)</label>
+               <input
+                 type="number"
+                 placeholder="E.g. 45"
+                 value={estimatedTime}
+                 required
+                 min="1"
+                 onChange={(e) => setEstimatedTime(e.target.value)}
+                 style={styles.input}
+               />
+              </div>
+
+              <div style={styles.formGroup}>
+              <label style={styles.label}>Number of Steps</label>
+              <input
+                type="number"
+                value={NumberofSteps}
+                onChange={(e) => setNumberofSteps(parseInt(e.target.value))}
+                min="0"
+                max={steps.length - 1}
+                style={styles.input}
+                required
+              />
+             </div>
+
+             <div style={styles.formGroup}>
+              <label style={styles.label}>Current Step</label>
+              <input
+                type="number"
+                value={currentStep}
+                onChange={(e) => setCurrentStep(parseInt(e.target.value))}
+                min="0"
+                max={steps.length - 1}
+                style={styles.input}
+                required
+              />
+            </div>
+
+             <div style={styles.formGroup}>
+              <label style={styles.label}>Status</label>
+              <select
+                value={status}
+                onChange={(e) => setStatus(e.target.value)}
+                style={styles.input}
+                required
+              >
+               <option value="Draft">Draft</option>
+               <option value="In Progress">In Progress</option>
+               <option value="Completed">Completed</option>
+              </select>
+             </div>
+
+
 
               <div style={styles.formGroup}>
                 <label style={styles.label}>Meal Steps</label>

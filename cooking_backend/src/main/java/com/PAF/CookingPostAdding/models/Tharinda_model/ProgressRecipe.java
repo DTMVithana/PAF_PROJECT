@@ -7,13 +7,13 @@ import java.util.List;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import com.PAF.CookingPostAdding.models.Tharinda_model.Steps;
+import com.PAF.CookingPostAdding.models.Tharinda_model.Step;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Document(collection = "Progressrecipes")
+@Document(collection = "recipes")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -32,7 +32,7 @@ public class ProgressRecipe {
     private String status;
 
     private List<String> mediaUrls = new ArrayList<>();
-    private List<Steps> steps = new ArrayList<>();
+    private List<Step> steps = new ArrayList<>();
 
     private String author;
     private LocalDateTime createdAt;
