@@ -75,26 +75,38 @@ const RecipeProgressForm = () => {
     const recipe = {
       title,
       description,
-      mainImage,
-      mediaUrls: mediaUrls.filter(Boolean),
+      mainImage: mainImage || mediaUrls[0] || "",
+      mediaUrls: mediaUrls.filter(url => url.trim() !== ""),
       steps: steps.filter(step => step.description.trim() !== '' || step.imageUrl.trim() !== ''),
-      estimatedTime,
+      estimatedtime: parseInt(estimatedTime), 
+      number_of_steps: steps.length, 
+      currentstep: parseInt(currentStep),
       status,
-      currentStep
+      author: "anonymous",
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString()
+
     };
 
-    try {
-      if (id) {
-        await axios.put(`/api/ongoing/${id}`, recipe);
-      } else {
-        await axios.post('/api/ongoing', recipe);
-      }
-      navigate('/onGoing'); // ✅ Redirect to OnGoing page
-    } catch (error) {
-      console.error('Error saving ongoing recipe:', error);
-      alert('Failed to save ongoing recipe.');
-    }
-  };
+    console.log("Submitting:", recipe);
+
+     try {
+    const response = id ? 
+      await axios.put(`/api/ongoing/${id}`, recipe) :
+      await axios.post('/api/ongoing', recipe);
+    
+    console.log("Server response:", response.data); // Log server response
+    
+    navigate('/ongoing', { state: { refresh: true } }); // Force refresh
+  } catch (error) {
+    console.error('Error details:', {
+      message: error.message,
+      response: error.response?.data,
+      request: error.request
+    });
+    alert(`Save failed: ${error.response?.data?.message || error.message}`);
+  }
+};
 
   return (
     <div>
@@ -119,7 +131,7 @@ const RecipeProgressForm = () => {
 
         <div style={styles.container}>
           <div style={styles.breadcrumbs}>
-            <span onClick={() => navigate('/onGoing')} style={styles.breadcrumbLink}>Dashboard</span>
+            <span onClick={() => navigate('/ongoing')} style={styles.breadcrumbLink}>Dashboard</span>
             <span style={styles.breadcrumbSeparator}>›</span>
             <span style={styles.breadcrumbCurrent}>{id ? 'Edit Recipe' : 'New Recipe'}</span>
           </div>
@@ -261,7 +273,7 @@ const RecipeProgressForm = () => {
               </div>
 
               <div style={styles.formActions}>
-                <button type="button" onClick={() => navigate('/onGoing')} style={styles.cancelBtn}>Cancel</button>
+                <button type="button" onClick={() => navigate('/ongoing')} style={styles.cancelBtn}>Cancel</button>
                 <button type="submit" style={styles.submitBtn}>{id ? 'Update Recipe' : 'Submit Recipe'}</button>
               </div>
             </form>

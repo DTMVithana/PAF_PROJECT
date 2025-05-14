@@ -20,14 +20,6 @@ public class ProgressService {
         return recipeRepository.findAll();
     }
 
-    public ProgressRecipe createRecipe(ProgressRecipe recipe, String author) {
-        recipe.setAuthor(author);
-        recipe.setCreatedAt(LocalDateTime.now());
-        recipe.setUpdatedAt(LocalDateTime.now());
-        recipe.setShared(false);
-        return recipeRepository.save(recipe);
-    }
-
     public ProgressRecipe getRecipe(String id) {
         return recipeRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Recipe not found"));
@@ -42,8 +34,17 @@ public class ProgressService {
     }
 
     public List<ProgressRecipe> getOngoingRecipes() {
-        return recipeRepository.findByStatus("ongoing");
+        return recipeRepository.findByStatus("In Progress");
     }
+
+    public ProgressRecipe createRecipe(ProgressRecipe recipe, String author) {
+        recipe.setAuthor(author);
+        recipe.setCreatedAt(LocalDateTime.now());
+        recipe.setUpdatedAt(LocalDateTime.now());
+        recipe.setShared(false);
+        return recipeRepository.save(recipe);
+    }
+
 
     public ProgressRecipe updateRecipe(String id, ProgressRecipe updatedRecipe, String author) {
         ProgressRecipe recipe = getRecipe(id);

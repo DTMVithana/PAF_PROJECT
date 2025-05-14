@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import com.PAF.CookingPostAdding.models.Tharinda_model.ProgressRecipe;
 import com.PAF.CookingPostAdding.services.Tharinda_service.ProgressService;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -47,7 +48,13 @@ public class ProgressController {
     
    @PostMapping
    public ProgressRecipe createRecipe(@RequestBody ProgressRecipe progressrecipe) { // Fixed parameter name
+    System.out.println("Received recipe: " + progressrecipe);
     progressrecipe.setAuthor("anonymous");
+    progressrecipe.setCreatedAt(LocalDateTime.now());  // Add creation timestamp
+    progressrecipe.setUpdatedAt(LocalDateTime.now());  // Add update timestamp
+
+    ProgressRecipe savedRecipe = progressService.createRecipe(progressrecipe, progressrecipe.getAuthor());
+    System.out.println("Saved recipe: " + savedRecipe);
     return progressService.createRecipe(progressrecipe, progressrecipe.getAuthor());
     }
     
