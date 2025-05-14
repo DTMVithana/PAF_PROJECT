@@ -1,5 +1,3 @@
-
-
 import { useNavigate } from 'react-router-dom';
 import React, { useState } from 'react';
 
@@ -28,6 +26,7 @@ const Header = ({ toggleSidebar }) => {
   <span style={{ cursor: 'pointer' }}>Categories</span>
   <span style={{ cursor: 'pointer' }}>On Going</span>
   <span style={{ cursor: 'pointer' }}onClick={() => navigate('/public')}>Public</span>
+  <span style={{ cursor: 'pointer' }}onClick={() => navigate('/mealplan')}>Meal plans</span>
   
         </div>
 
@@ -137,7 +136,7 @@ const styles = {
     zIndex: 1000,
   },
   modal: {
-    backgroundColor: '#1a1a1a', // ⬅️ Light background color
+    backgroundColor: '#1a1a1a', // ⬅ Light background color
     padding: '30px 25px',
     borderRadius: '12px',
     width: '400px',
