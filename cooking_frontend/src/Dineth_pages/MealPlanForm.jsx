@@ -25,7 +25,7 @@ function MealPlanForm() {
     }
 
     try {
-      await axios.post('http://localhost:9090/api/mealplans', {
+      await axios.post('http://localhost:9090/api/mealplans',  {
         name,
         plan_type,
         gole_category,
@@ -34,7 +34,11 @@ function MealPlanForm() {
         discription,
         target_calories,
         photo,
-      });
+      }, {
+  headers: {
+    Authorization: `Bearer ${localStorage.getItem("token")}`
+  }
+});
       navigate('/mealplan');
     } catch (err) {
       console.error(err);
