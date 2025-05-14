@@ -36,6 +36,12 @@ const Header = ({ toggleSidebar }) => {
 
       <div style={styles.profile}>
   <span role="img" aria-label="user">👤</span>
+  <button onClick={() => {
+  const username = JSON.parse(localStorage.getItem("user"))?.username;
+  navigate(`/profile/${username}`);
+}}>
+    Profile
+  </button>
   {/* <button style={styles.profileBtn} onClick={() => navigate('/profile')}>
     Profile
   </button> */}
