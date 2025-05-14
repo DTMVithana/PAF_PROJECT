@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { login } from '../services/auth';
-import { setUserData} from '../services/localStorage';
+
 import { FiUser, FiLock, FiEye, FiEyeOff, FiCheckCircle, FiLogIn } from 'react-icons/fi';
 
 const Login = ({ onLogin }) => {

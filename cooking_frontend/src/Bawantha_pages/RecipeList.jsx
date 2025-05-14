@@ -1,10 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+
+
 
 const RecipeList = () => {
   const [recipes, setRecipes] = useState([]);
-
+  
+const currentUser = JSON.parse(localStorage.getItem("user"));
+  const navigate = useNavigate();
   useEffect(() => {
     fetchRecipes();
   }, []);
@@ -75,21 +79,31 @@ const RecipeList = () => {
                   />
                 ))}
               </div>
-              <div style={{ marginTop: '10px' }}>
-                <Link to={`/edit/${recipe.id}`}>
-                  <button style={{ marginRight: '10px' }}>Edit</button>
-                </Link>
-                <button onClick={() => deleteRecipe(recipe.id)} style={{ backgroundColor: 'red', color: 'white' }}>
-                  Delete
-                </button>
-                <button
-  onClick={() => shareThisPost(recipe.id)}
-  style={{ backgroundColor: '#17a2b8', color: 'white', padding: '6px 12px', border: 'none', borderRadius: '4px', cursor: 'pointer' }}
->
-  📤 Share This Post
-</button>
-
-              </div>
+             <div style={{ marginTop: '10px' }}>
+  {currentUser && recipe.author === currentUser.username ? (
+    <>
+      <Link to={`/edit/${recipe.id}`}>
+        <button style={{ marginRight: '10px' }}>Edit</button>
+      </Link>
+      <button onClick={() => deleteRecipe(recipe.id)} style={{ backgroundColor: 'red', color: 'white', marginRight: '10px' }}>
+        Delete
+      </button>
+    </>
+  ) : null}
+  
+  <button
+    onClick={() => shareThisPost(recipe.id)}
+    style={{ backgroundColor: '#17a2b8', color: 'white', padding: '6px 12px', border: 'none', borderRadius: '4px', cursor: 'pointer' }}
+  >
+    📤 Share This Post
+  </button>
+   <button
+    onClick={() => navigate(`/post/${recipe.id}`)}
+    style={{ backgroundColor: '#6c757d', color: 'white', padding: '6px 12px', border: 'none', borderRadius: '4px', cursor: 'pointer' }}
+  >
+    👁️ View
+  </button>
+</div>
             </li>
           ))}
         </ul>
