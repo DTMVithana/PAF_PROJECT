@@ -58,18 +58,18 @@ public class ProgressController {
     return progressService.createRecipe(progressrecipe, progressrecipe.getAuthor());
     }
     
-    @PutMapping("/{id}")
+    @PutMapping("ongoing/{id}")
     public ProgressRecipe updateRecipe(@PathVariable String id, @RequestBody ProgressRecipe progressrecipe) {
         return progressService.updateRecipe(id, progressrecipe, null);
     }
     
-    @DeleteMapping("/{id}")
+    @DeleteMapping("ongoing/{id}")
     public void deleteRecipe(@PathVariable String id) {
         progressService.deleteRecipe(id, "anonymous");
     }
     
     // Share post
-    @PutMapping("/{id}/share")
+    @PutMapping("ongoing/{id}/share")
     public ProgressRecipe sharePost(@PathVariable String id) {
         return progressService.sharePost(id);
     }

@@ -84,7 +84,8 @@ const RecipeProgressForm = () => {
       status,
       author: "anonymous",
       createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString()
+      updatedAt: new Date().toISOString(),
+      recipeType: "ongoing"
 
     };
 

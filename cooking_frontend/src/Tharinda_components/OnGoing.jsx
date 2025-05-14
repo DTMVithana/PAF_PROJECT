@@ -20,7 +20,7 @@ function OnGoing() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await fetch('/api/ongoing/ongoing');
+        const res = await fetch('/api/ongoing/recipes');
         if (!res.ok) throw new Error(`HTTP error! Status: ${res.status}`);
         const data = await res.json();
         setOngoingRecipes(data);

@@ -25,7 +25,7 @@ const Home = () => {
 
   const fetchRecipes = async () => {
     try {
-      const res = await fetch('/api/ongoing/ongoing');
+      const res = await fetch('/api/home/ongoing');
       const data = await res.json();
       console.log("Fetched data:", data); // check this in console
       if (Array.isArray(data)) {

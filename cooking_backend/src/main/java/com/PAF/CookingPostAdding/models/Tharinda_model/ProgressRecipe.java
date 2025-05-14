@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
 import com.PAF.CookingPostAdding.models.Tharinda_model.Step;
 
@@ -21,6 +22,10 @@ public class ProgressRecipe {
 
     @Id
     private String id;
+
+    @Field("recipe_type")  // MongoDB field name
+    private String recipeType;  // New field to distinguish recipe types
+    
 
     private boolean shared;
     private String title;

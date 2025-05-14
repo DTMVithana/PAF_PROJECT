@@ -41,6 +41,7 @@ public class ProgressService {
         recipe.setAuthor(author);
         recipe.setCreatedAt(LocalDateTime.now());
         recipe.setUpdatedAt(LocalDateTime.now());
+        recipe.setRecipeType("ongoing");
         recipe.setShared(false);
         return recipeRepository.save(recipe);
     }
