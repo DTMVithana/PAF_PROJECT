@@ -17,12 +17,13 @@ public class MealPlan {
     private String discription;
     private String target_calories;
     private String photo;
+    private Nutrition nutrition;  // ✅ Added nutrition details
 
     public MealPlan() {}
 
     public MealPlan(String id, String name, String plan_type, String gole_category,
                     String start_date, String end_date, String discription,
-                    String target_calories, String photo) {
+                    String target_calories, String photo, Nutrition nutrition) {
         this.id = id;
         this.name = name;
         this.plan_type = plan_type;
@@ -32,7 +33,10 @@ public class MealPlan {
         this.discription = discription;
         this.target_calories = target_calories;
         this.photo = photo;
+        this.nutrition = nutrition;
     }
+
+    // Getters and Setters
 
     public String getId() {
         return id;
@@ -104,5 +108,62 @@ public class MealPlan {
 
     public void setPhoto(String photo) {
         this.photo = photo;
+    }
+
+    public Nutrition getNutrition() {
+        return nutrition;
+    }
+
+    public void setNutrition(Nutrition nutrition) {
+        this.nutrition = nutrition;
+    }
+
+    // ✅ Inner class for Nutrition
+    public static class Nutrition {
+        private String protein;
+        private String carbs;
+        private String fats;
+        private String fiber;
+        private String notes;
+
+        public String getProtein() {
+            return protein;
+        }
+
+        public void setProtein(String protein) {
+            this.protein = protein;
+        }
+
+        public String getCarbs() {
+            return carbs;
+        }
+
+        public void setCarbs(String carbs) {
+            this.carbs = carbs;
+        }
+
+        public String getFats() {
+            return fats;
+        }
+
+        public void setFats(String fats) {
+            this.fats = fats;
+        }
+
+        public String getFiber() {
+            return fiber;
+        }
+
+        public void setFiber(String fiber) {
+            this.fiber = fiber;
+        }
+
+        public String getNotes() {
+            return notes;
+        }
+
+        public void setNotes(String notes) {
+            this.notes = notes;
+        }
     }
 }
