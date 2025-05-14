@@ -10,7 +10,7 @@ import com.PAF.CookingPostAdding.services.Tharinda_service.ProgressService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/progress")
+@RequestMapping("/api/ongoing")
 @CrossOrigin(origins = "http://localhost:3000") // Frontend URL
 public class ProgressController {
 
@@ -45,10 +45,10 @@ public class ProgressController {
         return progressService.getRecipe(id);
     }
     
-    @PostMapping
-    public ProgressRecipe createRecipe(@RequestBody ProgressRecipe progressrecipe) {
-        progressrecipe.setAuthor("anonymous");
-        return progressService.createRecipe(progressrecipe, progressrecipe.getAuthor());
+   @PostMapping
+   public ProgressRecipe createRecipe(@RequestBody ProgressRecipe progressrecipe) { // Fixed parameter name
+    progressrecipe.setAuthor("anonymous");
+    return progressService.createRecipe(progressrecipe, progressrecipe.getAuthor());
     }
     
     @PutMapping("/{id}")

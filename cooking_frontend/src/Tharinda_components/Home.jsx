@@ -25,7 +25,7 @@ const Home = () => {
 
   const fetchRecipes = async () => {
     try {
-      const res = await fetch('/api/recipes');
+      const res = await fetch('/api/ongoing/ongoing');
       const data = await res.json();
       console.log("Fetched data:", data); // check this in console
       if (Array.isArray(data)) {
@@ -43,7 +43,7 @@ const Home = () => {
   const handleDelete = async (id) => {
     if (window.confirm('Are you sure you want to delete this recipe?')) {
       try {
-        await fetch(`/api/recipes/${id}`, { method: 'DELETE' });
+        await fetch(`/api/ongoing/${id}`, { method: 'DELETE' });
         fetchRecipes();
       } catch (err) {
         alert('Failed to delete recipe.');
@@ -53,7 +53,7 @@ const Home = () => {
 
   const handleShare = async (id) => {
     try {
-      await fetch(`/api/recipes/${id}/share`, { method: 'PUT' });
+      await fetch(`/api/ongoing/${id}/share`, { method: 'PUT' });
       alert('Post shared to public platform!');
     } catch (err) {
       alert('Failed to share post.');

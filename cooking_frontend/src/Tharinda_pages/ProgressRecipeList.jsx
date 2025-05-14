@@ -11,18 +11,18 @@ const RecipeList = () => {
 
   const fetchRecipes = async () => {
     try {
-      const response = await axios.get('/api/recipes');
+      const response = await axios.get('/api/ongoing');
       setRecipes(response.data);
     } catch (error) {
       console.error('Error fetching recipes:', error);
-      alert('Failed to fetch recipes. Make sure the backend is running on http://localhost:9090 and the proxy is set.');
+      alert('Failed to fetch recipes. Make sure the backend is running on http://localhost:3000 and the proxy is set.');
     }
   };
 
   const deleteRecipe = async (id) => {
     if (window.confirm('Are you sure you want to delete this recipe?')) {
       try {
-        await axios.delete(`/api/recipes/${id}`);
+        await axios.delete(`/api/ongoing/${id}`);
         fetchRecipes(); 
       } catch (error) {
         console.error('Error deleting recipe:', error);
@@ -33,7 +33,7 @@ const RecipeList = () => {
 
   const shareThisPost = async (id) => {
     try {
-      await axios.put(`/api/recipes/${id}/share`);
+      await axios.put(`/api/ongoing/${id}/share`);
       alert('Post shared to public platform!');
     } catch (error) {
       console.error('Share failed:', error.response || error.message);

@@ -29,7 +29,7 @@ const RecipeProgressForm = () => {
 
   useEffect(() => {
     if (id) {
-      axios.get(`/api/recipes/ongoing/${id}`).then(response => {
+      axios.get(`/api/ongoing/${id}`).then(response => {
         const data = response.data;
         setTitle(data.title);
         setDescription(data.description);
@@ -85,14 +85,14 @@ const RecipeProgressForm = () => {
 
     try {
       if (id) {
-        await axios.put(`/api/recipes/${id}`, recipe);
+        await axios.put(`/api/ongoing/${id}`, recipe);
       } else {
-        await axios.post('/api/recipes', recipe);
+        await axios.post('/api/ongoing', recipe);
       }
-      navigate('/ongoing'); // ✅ Redirect to OnGoing page
+      navigate('/onGoing'); // ✅ Redirect to OnGoing page
     } catch (error) {
-      console.error('Error saving recipe:', error);
-      alert('Failed to save recipe.');
+      console.error('Error saving ongoing recipe:', error);
+      alert('Failed to save ongoing recipe.');
     }
   };
 
@@ -119,7 +119,7 @@ const RecipeProgressForm = () => {
 
         <div style={styles.container}>
           <div style={styles.breadcrumbs}>
-            <span onClick={() => navigate('/ongoing')} style={styles.breadcrumbLink}>Dashboard</span>
+            <span onClick={() => navigate('/onGoing')} style={styles.breadcrumbLink}>Dashboard</span>
             <span style={styles.breadcrumbSeparator}>›</span>
             <span style={styles.breadcrumbCurrent}>{id ? 'Edit Recipe' : 'New Recipe'}</span>
           </div>
@@ -261,7 +261,7 @@ const RecipeProgressForm = () => {
               </div>
 
               <div style={styles.formActions}>
-                <button type="button" onClick={() => navigate('/ongoing')} style={styles.cancelBtn}>Cancel</button>
+                <button type="button" onClick={() => navigate('/onGoing')} style={styles.cancelBtn}>Cancel</button>
                 <button type="submit" style={styles.submitBtn}>{id ? 'Update Recipe' : 'Submit Recipe'}</button>
               </div>
             </form>

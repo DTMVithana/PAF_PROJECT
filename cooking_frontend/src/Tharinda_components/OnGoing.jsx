@@ -19,7 +19,7 @@ function OnGoing() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await fetch('http://localhost:9090/api/progress-recipes/ongoing');
+        const res = await fetch('/api/ongoing/ongoing');
         if (!res.ok) throw new Error(`HTTP error! Status: ${res.status}`);
         const data = await res.json();
         setOngoingRecipes(data);
@@ -48,7 +48,7 @@ function OnGoing() {
 
   const handleShare = async (id) => {
     try {
-      await fetch(`http://localhost:9090/api/progress/${id}/share`, { method: 'PUT' });
+      await fetch(`/api/ongoing/${id}/share`, { method: 'PUT' });
       alert('Recipe shared to public platform!');
     } catch (err) {
       alert('Failed to share recipe.');
@@ -62,7 +62,7 @@ function OnGoing() {
 
       <div style={styles.main}>
         <div style={styles.feature}>
-          <h1 style={styles.pageTitle}>My Ongoing Recipes ({ongoingRecipes.length})</h1>
+          <h1 style={styles.pageTitle}>My On-Going Recipes ({ongoingRecipes.length})</h1>
 
           {loading && <p>Loading recipes...</p>}
           {error && <p className="error-message">Error: {error}</p>}
