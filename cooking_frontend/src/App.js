@@ -1,3 +1,51 @@
+// import React from 'react';
+// import { BrowserRouter, Routes, Route } from 'react-router-dom';
+// import Home from './Bawantha_components/Home'; 
+// import RecipeList from './Bawantha_pages/RecipeList';
+// import RecipeForm from './Bawantha_pages/RecipeForm';
+// import SharePost from './Bawantha_components/SharePost';
+// import PublicPlatform from './Bawantha_components/PublicPlatform';
+// import PostView from './Bawantha_pages/PostView';
+// import UpdateRecipe from './Bawantha_pages/UpdateRecipe';
+
+// // 👇 Your meal-plan pages
+// import MealPlanList from './Dineth_pages/MealPlanList';
+// import MealPlanForm from './Dineth_pages/MealPlanForm';
+// import UpdateMealPlan from './Dineth_pages/UpdateMealPlan';
+// import MealPlanDetails from './Dineth_pages/MealPlanDetails';
+
+
+// function App() {
+//   return (
+//     <BrowserRouter>
+//       <Routes>
+//       <Route path="/" element={<Home />} /> {/* ✅ Show Home by default */}
+//         <Route path="/recipe" element={<RecipeList />} />
+//         <Route path="/create" element={<RecipeForm />} />
+//         <Route path="/edit/:id" element={<UpdateRecipe />} />
+//         <Route path="/public" element={<PublicPlatform />} />
+//         <Route path="/share" element={<SharePost />} />
+//         <Route path="/post/:id" element={<PostView />} />
+
+
+//                 {/* Dineth (MealPlan) routes */}
+//                 <Route path="/mealplan" element={<MealPlanList />} />
+//         <Route path="/mealplan/create" element={<MealPlanForm />} />
+//         <Route path="/mealplan/edit/:id" element={<UpdateMealPlan />} />
+//         <Route path="/mealplan/view/:id" element={<MealPlanDetails />} />
+        
+
+      
+//       </Routes>
+//     </BrowserRouter>
+//   );
+// }
+
+// export default App;
+
+
+
+
 import React from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import Home from './User_platform/Home'; 
@@ -11,7 +59,7 @@ import LoginPage from './auth/pages/LoginPage';
 import SignupPage from './auth/pages/SignupPage';
 import UserProfile from './User_platform/UserProfile';
 
-//meal-plan pages
+
 import MealPlanList from './Dineth_pages/MealPlanList';
 import MealPlanForm from './Dineth_pages/MealPlanForm';
 import UpdateMealPlan from './Dineth_pages/UpdateMealPlan';
@@ -61,13 +109,12 @@ function App() {
         <Route path="/profile" element={<UserProfile />} />
         
         <Route path="/signup" element={<SignupPage />} />
+          {/* protected routes go here */}
 
-                        {/* Dineth (MealPlan) routes */}
-        <Route path="/mealplan" element={<MealPlanList />} />
+                 <Route path="/mealplan" element={<MealPlanList />} />
         <Route path="/mealplan/create" element={<MealPlanForm />} />
         <Route path="/mealplan/edit/:id" element={<UpdateMealPlan />} />
         <Route path="/mealplan/view/:id" element={<MealPlanDetails />} />
-          {/* protected routes go here */}
         </Routes>
       </main>
     </div>
