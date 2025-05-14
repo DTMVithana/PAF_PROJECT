@@ -25,6 +25,19 @@ const QuestionSection = ({ recipeId, currentUser }) => {
   const [questionAdded, setQuestionAdded] = useState(false);
   const [animateQuestionId, setAnimateQuestionId] = useState(null);
   
+    // Get logged-in user from localStorage
+  useEffect(() => {
+    const userString = localStorage.getItem("user");
+    if (userString) {
+      try {
+        const userData = JSON.parse(userString);
+        setUser(userData.username || userData.email);
+      } catch (e) {
+        console.error("Error parsing user data:", e);
+      }
+    }
+  }, []);
+
   // Load questions from localStorage on component mount
   useEffect(() => {
     if (recipeId) {
@@ -256,6 +269,7 @@ const QuestionSection = ({ recipeId, currentUser }) => {
                     type="text"
                     placeholder="Your Name"
                     value={user}
+                    readOnly={!!user} // Make it read-only if user is logged in
                     onChange={(e) => setUser(e.target.value)}
                     className="name-input"
                   />
