@@ -52,7 +52,7 @@ function App() {
         <Route path="/public" element={<PublicPlatform />} />
         <Route path="/share" element={<SharePost />} />
         <Route path="/post/:id" element={<PostView />} />
-        <Route path="/profile/:username" element={<UserProfile />} />
+        <Route path="/profile" element={<UserProfile />} />
         
         <Route path="/signup" element={<SignupPage />} />
           {/* protected routes go here */}

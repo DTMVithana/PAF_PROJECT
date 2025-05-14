@@ -42,10 +42,11 @@ const Login = ({ onLogin }) => {
    const data = await login({ username: username, password });
      
       if (data && data.user) {
-        setUserData(data.user);
-        
-        if (onLogin) onLogin(data.user, data.token);
-        localStorage.setItem("userId", data.user.id);
+        localStorage.setItem("user", JSON.stringify(data.user)); // ✅ THIS IS CRITICAL
+localStorage.setItem("userId", data.user.id);
+localStorage.setItem("token", data.token);
+
+if (onLogin) onLogin(data.user, data.token);
         toast.success('Welcome back! Login successful.');
         navigate('/home');
       } else {
