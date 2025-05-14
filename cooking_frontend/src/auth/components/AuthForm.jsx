@@ -1,8 +1,7 @@
-import React, { useState } from "react";
-import PropTypes from "prop-types";
-import { useNavigate } from "react-router-dom";
-import "../auth.css";
+import React from 'react';
+import '../auth.css';
 
+const AuthForm = ({ children }) => {
 const AuthForm = ({ mode }) => {
   const isLogin = mode === "login";
   const navigate = useNavigate();
@@ -59,64 +58,12 @@ const AuthForm = ({ mode }) => {
   };
 
   return (
-    <div className="auth-container">
-      <h2>{isLogin ? "Login" : "Sign Up"}</h2>
-
-      <form onSubmit={handleSubmit} className="auth-form">
-        {!isLogin && (
-          <>
-            <label>
-              Name
-              <input
-                name="name"
-                value={form.name}
-                onChange={handleChange}
-                required
-              />
-            </label>
-            <label>
-              Profile Photo URL
-              <input
-                name="profilePhotoUrl"
-                value={form.profilePhotoUrl}
-                onChange={handleChange}
-              />
-            </label>
-          </>
-        )}
-
-        <label>
-          Username
-          <input
-            name="username"
-            value={form.username}
-            onChange={handleChange}
-            required
-          />
-        </label>
-
-        <label>
-          Password
-          <input
-            type="password"
-            name="password"
-            value={form.password}
-            onChange={handleChange}
-            required
-            minLength={6}
-          />
-        </label>
-
-        {error && <p className="auth-error">{error}</p>}
-
-        <button type="submit">{isLogin ? "Log In" : "Sign Up"}</button>
-      </form>
+    <div className="auth-container flex justify-center items-center min-h-screen w-full">
+      <div className="auth-card grid grid-cols-1 md:grid-cols-2 shadow-lg rounded-2xl overflow-hidden">
+        {children}
+      </div>
     </div>
   );
-};
-
-AuthForm.propTypes = {
-  mode: PropTypes.oneOf(["login", "signup"]).isRequired
 };
 
 export default AuthForm;

@@ -11,9 +11,14 @@ import QuestionPage from './Uvindu_pages/QuestionPage';
 
 import LoginPage from './auth/pages/LoginPage';
 import SignupPage from './auth/pages/SignupPage';
+import UserProfile from './User_platform/UserProfile';
+
+
+
+
 
 const PrivateRoute = ({ children }) =>
-  localStorage.getItem("userId")
+  localStorage.getItem("user")
     ? children
     : <Navigate to="/login" replace />;
 
@@ -50,6 +55,7 @@ function App() {
         <Route path="/public" element={<PublicPlatform />} />
         <Route path="/share" element={<SharePost />} />
         <Route path="/post/:id" element={<PostView />} />
+        <Route path="/profile" element={<UserProfile />} />
         
         <Route path="/recipe/:recipeId/questions" element={<QuestionPage />} />
         <Route path="/login" element={<LoginPage />} />
