@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Send, MessageSquare, User } from 'lucide-react';
 
 const QuestionForm = ({ recipeId, onSubmitSuccess }) => {
@@ -7,6 +7,20 @@ const QuestionForm = ({ recipeId, onSubmitSuccess }) => {
   const [showQuestions, setShowQuestions] = useState(true);
   const [submitted, setSubmitted] = useState(false);
 
+
+    // Get logged-in user from localStorage
+  useEffect(() => {
+    const userString = localStorage.getItem("user");
+    if (userString) {
+      try {
+        const userData = JSON.parse(userString);
+        setUser(userData.username || userData.email);
+      } catch (e) {
+        console.error("Error parsing user data:", e);
+      }
+    }
+  }, []);
+  
   const handleSubmit = (e) => {
     e.preventDefault();
 
