@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { useParams} from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import Sidebar from '../Bawantha_components/Sidebar';
 import Header from '../Bawantha_components/Header';
 import Footer from '../Bawantha_components/Footer';
+import QuestionSection from '../Uvindu_components/QuestionSection';
 
 const PostView = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -11,6 +12,7 @@ const PostView = () => {
   const [recipe, setRecipe] = useState(null);
   const [expandedSteps, setExpandedSteps] = useState([]); 
   const [loading, setLoading] = useState(true);
+  const [showQuestions, setShowQuestions] = useState(false);
   const toggleSidebar = () => setSidebarOpen(!sidebarOpen);
 
   useEffect(() => {
@@ -143,9 +145,22 @@ const PostView = () => {
             {stepElements}
           </div>
         </div>
-
         
-        
+        <div className="questions-container">
+          <button 
+            onClick={() => setShowQuestions(!showQuestions)} 
+            className="question-toggle-btn"
+          >
+            {showQuestions ? "Hide Questions" : "Ask a Question"}
+          </button>
+          
+          {showQuestions && (
+            <QuestionSection 
+              recipeId={id}
+              currentUser="AnonymousUser"  // Replace with actual user if available
+            />
+          )}
+        </div>
       </div>
       <Footer />
      
@@ -472,6 +487,39 @@ const PostView = () => {
         
         .back-button:hover {
           background-color: rgba(255,255,255,0.1);
+        }
+
+        /* Questions Section */
+        .questions-container {
+          background-color: white;
+          border-radius: 10px;
+          padding: 30px;
+          margin-bottom: 40px;
+          box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+        
+        .question-toggle-btn {
+          background-color: #457b9d;
+          color: white;
+          border: none;
+          padding: 10px 20px;
+          border-radius: 5px;
+          font-size: 15px;
+          font-weight: 500;
+          cursor: pointer;
+          transition: background-color 0.2s;
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          margin-bottom: 20px;
+        }
+        
+        .question-toggle-btn:hover {
+          background-color: #1d3557;
+        }
+        
+        .question-toggle-btn::before {
+          content: '💬';
         }
 
         /* Loading State */

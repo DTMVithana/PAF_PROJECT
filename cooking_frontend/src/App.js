@@ -8,6 +8,8 @@ import SharePost from './User_platform/SharePost';
 import PublicPlatform from './User_platform/PublicPlatform';
 import PostView from './Bawantha_pages/PostView';
 import UpdateRecipe from './Bawantha_pages/UpdateRecipe';
+import QuestionPage from './Uvindu_pages/QuestionPage';
+
 import LoginPage from './auth/pages/LoginPage';
 import SignupPage from './auth/pages/SignupPage';
 import UserProfile from './User_platform/UserProfile';
@@ -53,6 +55,7 @@ function App() {
           </PrivateRoute>
         }
       />
+          <Route path="/" element={<Home />} /> 
         <Route path="/recipe" element={<RecipeList />} />
         <Route path="/create" element={<RecipeForm />} />
         <Route path="/edit/:id" element={<UpdateRecipe />} />
@@ -61,6 +64,8 @@ function App() {
         <Route path="/post/:id" element={<PostView />} />
         <Route path="/profile" element={<UserProfile />} />
         
+        <Route path="/recipe/:recipeId/questions" element={<QuestionPage />} />
+        <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignupPage />} />
           {/* protected routes go here */}
 
