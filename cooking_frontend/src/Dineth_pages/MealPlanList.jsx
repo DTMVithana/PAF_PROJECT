@@ -1,4 +1,3 @@
-// src/Dineth_pages/MealPlanList.jsx
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
@@ -40,7 +39,8 @@ function MealPlanList() {
 
       <main className="mealplan-content">
         <header className="page-header">
-          <h1 className="page-title">Your Meal Plans</h1>
+        <h1 className="page-title">Your Meal Plans</h1>
+
           <button
             className="btn-add"
             onClick={() => navigate('/mealplan/create')}
@@ -56,12 +56,15 @@ function MealPlanList() {
                 <img
                   src={mp.photo}
                   alt={mp.name}
-                  className="mealplan-card-img"
+                  className="mealplan-card-img clickable"
+                  onClick={() => navigate(`/mealplan/view/${mp.id}`)}
                 />
               )}
               <div className="mealplan-card-body">
                 <h3 className="mealplan-card-title">{mp.name}</h3>
-                <p className="mealplan-card-date">{mp.date}</p>
+                <p className="mealplan-card-date">
+                  {mp.start_date} to {mp.end_date}
+                </p>
                 <div className="mealplan-card-actions">
                   <button
                     className="mealplan-card-button"
