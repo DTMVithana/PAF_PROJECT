@@ -11,6 +11,10 @@ import LoginPage from './auth/pages/LoginPage';
 import SignupPage from './auth/pages/SignupPage';
 import UserProfile from './User_platform/UserProfile';
 
+
+
+
+
 const PrivateRoute = ({ children }) =>
   localStorage.getItem("userId")
     ? children

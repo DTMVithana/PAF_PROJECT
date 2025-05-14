@@ -36,9 +36,9 @@ const Header = ({ toggleSidebar }) => {
 
       <div style={styles.profile}>
   <span role="img" aria-label="user">👤</span>
-  <button style={styles.profileBtn} onClick={() => navigate('/profile')}>
+  {/* <button style={styles.profileBtn} onClick={() => navigate('/profile')}>
     Profile
-  </button>
+  </button> */}
   <button style={styles.logoutBtn} onClick={() => setShowLogoutConfirm(true)}>
     Log Out
   </button>

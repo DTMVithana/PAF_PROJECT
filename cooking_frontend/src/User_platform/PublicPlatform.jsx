@@ -115,7 +115,7 @@ const PublicPlatform = () => {
   return (
     <div style={styles.container}>
       <div style={styles.wrapper}>
-        <h1 style={styles.header}>🌍 Public Cooking Feed</h1>
+        <h1 style={styles.header}>🎀✂️ Public Craft Feed</h1>
 
         {recipes.length === 0 ? (
           <p>No posts yet. Be the first to share something delicious!</p>
