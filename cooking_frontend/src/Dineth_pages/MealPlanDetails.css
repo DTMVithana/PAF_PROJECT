@@ -1,0 +1,146 @@
+/* src/Dineth_pages/MealPlanForm.css */
+.mealplan-form-container {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px;
+    min-height: calc(100vh - 60px);
+    background: url('../Dineth_pages/imgs/food.jpeg') center/cover no-repeat fixed;
+  }
+  
+  .mealplan-form-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: inherit;
+    filter: blur(8px) brightness(0.7);
+    z-index: 0;
+  }
+  
+  .mealplan-form {
+    position: relative;
+    z-index: 1;
+    background: rgba(255,255,255,0.8);
+    padding: 30px 40px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    width: 100%;
+    max-width: 480px;
+    backdrop-filter: blur(4px);
+  }
+  
+  .form-title {
+    margin-bottom: 24px;
+    font-size: 24px;
+    color: #1a3a5f;
+    text-align: center;
+  }
+  
+  .form-label {
+    display: block;
+    margin-bottom: 16px;
+    font-weight: 500;
+    color: #333;
+  }
+  
+  .form-input {
+    width: 100%;
+    padding: 10px 12px;
+    margin-top: 8px;
+    border: 1px solid #d0d5dd;
+    border-radius: 4px;
+    font-size: 14px;
+    transition: border-color 0.2s;
+  }
+  
+  .form-input:focus {
+    border-color: #1a3a5f;
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(26,58,95,0.1);
+  }
+  
+  .form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 24px;
+  }
+  
+  .btn-cancel {
+    background: transparent;
+    color: #555;
+    border: 1px solid #d0d5dd;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+  }
+  
+  .btn-submit {
+    background: #1a3a5f;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background 0.2s;
+  }
+  
+  .btn-submit:hover {
+    background: #122744;
+  }
+  
+
+
+  .mealplan-flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 40px;
+    padding: 20px;
+  }
+  
+  .mealplan-left {
+    flex: 2;
+    min-width: 0;
+  }
+  
+  .nutrition-card {
+    flex: 1;
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    min-width: 280px;
+    max-width: 360px;
+  }
+  
+  .nutrition-title {
+    font-size: 20px;
+    margin-bottom: 16px;
+    color: #1a3a5f;
+  }
+  
+  .nutrition-card p {
+    font-size: 14px;
+    margin-bottom: 10px;
+    color: #333;
+  }
+  
+  @media screen and (max-width: 768px) {
+    .mealplan-flex {
+      flex-direction: column;
+    }
+  
+    .nutrition-card {
+      width: 100%;
+      margin-top: 30px;
+    }
+  }
+  
