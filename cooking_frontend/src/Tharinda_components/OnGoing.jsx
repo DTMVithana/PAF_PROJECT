@@ -5,6 +5,8 @@ import Footer from './Footer';
 import Sidebar from './Sidebar';
 import CornerVideo from './CornerVideo';
 import './OnGoing.css';
+import { FaEdit, FaTrash } from 'react-icons/fa';
+
 
 function OnGoing() {
   const [ongoingRecipes, setOngoingRecipes] = useState([]);
@@ -56,6 +58,24 @@ function OnGoing() {
     }
   };
 
+  const handleDelete = async (id) => {
+  if (window.confirm('Are you sure you want to delete this recipe?')) {
+    try {
+      await fetch(`/api/ongoing/${id}`, { 
+        method: 'DELETE' 
+      });
+      // Refresh the list after deletion
+      setOngoingRecipes(prev => prev.filter(recipe => recipe.id !== id));
+    } catch (err) {
+      alert('Failed to delete recipe.');
+    }
+  }
+};
+
+const handleUpdate = async (id) => {
+  navigate(`/update/${id}`); // Navigate to update form
+};
+
   return (
     <div style={styles.page}>
       <Sidebar isOpen={sidebarOpen} toggleSidebar={toggleSidebar} />
@@ -78,11 +98,36 @@ function OnGoing() {
               ) : (
                 <div style={styles.postsGrid}>
                   {ongoingRecipes.map((recipe) => (
+                    
                     <div
+                      
                       key={recipe.id}
                       style={styles.postCard}
                       onClick={() => navigate(`/progress/view/${recipe.id}`)}
                     >
+                      <div style={styles.cardHeader}>
+                        <h3>{recipe.title}</h3>
+                        <div style={styles.actionButtons} onClick={(e) => e.stopPropagation()}>
+                          <button 
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleUpdate(recipe.id);
+                            }}
+                            style={styles.iconButton}
+                          >
+                            <FaEdit />
+                          </button>
+                          <button 
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleDelete(recipe.id);
+                            }}
+                            style={{...styles.iconButton, ...styles.dangerButton}}
+                          >
+                            <FaTrash />
+                          </button>
+                        </div>
+                      </div>
                       <img
                         src={recipe.imageUrl || recipe.mediaUrls?.[0] || 'https://via.placeholder.com/300x200?text=No+Image'}
                         alt={recipe.title}

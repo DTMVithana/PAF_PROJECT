@@ -22,6 +22,7 @@ function App() {
         <Route path="/share" element={<SharePost />} />
         <Route path="/ongoing" element={<OnGoing />} />
         <Route path="/post/:id" element={<ProgressPostView />} />
+        <Route path="/update/:id" element={<UpdateProgressRecipe />} />
 
       
       </Routes>

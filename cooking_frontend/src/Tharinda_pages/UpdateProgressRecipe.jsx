@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import Sidebar from '../Tharinda_components/Sidebar';
 import Header from '../Tharinda_components/Header';
 import Footer from '../Tharinda_components/Footer';
 
-const UpdateRecipe = () => {
+const UpdateProgressRecipe = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -12,9 +13,14 @@ const UpdateRecipe = () => {
     title: '',
     description: '',
     mainImage: '',
-    tags: [],
-    mediaUrls: [''],
-    steps: [{ description: '', imageUrl: '' }],
+    mediaUrls: [],
+    steps: [],
+    estimatedtime: 0,
+    number_of_steps: 0,
+    currentstep: 0,
+    status: 'Draft',
+    tags: []
+    
   });
   const [loading, setLoading] = useState(true);
   const [currentBgIndex, setCurrentBgIndex] = useState(0);
@@ -26,6 +32,19 @@ const UpdateRecipe = () => {
   ];
 
   const toggleSidebar = () => setSidebarOpen(!sidebarOpen);
+
+  useEffect(() => {
+    const fetchRecipe = async () => {
+      try {
+        const res = await axios.get(`/api/ongoing/${id}`);
+        setRecipe(res.data);
+      } catch (error) {
+        console.error('Error fetching recipe:', error);
+      }
+    };
+    fetchRecipe();
+  }, [id]);
+
 
   useEffect(() => {
     fetch(`/api/recipes/${id}`)
@@ -88,22 +107,13 @@ const UpdateRecipe = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     
-    console.log('Updated recipe state:', recipe);
+    console.log('Updated ongoing recipe state:', recipe);
 
     try {
-      const response = await fetch(`/api/recipes/${id}`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(recipe),
-      });
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-      alert('Recipe updated successfully.');
-      navigate(`/post/${id}`);
+      await axios.put(`/api/ongoing/${id}`, recipe);
+      navigate('/ongoing');
     } catch (error) {
-      console.error('Error updating recipe:', error);
-      alert('Failed to update recipe.');
+      console.error('Update error:', error);
     }
   };
 
@@ -387,4 +397,4 @@ const styles = {
   },
 };
 
-export default UpdateRecipe;
+export default UpdateProgressRecipe;

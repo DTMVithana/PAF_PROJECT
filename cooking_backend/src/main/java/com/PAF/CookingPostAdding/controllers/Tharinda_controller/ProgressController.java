@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import com.PAF.CookingPostAdding.exception.ResourceNotFoundException;
 import com.PAF.CookingPostAdding.models.Tharinda_model.ProgressRecipe;
 import com.PAF.CookingPostAdding.services.Tharinda_service.ProgressService;
 
@@ -58,15 +59,38 @@ public class ProgressController {
     return progressService.createRecipe(progressrecipe, progressrecipe.getAuthor());
     }
     
-    @PutMapping("ongoing/{id}")
-    public ProgressRecipe updateRecipe(@PathVariable String id, @RequestBody ProgressRecipe progressrecipe) {
-        return progressService.updateRecipe(id, progressrecipe, null);
-    }
+    @PutMapping("/{id}")
+public ResponseEntity<ProgressRecipe> updateRecipe(
+    @PathVariable String id,
+    @RequestBody ProgressRecipe recipeDetails
+) {
+    ProgressRecipe existingRecipe = progressService.getRecipeById(id)
+        .orElseThrow(() -> new ResourceNotFoundException("Recipe not found"));
     
-    @DeleteMapping("ongoing/{id}")
-    public void deleteRecipe(@PathVariable String id) {
-        progressService.deleteRecipe(id, "anonymous");
-    }
+    // Update fields
+    existingRecipe.setTitle(recipeDetails.getTitle());
+    existingRecipe.setDescription(recipeDetails.getDescription());
+    existingRecipe.setMainImage(recipeDetails.getMainImage());
+    existingRecipe.setMediaUrls(recipeDetails.getMediaUrls());
+    existingRecipe.setSteps(recipeDetails.getSteps());
+    existingRecipe.setEstimatedtime(recipeDetails.getEstimatedtime());
+    existingRecipe.setNumber_of_steps(recipeDetails.getNumber_of_steps());
+    existingRecipe.setCurrentstep(recipeDetails.getCurrentstep());
+    existingRecipe.setStatus(recipeDetails.getStatus());
+    existingRecipe.setUpdatedAt(LocalDateTime.now());
+    
+    ProgressRecipe updatedRecipe = progressService.updateRecipe(existingRecipe);
+    return ResponseEntity.ok(updatedRecipe);
+}
+    
+    @DeleteMapping("/{id}")
+public ResponseEntity<?> deleteRecipe(@PathVariable String id) {
+    progressService.getRecipeById(id)
+        .orElseThrow(() -> new ResourceNotFoundException("Recipe not found"));
+    
+    progressService.deleteRecipe(id, id);
+    return ResponseEntity.ok().build();
+}
     
     // Share post
     @PutMapping("ongoing/{id}/share")

@@ -8,6 +8,7 @@ import com.PAF.CookingPostAdding.repos.Tharinda_repo.ProgressRecipeRepository;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ProgressService {
@@ -61,10 +62,18 @@ public class ProgressService {
         return recipeRepository.save(recipe);
     }
 
+    public ProgressRecipe updateRecipe(ProgressRecipe recipe) {
+    recipe.setUpdatedAt(LocalDateTime.now());
+    return recipeRepository.save(recipe);
+}
+
     public void deleteRecipe(String id, String author) {
-        ProgressRecipe recipe = getRecipe(id);
-        recipeRepository.delete(recipe);
+       recipeRepository.deleteById(id);
     }
+
+    public Optional<ProgressRecipe> getRecipeById(String id) {
+    return recipeRepository.findById(id);
+}
 
     // Share a post publicly
     public ProgressRecipe sharePost(String id) {
