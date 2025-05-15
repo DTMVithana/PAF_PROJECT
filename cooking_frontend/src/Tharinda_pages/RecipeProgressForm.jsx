@@ -19,7 +19,7 @@ const RecipeProgressForm = () => {
   const [estimatedTime, setEstimatedTime] = useState('');
   const [status, setStatus] = useState('Draft');
   const [currentStep, setCurrentStep] = useState(0);
-  const [NumberofSteps, setNumberofSteps] = useState(0);
+  const [NumberofSteps, setNumberOfSteps] = useState(0);
 
   const backgroundImages = [
     "https://ca-times.brightspotcdn.com/dims4/default/cc33da0/2147483647/strip/true/crop/6582x4388+0+0/resize/2400x1600!/quality/75/?url=https%3A%2F%2Fcalifornia-times-brightspot.s3.amazonaws.com%2F37%2F50%2F28ad1c96426fa31619f425e8b971%2Fla-photos-freelance-contract-843855-la-fo-week-of-meals-oct-jc-16.JPG",
@@ -69,6 +69,12 @@ const RecipeProgressForm = () => {
   const addStep = () => {
     setSteps([...steps, { description: '', imageUrl: '' }]);
   };
+
+   const handleNumberInput = (value, setter) => { 
+    // Parse input as integer and remove any decimal part 
+    const intValue = parseInt(value) || 0; 
+    setter(intValue); 
+  }; 
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -140,7 +146,7 @@ const RecipeProgressForm = () => {
           <div style={styles.card}>
             <div style={styles.cardHeader}>
               <h2 style={styles.heading}>
-                {id ? 'Update Recipe Information' : 'Create New Recipe Entry'}
+                {id ? 'Update Recipe Information' : 'Create New On-Going Recipe Entry'}
               </h2>
               <p style={styles.subheading}>
                 {id ? 'Modify the details of your existing recipe' : 'Fill in the information to share your recipe'}
@@ -211,11 +217,22 @@ const RecipeProgressForm = () => {
               <input
                 type="number"
                 value={NumberofSteps}
-                onChange={(e) => setNumberofSteps(parseInt(e.target.value))}
-                min="0"
-                max={steps.length - 1}
-                style={styles.input}
-                required
+                  onChange={(e) => handleNumberInput(e.target.value, setNumberOfSteps)} 
+                min="1" 
+                style={styles.input} 
+                required 
+                onBlur={() => { 
+                    // Ensure at least 1 step 
+                    const validSteps = Math.max(1, Math.floor(Math.abs(NumberofSteps))); 
+                    setNumberOfSteps(validSteps); 
+                  }} 
+                  onKeyDown={(e) => { 
+                    // Prevent any non-numeric input and decimal point 
+                    if (e.key === '.' || e.key === 'e' || e.key === '+' || e.key === '-') { 
+                      e.preventDefault(); 
+                    } 
+                  }} 
+
               />
              </div>
 
@@ -224,11 +241,17 @@ const RecipeProgressForm = () => {
               <input
                 type="number"
                 value={currentStep}
-                onChange={(e) => setCurrentStep(parseInt(e.target.value))}
-                min="0"
-                max={steps.length - 1}
-                style={styles.input}
-                required
+                onChange={(e) => handleNumberInput(e.target.value, setCurrentStep)} 
+                  min="0" 
+                  style={styles.input} 
+                  required 
+                  onBlur={() => setCurrentStep(Math.floor(Math.abs(currentStep)))} 
+                  onKeyDown={(e) => { 
+                    // Prevent any non-numeric input and decimal point 
+                    if (e.key === '.' || e.key === 'e' || e.key === '+' || e.key === '-') { 
+                      e.preventDefault(); 
+                    } 
+                  }} 
               />
             </div>
 
