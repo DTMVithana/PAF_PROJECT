@@ -31,13 +31,14 @@ const commonIngredients = [
 
 const RecipeForm = () => {
   const [title, setTitle] = useState('');
+  const [errors, setErrors] = useState({});
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [description, setDescription] = useState('');
   const [mainImage, setMainImage] = useState('');
   const [mediaUrls, setMediaUrls] = useState(['']);
   const [steps, setSteps] = useState([{ description: '', imageUrl: '' }]);
   const [currentBgIndex, setCurrentBgIndex] = useState(0);
-  
+   
  
   const [ingredients, setIngredients] = useState([{ name: '', amount: '' }]);
   const [suggestions, setSuggestions] = useState([]);
@@ -56,6 +57,35 @@ const RecipeForm = () => {
     "https://www.activatefoods.com.au/cdn/shop/articles/ready-made-meals.jpg",
     "https://beehivemeals.com/cdn/shop/files/beehive-meals-apricot-chicken-Current-Menu-Page_540x.jpg?v=1737774768"
   ];
+
+  const isValidImageUrl = url => /\.(jpe?g|png)$/i.test(url.trim());
+
+
+
+  const validate = () => {
+    const newErrors = {};
+    if (!title.trim()) newErrors.title = 'Recipe title is required.';
+    if (!description.trim()) newErrors.description = 'Description is required.';
+    if (mainImage.trim() && !isValidImageUrl(mainImage)) newErrors.mainImage = 'Main image must be a JPG or PNG file.';
+
+    mediaUrls.forEach((url, idx) => {
+      if (url.trim() && !isValidImageUrl(url)) newErrors[`media_${idx}`] = `Media URL ${idx + 1} must be a JPG or PNG file.`;
+    });
+
+    if (steps.length < 1) {
+      newErrors.steps = 'At least one step is required.';
+    }
+    steps.forEach((st, idx) => {
+      if (!st.description.trim()) newErrors[`step_${idx}`] = `Description for step ${idx + 1} is required.`;
+      if (st.imageUrl.trim() && !isValidImageUrl(st.imageUrl)) newErrors[`stepImage_${idx}`] = `Image for step ${idx + 1} must be JPG or PNG.`;
+    });
+
+    ingredients.forEach((ing, idx) => {
+      if (!ing.amount.trim()) newErrors[`amount_${idx}`] = 'Amount is required.';
+      if (!ing.name.trim()) newErrors[`name_${idx}`] = 'Ingredient name is required.';
+    });
+    return newErrors;
+  };
 
   useEffect(() => {
     if (id) {
@@ -87,11 +117,16 @@ const RecipeForm = () => {
   }, [id]);
 
   useEffect(() => {
+
+    
     const interval = setInterval(() => {
       setCurrentBgIndex((prevIndex) => (prevIndex + 1) % backgroundImages.length);
     }, 8000);
     return () => clearInterval(interval);
   }, [backgroundImages.length]);
+
+
+  
 
   const handleMediaChange = (index, value) => {
     const updatedUrls = [...mediaUrls];
@@ -195,6 +230,12 @@ const RecipeForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const validationErrors = validate();
+    if (Object.keys(validationErrors).length) {
+      setErrors(validationErrors);
+      return;
+    }
+    setErrors({});
     
     
     const formattedIngredients = ingredients
@@ -277,6 +318,7 @@ const RecipeForm = () => {
                   onChange={(e) => setTitle(e.target.value)}
                   style={styles.input}
                 />
+                 {errors.title && <span style={styles.errorText}>{errors.title}</span>}
               </div>
 
               {/* Description */}
@@ -289,6 +331,7 @@ const RecipeForm = () => {
                   onChange={(e) => setDescription(e.target.value)}
                   style={styles.textarea}
                 />
+                {errors.description && <span style={styles.errorText}>{errors.description}</span>}
               </div>
 
               {/* Media URLs */}
@@ -304,6 +347,7 @@ const RecipeForm = () => {
                       onChange={(e) => handleMediaChange(index, e.target.value)}
                       style={styles.input}
                     />
+                      {errors[`media_${index}`] && <span style={styles.errorText}>{errors[`media_${index}`]}</span>}
                     <span style={styles.mediaFieldNumber}>{index + 1}</span>
                   </div>
                 ))}
@@ -329,6 +373,7 @@ const RecipeForm = () => {
                           onChange={(e) => handleIngredientChange(index, 'amount', e.target.value)}
                           style={styles.ingredientInput}
                         />
+                        {errors[`amount_${index}`] && <span style={styles.errorText}>{errors[`amount_${index}`]}</span>}
                       </div>
                       <div style={styles.ingredientNameCol}>
                         <div style={styles.suggestionsContainer}>
@@ -352,6 +397,8 @@ const RecipeForm = () => {
                             }}
                             style={styles.ingredientInput}
                           />
+                           {errors[`name_${index}`] && <span style={styles.errorText}>{errors[`name_${index}`]}</span>}
+
                           {showSuggestions && currentIngredientIndex === index && (
                             <ul style={styles.suggestionsList}>
                               {suggestions.map((suggestion, i) => (
@@ -413,6 +460,8 @@ const RecipeForm = () => {
                       onChange={(e) => handleStepChange(index, 'imageUrl', e.target.value)}
                       style={styles.input}
                     />
+                    {errors[`stepImage_${index}`] && <span style={styles.errorText}>{errors[`stepImage_${index}`]}</span>}
+
                     <div style={styles.stepDivider}></div>
                   </div>
                 ))}
@@ -433,6 +482,14 @@ const RecipeForm = () => {
 };
 
 const styles = {
+
+
+  errorText: {
+    color: 'red',
+    fontSize: '0.875rem',
+    marginTop: '4px',
+  },
+
   page: {
     fontFamily: '"Roboto", "Segoe UI", sans-serif',
     minHeight: '100vh',
