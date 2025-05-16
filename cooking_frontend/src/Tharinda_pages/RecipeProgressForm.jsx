@@ -18,7 +18,7 @@ const RecipeProgressForm = () => {
   const toggleSidebar = () => setSidebarOpen(!sidebarOpen);
   const [estimatedTime, setEstimatedTime] = useState('');
   const [status, setStatus] = useState('Draft');
-  const [currentStep, setCurrentStep] = useState(0);
+  const [currentStep, setCurrentStep] = useState(1);
   const [NumberofSteps, setNumberOfSteps] = useState(0);
 
   const backgroundImages = [

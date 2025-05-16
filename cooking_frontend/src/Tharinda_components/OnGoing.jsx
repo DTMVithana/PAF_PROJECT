@@ -162,7 +162,7 @@ const handleUpdate = async (id) => {
                               style={styles.dropdownItem}
                               onClick={() => navigate(`/progress/update/${recipe.id}`)}
                             >
-                              Continue Cooking
+                              Live chat
                             </button>
                             <button
                               style={styles.dropdownItem}
