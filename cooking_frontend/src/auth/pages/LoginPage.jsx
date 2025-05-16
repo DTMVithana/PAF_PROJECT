@@ -72,29 +72,29 @@ if (onLogin) onLogin(data.user, data.token);
               <path d="M12 2V12" stroke="#FFF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
           </div>
-          <h1 className="hotel-name">Grand Horizon</h1>
-          <h2 className="hotel-tagline">Hotel & Resort</h2>
+          <h1 className="hotel-name">Cooking Skills Sharing</h1>
+          <h2 className="hotel-tagline"></h2>
           
           <div className="separator"></div>
           
-          <p className="brand-description">Access your premium hotel management dashboard</p>
+          <p className="brand-description">Sharing Your Cooking Skills</p>
           
           <div className="feature-list">
             <div className="feature-item">
               <FiCheckCircle className="feature-icon" />
-              <span>Real-time booking updates</span>
+              <span>Completed Recipes</span>
             </div>
             <div className="feature-item">
               <FiCheckCircle className="feature-icon" />
-              <span>Guest services management</span>
+              <span>Ongoing Recipes</span>
             </div>
             <div className="feature-item">
               <FiCheckCircle className="feature-icon" />
-              <span>Financial reporting tools</span>
+              <span>Meal Plans</span>
             </div>
             <div className="feature-item">
               <FiCheckCircle className="feature-icon" />
-              <span>Staff scheduling system</span>
+              <span>Post Sharing</span>
             </div>
           </div>
           
@@ -105,7 +105,7 @@ if (onLogin) onLogin(data.user, data.token);
         <div className="form-section">
           <div className="form-header">
             <h2>Welcome Back</h2>
-            <p>Please sign in to access your dashboard</p>
+            <p>Please sign in to access your account</p>
           </div>
           
           <form onSubmit={handleSubmit}>

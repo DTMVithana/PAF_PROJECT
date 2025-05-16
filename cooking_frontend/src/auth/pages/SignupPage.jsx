@@ -78,30 +78,30 @@ const Signup = () => {
               <path d="M12 2V12" stroke="#FFF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
           </div>
-          <h1 className="hotel-name">Grand Horizon</h1>
-          <h2 className="hotel-tagline">Hotel & Resort</h2>
-          
-          <div className="separator"></div>
-          
-          <p className="brand-description">Join our exclusive platform and experience premium hotel management</p>
-          
-          <div className="feature-list">
-            <div className="feature-item">
-              <FiCheckCircle className="feature-icon" />
-              <span>Easy booking management</span>
-            </div>
-            <div className="feature-item">
-              <FiCheckCircle className="feature-icon" />
-              <span>Customer profiles & preferences</span>
-            </div>
-            <div className="feature-item">
-              <FiCheckCircle className="feature-icon" />
-              <span>Seamless staff coordination</span>
-            </div>
-            <div className="feature-item">
-              <FiCheckCircle className="feature-icon" />
-              <span>Integrated analytics dashboard</span>
-            </div>
+          <h1 className="hotel-name">Cooking Skills Sharing</h1>
+                    <h2 className="hotel-tagline"></h2>
+                    
+                    <div className="separator"></div>
+                    
+                    <p className="brand-description">Sharing Your Cooking Skills</p>
+                    
+                    <div className="feature-list">
+                      <div className="feature-item">
+                        <FiCheckCircle className="feature-icon" />
+                        <span>Completed Recipes</span>
+                      </div>
+                      <div className="feature-item">
+                        <FiCheckCircle className="feature-icon" />
+                        <span>Ongoing Recipes</span>
+                      </div>
+                      <div className="feature-item">
+                        <FiCheckCircle className="feature-icon" />
+                        <span>Meal Plans</span>
+                      </div>
+                      <div className="feature-item">
+                        <FiCheckCircle className="feature-icon" />
+                        <span>Post Sharing</span>
+                      </div>
           </div>
           
           <div className="brand-background"></div>
@@ -111,7 +111,7 @@ const Signup = () => {
         <div className="form-section">
           <div className="form-header">
             <h2>Create Account</h2>
-            <p>Join our hotel management platform</p>
+            <p>Join our skills sharing platform</p>
           </div>
           
           <form onSubmit={handleSubmit}>
