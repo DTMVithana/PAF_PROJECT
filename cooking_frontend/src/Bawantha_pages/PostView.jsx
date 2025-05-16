@@ -88,11 +88,11 @@ const PostView = () => {
       <div className="content-container">
         <div className="recipe-header">
           <h1 className="recipe-title">{recipe?.title}</h1>
-          <div className="recipe-meta">
+          {/* <div className="recipe-meta">
             <span className="prep-time">Prep: 20 min</span>
             <span className="cook-time">Cook: 30 min</span>
             <span className="servings">Serves: 4</span>
-          </div>
+          </div> */}
         </div>
 
         <div className="recipe-grid">
@@ -109,11 +109,11 @@ const PostView = () => {
               <h2 className="section-title">About this dish</h2>
               <p className="recipe-description">{recipe?.description}</p>
               
-              <div className="recipe-tags">
+              {/* <div className="recipe-tags">
                 {(recipe?.tags || ['Quick', 'Easy', 'Vegetarian']).map((tag, index) => (
                   <span key={index} className="recipe-tag">{tag}</span>
                 ))}
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
@@ -121,21 +121,16 @@ const PostView = () => {
         <div className="ingredients-section">
           <h2 className="section-title">Ingredients</h2>
           <div className="ingredients-grid">
-            {(recipe?.ingredients || [
-              '250g pasta', 
-              '2 cups sliced mushrooms', 
-              '3 cloves garlic, minced', 
-              '2 tbsp olive oil',
-              '1 cup heavy cream',
-              'Salt and pepper to taste',
-              '¼ cup grated parmesan cheese',
-              'Fresh parsley for garnish'
-            ]).map((ingredient, index) => (
-              <div key={index} className="ingredient-item">
-                <span className="ingredient-check">✓</span>
-                <span>{ingredient}</span>
-              </div>
-            ))}
+            {(recipe?.ingredients && recipe.ingredients.length > 0) ? (
+              recipe.ingredients.map((ingredient, index) => (
+                <div key={index} className="ingredient-item">
+                  <span className="ingredient-check">✓</span>
+                  <span>{ingredient}</span>
+                </div>
+              ))
+            ) : (
+              <div className="no-ingredients">No ingredients listed for this recipe.</div>
+            )}
           </div>
         </div>
 
@@ -365,6 +360,15 @@ const PostView = () => {
         .ingredient-check {
           color: #a8dadc;
           font-weight: bold;
+        }
+        
+        .no-ingredients {
+          grid-column: 1 / -1;
+          padding: 15px;
+          text-align: center;
+          color: #6c757d;
+          background-color: #f8f9fa;
+          border-radius: 6px;
         }
 
         /* Steps Section */

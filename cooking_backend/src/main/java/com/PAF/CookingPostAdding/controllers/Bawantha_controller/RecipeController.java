@@ -12,7 +12,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/recipes")
-// Allow requests from your React dev server:
+
 @CrossOrigin(origins = "http://localhost:3000", 
              methods = { RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE, RequestMethod.OPTIONS },
              allowCredentials = "true")
