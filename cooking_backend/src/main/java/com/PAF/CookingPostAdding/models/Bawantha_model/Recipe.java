@@ -23,7 +23,9 @@ public class Recipe {
     private String description;
 
     private List<String> mediaUrls = new ArrayList<>();
-    private List<String> comments = new ArrayList<>();
+
+    private List<Comment> comments = new ArrayList<>();
+
     private List<Step> steps = new ArrayList<>();
     private List<String> ingredients = new ArrayList<>();
 
@@ -32,6 +34,15 @@ public class Recipe {
     private String author;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
+
+    @Data
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class Comment {
+        private String text;
+        private String author;
+        private LocalDateTime createdAt;
+    }
 }
 
 

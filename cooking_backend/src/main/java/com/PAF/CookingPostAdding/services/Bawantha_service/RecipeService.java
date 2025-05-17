@@ -58,16 +58,20 @@ public class RecipeService {
         return recipeRepository.save(recipe);
     }
 
-    public Recipe addComment(String id, String comment) {
+
+    public Recipe addComment(String id, String commentText, String author) {
         Recipe recipe = getRecipe(id);
-        recipe.getComments().add(comment);
+        Recipe.Comment newComment = new Recipe.Comment(commentText, author, LocalDateTime.now());
+        recipe.getComments().add(newComment);
         return recipeRepository.save(recipe);
     }
 
-    public Recipe updateComment(String id, int index, String newComment) {
+
+    public Recipe updateComment(String id, int index, String newCommentText) {
         Recipe recipe = getRecipe(id);
         if (index >= 0 && index < recipe.getComments().size()) {
-            recipe.getComments().set(index, newComment);
+            Recipe.Comment comment = recipe.getComments().get(index);
+            comment.setText(newCommentText);
         }
         return recipeRepository.save(recipe);
     }

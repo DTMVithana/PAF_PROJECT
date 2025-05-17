@@ -59,8 +59,9 @@ public class RecipeController {
 
     @PutMapping("/{id}/comment")
     public Recipe addComment(@PathVariable String id, @RequestBody Map<String, String> body) {
-        String comment = body.get("comment"); 
-        return recipeService.addComment(id, comment);
+        String comment = body.get("comment");
+        String author = body.get("author"); // Get author from request
+        return recipeService.addComment(id, comment, author);
     }
 
     @PutMapping("/{id}/comment/{index}")
