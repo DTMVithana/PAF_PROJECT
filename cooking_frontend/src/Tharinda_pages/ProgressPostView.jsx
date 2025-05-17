@@ -87,9 +87,8 @@ const PostView = () => {
         <div className="recipe-header">
           <h1 className="recipe-title">{recipe?.title}</h1>
           <div className="recipe-meta">
-            <span className="prep-time">Prep: 20 min</span>
-            <span className="cook-time">Cook: 30 min</span>
-            <span className="servings">Serves: 4</span>
+            
+            
           </div>
         </div>
 
@@ -108,7 +107,7 @@ const PostView = () => {
               <p className="recipe-description">{recipe?.description}</p>
               
               <div className="recipe-tags">
-                {(recipe?.tags || ['Quick', 'Easy', 'Vegetarian']).map((tag, index) => (
+                {(recipe?.tags || ['Quick', 'Easy', 'Healthy']).map((tag, index) => (
                   <span key={index} className="recipe-tag">{tag}</span>
                 ))}
               </div>
@@ -116,7 +115,7 @@ const PostView = () => {
           </div>
         </div>
 
-        <div className="ingredients-section">
+        {/* <div className="ingredients-section">
           <h2 className="section-title">Ingredients</h2>
           <div className="ingredients-grid">
             {(recipe?.ingredients || [
@@ -135,7 +134,21 @@ const PostView = () => {
               </div>
             ))}
           </div>
-        </div>
+        </div> */}
+
+        <div className="current-step-indicator">
+  <h3>Current Progress</h3>
+  <div className="step-progress">
+    {recipe?.steps?.map((_, index) => (
+      <div 
+        key={index}
+        className={`step-circle ${index + 1 <= recipe.currentstep ? 'active' : ''}`}
+      >
+        {index + 1}
+      </div>
+    ))}
+  </div>
+</div>
 
         <div className="steps-section">
           <h2 className="section-title">Preparation Steps</h2>
@@ -493,6 +506,42 @@ const PostView = () => {
           animation: spin 1s linear infinite;
           margin-bottom: 15px;
         }
+
+        .current-step-indicator {
+  margin: 30px 0;
+  padding: 20px;
+  background: #f8f9fa;
+  border-radius: 10px;
+}
+
+.step-progress {
+  display: flex;
+  gap: 15px;
+  margin-top: 15px;
+  flex-wrap: wrap;
+}
+
+.step-circle {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #e9ecef;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  color: #666;
+  border: 2px solid #dee2e6;
+  transition: all 0.3s ease;
+}
+
+.step-circle.active {
+  background: #1a3a5f;
+  color: white;
+  border-color: #1a3a5f;
+  transform: scale(1.1);
+  box-shadow: 0 4px 8px rgba(26, 58, 95, 0.2);
+}
         
         @keyframes spin {
           0% { transform: rotate(0deg); }
