@@ -51,7 +51,9 @@ const PostView = () => {
       stepElements.push(
         <div key={i} className="step-accordion">
           <div className={`step-header ${isExpanded ? 'expanded' : ''}`} onClick={() => toggleStep(i)}>
-            <div className="step-number">{i + 1}</div>
+            <div className={`step-number ${(i + 1) <= recipe.currentstep ? 'completed' : ''}`}>
+    {i + 1}
+  </div>
             <div className="step-title">{step.description}</div>
             <div className="step-toggle">{isExpanded ? '−' : '+'}</div>
           </div>
@@ -506,6 +508,17 @@ const PostView = () => {
           animation: spin 1s linear infinite;
           margin-bottom: 15px;
         }
+
+        .step-number.completed {
+  background-color: #4CAF50; /* Green color for completed steps */
+  color: white;
+  border: 2px solid #388E3C;
+}
+
+/* Optional: Add animation for completion */
+.step-number {
+  transition: all 0.3s ease;
+}
 
         .current-step-indicator {
   margin: 30px 0;

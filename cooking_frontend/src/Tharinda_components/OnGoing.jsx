@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import Header from './Header';
 import Footer from './Footer';
 import Sidebar from './Sidebar';
-import CornerVideo from './CornerVideo';
+// import CornerVideo from './CornerVideo';
 import './OnGoing.css';
 import { FaEdit, FaTrash } from 'react-icons/fa';
 
@@ -184,7 +184,7 @@ const handleUpdate = async (id) => {
           )}
         </div>
 
-        <div style={styles.latest}>
+        {/* <div style={styles.latest}>
           <h3 style={{ borderBottom: '3px solid red', paddingBottom: 6 }}>Cooking Tips</h3>
           {[...Array(3)].map((_, i) => (
             <div key={i} style={styles.latestItem}>
@@ -196,7 +196,7 @@ const handleUpdate = async (id) => {
             </div>
           ))}
           <CornerVideo />
-        </div>
+        </div> */}
       </div>
 
       <Footer />

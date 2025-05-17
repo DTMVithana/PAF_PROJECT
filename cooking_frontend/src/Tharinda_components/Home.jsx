@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import Sidebar from './Sidebar';
 import Header from './Header';
 import Footer from './Footer';
-import CornerVideo from './CornerVideo';
+// import CornerVideo from './CornerVideo';
 
 
 
@@ -170,7 +170,7 @@ const Home = () => {
           >
             {showAllLatest ? 'Show Less' : 'See More'}
           </button>
-          <CornerVideo />
+          {/* <CornerVideo /> */}
         </div>
       </div>
       
