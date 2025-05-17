@@ -19,6 +19,7 @@ import MealPlanList from './Dineth_pages/MealPlanList';
 import MealPlanForm from './Dineth_pages/MealPlanForm';
 import UpdateMealPlan from './Dineth_pages/UpdateMealPlan';
 import MealPlanDetails from './Dineth_pages/MealPlanDetails';
+import ChatLectro from './ChatLectro';
 
 
 
@@ -73,6 +74,8 @@ function App() {
         <Route path="/mealplan/create" element={<MealPlanForm />} />
         <Route path="/mealplan/edit/:id" element={<UpdateMealPlan />} />
         <Route path="/mealplan/view/:id" element={<MealPlanDetails />} />
+        
+        <Route path="/chat" element={<ChatLectro/>} />
         </Routes>
       </main>
     </div>
