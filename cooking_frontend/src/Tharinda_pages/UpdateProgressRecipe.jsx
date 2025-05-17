@@ -16,12 +16,13 @@ const UpdateProgressRecipe = () => {
     mediaUrls: [],
     steps: [],
     estimatedtime: 0,
-    number_of_steps: 0,
-    currentstep: 0,
+    number_of_steps: 1,
+    currentstep: 1,
     status: 'Draft',
     tags: []
     
   });
+
   const [loading, setLoading] = useState(true);
   const [currentBgIndex, setCurrentBgIndex] = useState(0);
 
