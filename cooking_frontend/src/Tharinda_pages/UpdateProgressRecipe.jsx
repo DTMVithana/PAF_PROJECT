@@ -78,9 +78,24 @@ const UpdateProgressRecipe = () => {
     return () => clearInterval(interval);
   }, [backgroundImages.length]);
 
+  useEffect(() => {
+    const stepsLength = recipe.steps.length;
+    if (recipe.number_of_steps > stepsLength) {
+      const newSteps = [...recipe.steps];
+      for (let i = stepsLength; i < recipe.number_of_steps; i++) {
+        newSteps.push({ description: '', imageUrl: '' });
+      }
+      setRecipe(prev => ({ ...prev, steps: newSteps }));
+    } else if (recipe.number_of_steps < stepsLength) {
+      const newSteps = recipe.steps.slice(0, recipe.number_of_steps);
+      setRecipe(prev => ({ ...prev, steps: newSteps }));
+    }
+  }, [recipe.number_of_steps]);
+
   const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setRecipe(prev => ({ ...prev, [name]: value }));
+    const { name, value, type } = e.target;
+    const parsedValue = type === 'number' ? parseInt(value, 10) : value;
+    setRecipe(prev => ({ ...prev, [name]: isNaN(parsedValue) ? value : parsedValue }));
   };
 
   const handleMediaChange = (index, value) => {
@@ -146,7 +161,7 @@ const UpdateProgressRecipe = () => {
 
         <div style={styles.container}>
           <div style={styles.card}>
-            <h2 style={styles.heading}>Update Recipe</h2>
+            <h2 style={styles.heading}>Update On-Going Recipe</h2>
             <form onSubmit={handleSubmit} style={styles.form}>
               <div style={styles.formGroup}>
                 <label style={styles.label}>Title</label>
@@ -198,6 +213,72 @@ const UpdateProgressRecipe = () => {
                     + Add Media
                   </button>
                 )}
+              </div>
+
+              <div style={styles.formGroup}>
+                <label style={styles.label}>Estimated Time (minutes)</label>
+                <input
+                  type="number"
+                  name="estimatedtime"
+                  value={recipe.estimatedtime}
+                  onChange={handleInputChange}
+                  min="1"
+                  required
+                  style={styles.input}
+                />
+              </div>
+
+              <div style={styles.formGroup}>
+                <label style={styles.label}>Number of Steps</label>
+                <input
+                  type="number"
+                  name="number_of_steps"
+                  value={recipe.number_of_steps}
+                  onChange={handleInputChange}
+                  min="1"
+                  required
+                  style={styles.input}
+                  onBlur={() => {
+                    const validSteps = Math.max(1, recipe.number_of_steps);
+                    setRecipe(prev => ({ ...prev, number_of_steps: validSteps }));
+                  }}
+                />
+              </div>
+
+              <div style={styles.formGroup}>
+                <label style={styles.label}>Current Step</label>
+                <input
+                  type="number"
+                  name="currentstep"
+                  value={recipe.currentstep}
+                  onChange={handleInputChange}
+                  min="1"
+                  max={recipe.number_of_steps}
+                  required
+                  style={styles.input}
+                  onBlur={() => {
+                    const validCurrent = Math.min(
+                      Math.max(1, recipe.currentstep),
+                      recipe.number_of_steps
+                    );
+                    setRecipe(prev => ({ ...prev, currentstep: validCurrent }));
+                  }}
+                />
+              </div>
+
+               <div style={styles.formGroup}>
+                <label style={styles.label}>Status</label>
+                <select
+                  name="status"
+                  value={recipe.status}
+                  onChange={handleInputChange}
+                  style={styles.input}
+                  required
+                >
+                  <option value="Draft">Draft</option>
+                  <option value="In Progress">In Progress</option>
+                  <option value="Completed">Completed</option>
+                </select>
               </div>
 
               <div style={styles.formGroup}>
