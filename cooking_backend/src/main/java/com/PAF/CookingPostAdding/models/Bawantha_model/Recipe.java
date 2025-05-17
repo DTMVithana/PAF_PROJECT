@@ -25,7 +25,9 @@ public class Recipe {
     private List<String> mediaUrls = new ArrayList<>();
     private List<String> comments = new ArrayList<>();
     private List<Step> steps = new ArrayList<>();
-private List<String> ingredients = new ArrayList<>();
+    private List<String> ingredients = new ArrayList<>();
+
+    private List<String> likedByUsers = new ArrayList<>(); 
 
     private String author;
     private LocalDateTime createdAt;

@@ -9,7 +9,6 @@ import Sidebar from '../Bawantha_components/Sidebar';
 
 const PublicPlatform = () => {
   const [recipes, setRecipes] = useState([]);
-  const [likes, setLikes] = useState({});
   const [openComments, setOpenComments] = useState({});
   const [commentInputs, setCommentInputs] = useState({});
   const [allComments, setAllComments] = useState({});
@@ -17,10 +16,20 @@ const PublicPlatform = () => {
   const [editComment, setEditComment] = useState({});
   const [openMenuId, setOpenMenuId] = useState(null);
   const [sidebarOpen, setSidebarOpen] = useState(false);
-
   const [showEmojiPicker, setShowEmojiPicker] = useState({});
   const [replyInputs, setReplyInputs] = useState({});
   const [allReplies, setAllReplies] = useState({});
+
+  // Get user ID from localStorage
+  const userString = localStorage.getItem("user");
+  let userId = null;
+  
+  try {
+    const user = JSON.parse(userString);
+    userId = user?._id || user?.id; // Adjust based on your user object structure
+  } catch (e) {
+    console.error("Error parsing user data:", e);
+  }
 
   const toggleSidebar = () => setSidebarOpen(!sidebarOpen);
 
@@ -28,18 +37,28 @@ const PublicPlatform = () => {
     axios.get('/api/recipes/shared')
       .then(res => {
         setRecipes(res.data);
-        const likesInit = {}, commentsInit = {};
+        const commentsInit = {};
         res.data.forEach(post => {
-          likesInit[post.id] = 0;
           commentsInit[post.id] = post.comments || [];
         });
-        setLikes(likesInit);
         setAllComments(commentsInit);
       });
   }, []);
 
-  const handleLike = (id) => {
-    setLikes(prev => ({ ...prev, [id]: prev[id] + 1 }));
+  const handleLike = async (postId) => {
+    if (!userId) {
+      alert("Please login to like recipes");
+      return;
+    }
+
+    try {
+      const response = await axios.put(`/api/recipes/${postId}/like`, { userId });
+      setRecipes(prev => prev.map(recipe => 
+        recipe.id === postId ? response.data : recipe
+      ));
+    } catch (error) {
+      console.error("Error liking recipe:", error);
+    }
   };
 
   const toggleComments = (postId) => {
@@ -112,7 +131,6 @@ const PublicPlatform = () => {
       <Sidebar isOpen={sidebarOpen} toggleSidebar={toggleSidebar} />
       <Header toggleSidebar={toggleSidebar} />
 
-
       <div className="platform-content-wrapper">
         <div className="post-feed">
           {recipes.length === 0 ? (
@@ -152,8 +170,15 @@ const PublicPlatform = () => {
                 </div>
 
                 <div className="recipe-actions">
-                  <button className="like-btn" onClick={() => handleLike(post.id)}><FaHeart /> {likes[post.id] || 0}</button>
-                  <button className="comment-btn" onClick={() => toggleComments(post.id)}><FaCommentDots /> {(allComments[post.id] || []).length}</button>
+                  <button 
+                    className={`like-btn ${post.likedByUsers?.includes(userId) ? 'liked' : ''}`} 
+                    onClick={() => handleLike(post.id)}
+                  >
+                    <FaHeart /> {post.likedByUsers?.length || 0}
+                  </button>
+                  <button className="comment-btn" onClick={() => toggleComments(post.id)}>
+                    <FaCommentDots /> {(allComments[post.id] || []).length}
+                  </button>
                 </div>
 
                 {openComments[post.id] && (

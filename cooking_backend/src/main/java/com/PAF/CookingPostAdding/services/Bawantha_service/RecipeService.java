@@ -79,4 +79,18 @@ public class RecipeService {
         }
         return recipeRepository.save(recipe);
     }
+
+    public Recipe likeRecipe(String id, String userId) {
+        Recipe recipe = getRecipe(id);
+        
+        if (recipe.getLikedByUsers().contains(userId)) {
+            // User already liked - remove like
+            recipe.getLikedByUsers().remove(userId);
+        } else {
+            // Add like
+            recipe.getLikedByUsers().add(userId);
+        }
+        
+        return recipeRepository.save(recipe);
+    }
 }
