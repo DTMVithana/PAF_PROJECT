@@ -1,6 +1,5 @@
 package com.PAF.CookingPostAdding.controllers.Bawantha_controller;
 
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -72,5 +71,11 @@ public class RecipeController {
     @DeleteMapping("/{id}/comment/{index}")
     public Recipe deleteComment(@PathVariable String id, @PathVariable int index) {
         return recipeService.deleteComment(id, index);
+    }
+
+    @PutMapping("/{id}/like")
+    public Recipe likeRecipe(@PathVariable String id, @RequestBody Map<String, String> body) {
+        String userId = body.get("userId");
+        return recipeService.likeRecipe(id, userId);
     }
 }
