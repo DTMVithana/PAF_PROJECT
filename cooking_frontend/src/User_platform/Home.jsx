@@ -4,6 +4,7 @@ import Sidebar from '../Bawantha_components/Sidebar';
 import Header from '../Bawantha_components/Header';
 import Footer from '../Bawantha_components/Footer';
 import CornerVideo from '../Bawantha_components/CornerVideo';
+import ChatLectro from '../ChatLectro';
 
 
 
@@ -19,6 +20,8 @@ const Home = () => {
   const navigate = useNavigate();
 
   const toggleSidebar = () => setSidebarOpen(!sidebarOpen);
+  const [showChatBot, setShowChatBot] = useState(false);
+
 
   useEffect(() => {
     fetchRecipes();
@@ -184,6 +187,57 @@ const Home = () => {
         </div>
       </div>
       
+
+
+
+      {/* Chatbot Floating Button and Popup */}
+<div>
+  <button
+  onClick={() => setShowChatBot(!showChatBot)}
+  style={{
+    position: 'fixed',
+    bottom: '20px',
+    left: '20px',
+    backgroundColor: '#f57c00',
+    border: 'none',
+    borderRadius: '50%',
+    width: '45px',        //  smaller width
+    height: '45px',       //  smaller height
+    boxShadow: '0 3px 8px rgba(0,0,0,0.25)',
+    color: '#fff',
+    fontSize: '18px',     // smaller icon
+    zIndex: 1000,
+    cursor: 'pointer',
+  }}
+  aria-label="Open chatbot"
+>
+  💬
+</button>
+
+
+  {showChatBot && (
+    <div
+      style={{
+        position: 'fixed',
+        bottom: '90px',
+        left: '20px',
+        width: '360px',
+        maxHeight: '500px',
+        backgroundColor: '#fff',
+        border: '1px solid #ccc',
+        borderRadius: '10px',
+        boxShadow: '0 8px 20px rgba(0,0,0,0.2)',
+        zIndex: 1000,
+        overflow: 'hidden',
+      }}
+    >
+      <ChatLectro />
+    </div>
+  )}
+</div>
+
+
+
       <Footer />
        
     </div>
