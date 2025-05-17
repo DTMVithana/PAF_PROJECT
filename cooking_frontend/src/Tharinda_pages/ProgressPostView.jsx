@@ -15,7 +15,7 @@ const PostView = () => {
 
   useEffect(() => {
     setLoading(true);
-    fetch(`/api/recipes/${id}`)
+    fetch(`/api/ongoing/${id}`)
       .then(res => res.json())
       .then(data => {
         setRecipe(data);

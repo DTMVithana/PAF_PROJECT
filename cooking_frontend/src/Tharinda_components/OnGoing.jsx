@@ -103,7 +103,7 @@ const handleUpdate = async (id) => {
                       
                       key={recipe.id}
                       style={styles.postCard}
-                      onClick={() => navigate(`/progress/view/${recipe.id}`)}
+                      onClick={() => navigate(`/post/${recipe.id}`)}
                     >
                       <div style={styles.cardHeader}>
                         <h3>{recipe.title}</h3>
